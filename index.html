@@ -309,6 +309,34 @@
   .callout.verified { background: var(--accent-wash); border-color: var(--accent); }
   .callout.verified .mk { color: var(--accent-ink); }
 
+  .fakebanner {
+    background: var(--alert-wash);
+    border: 2px solid var(--alert);
+    padding: 1.1rem 1.3rem;
+    display: flex; flex-direction: column; gap: 0.4rem;
+  }
+  .fakebanner .fb-t {
+    font-family: var(--f-mono); font-size: 0.72rem; font-weight: 600;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--alert);
+  }
+  .fakebanner p { font-size: 0.95rem; color: var(--ink); }
+
+  table.fake tbody td, table.fake thead th { opacity: 0.97; }
+  table.fake caption {
+    caption-side: top; text-align: left;
+    font-family: var(--f-mono); font-size: 0.68rem; font-weight: 600;
+    letter-spacing: 0.09em; text-transform: uppercase;
+    color: var(--alert); padding: 0.7rem 1rem 0.2rem;
+  }
+  td.hl { font-weight: 600; color: var(--accent-ink); }
+
+  pre.rec {
+    background: var(--surface-2); border: 1px solid var(--rule);
+    padding: 1.1rem 1.3rem; margin: 0;
+    font-family: var(--f-mono); font-size: 0.8rem; line-height: 1.7;
+    overflow-x: auto;
+  }
+
   .scope { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 1rem; }
   .scope .col {
     border: 1px solid var(--rule); background: var(--surface);
@@ -334,7 +362,7 @@
 <div class="wrap">
 
   <header class="masthead">
-    <div class="eyebrow">Senior Project · Scope v0.3 · literature verified</div>
+    <div class="eyebrow">Senior Project · Scope v0.7 · literature verified · expected results illustrative</div>
     <h1>HalluTrace</h1>
     <p class="standfirst">
       Hallucination can be attacked at three points — the pretraining corpus, the training process, or inference —
@@ -929,7 +957,7 @@
         <div class="wk">W14</div>
         <div class="body">
           <h3>Phase 5 · Analysis</h3>
-          <p>Cross-tabulation, scale curves, significance testing, final figures. Bucket every fact by its recorded corpus frequency and plot hallucination rate per bucket — this is where contribution 04 is produced.</p>
+          <p>Cross-tabulation, scale curves, significance testing, final figures. Bucket every fact by its recorded corpus frequency and plot hallucination rate per bucket — this is where contribution 04 is produced. Also re-run attribution on OLMo against RedPajama as a proxy corpus and measure label agreement against the Dolma ground truth, producing an error bar for proxy-based attribution.</p>
           <p class="out"><b>Optional:</b> replay prompts across OLMo/Pythia intermediate checkpoints to see when each type emerges</p>
         </div>
       </div>
@@ -1009,6 +1037,206 @@
   </section>
 
   <section>
+    <h2>Expected results</h2>
+
+    <div class="fakebanner">
+      <div class="fb-t">⚠ Every number in this section is invented</div>
+      <p>
+        Nothing below has been measured. These tables exist to show the <em>shape</em> of the output and to force the
+        analysis plan to be coherent before any data is collected. They are built to match what HALoGEN observed —
+        hallucinated packages often do appear in corpora; impossible historical meetings leave no trace — so if those
+        patterns hold, this is roughly what we would see. <strong>The real numbers may look nothing like this, which
+        is the entire reason to run the study.</strong> No figure here may appear in the thesis or a slide without
+        this warning attached.
+      </p>
+    </div>
+
+    <h3 style="margin-top:0.6rem">Main cross-tabulation · RQ2</h3>
+    <div class="tscroll">
+      <table class="fake">
+        <caption>Illustrative only — OLMo 2 7B Instruct, n = 450 hallucinated claims</caption>
+        <thead><tr><th>Failure mode</th><th>Type A</th><th>Type B</th><th>Type C</th><th>A+B</th><th>NA</th><th class="num">n</th></tr></thead>
+        <tbody>
+          <tr><td class="lead">EXISTENCE</td><td class="num">8%</td><td class="num hl">37%</td><td class="num">41%</td><td class="num">5%</td><td class="num">9%</td><td class="num">240</td></tr>
+          <tr><td class="lead">ATTRIBUTION</td><td class="num hl">58%</td><td class="num">9%</td><td class="num">14%</td><td class="num">19%</td><td class="num">—</td><td class="num">150</td></tr>
+          <tr><td class="lead">NON_ABSTENTION</td><td class="num">19%</td><td class="num">5%</td><td class="num hl">72%</td><td class="num">4%</td><td class="num">—</td><td class="num">60</td></tr>
+          <tr><td class="lead">All</td><td class="num">26%</td><td class="num">23%</td><td class="num">36%</td><td class="num">10%</td><td class="num">5%</td><td class="num">450</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="prose">
+      The sentence this table produces: <strong>"23% of what this model hallucinates is addressable at the corpus."</strong>
+      That single number is what the entire project exists to produce. The row structure carries its own meaning —
+      attribution failures leaning Type A means the source was in the corpus and the model narrated it wrongly, while
+      non-abstention being almost entirely Type C means there was never anything to recall. If that pattern holds, the
+      policy reading is that retrieval augmentation helps attribution failures and barely touches non-abstention.
+    </p>
+
+    <h3 style="margin-top:1rem">Corpus frequency and hallucination rate · contribution 04</h3>
+    <div class="tscroll">
+      <table class="fake">
+        <caption>Illustrative only — tests the Kalai singleton prediction</caption>
+        <thead><tr><th>Frequency of the correct fact in Dolma</th><th>Hallucination rate</th><th class="num">n claims</th></tr></thead>
+        <tbody>
+          <tr><td class="lead">0</td><td class="num">94%</td><td class="num">210</td></tr>
+          <tr><td class="lead">1 — singleton</td><td class="num hl">71%</td><td class="num">180</td></tr>
+          <tr><td class="lead">2–10</td><td class="num">44%</td><td class="num">390</td></tr>
+          <tr><td class="lead">11–100</td><td class="num">22%</td><td class="num">620</td></tr>
+          <tr><td class="lead">100+</td><td class="num">9%</td><td class="num">1,100</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="prose">
+      A monotone decline would be the first empirical confirmation of the singleton hypothesis against a real corpus.
+      A flat curve would be the first empirical refutation — and the stronger result of the two.
+    </p>
+
+    <h3 style="margin-top:1rem">Scale curve · RQ3</h3>
+    <div class="tscroll">
+      <table class="fake">
+        <caption>Illustrative only — share of hallucinations by provenance</caption>
+        <thead><tr><th>Model</th><th>Type A</th><th>Type B</th><th>Type C</th></tr></thead>
+        <tbody>
+          <tr><td class="lead">OLMo 2 1B</td><td class="num">19%</td><td class="num">21%</td><td class="num">51%</td></tr>
+          <tr><td class="lead">OLMo 2 7B</td><td class="num">26%</td><td class="num">23%</td><td class="num">36%</td></tr>
+          <tr><td class="lead">OLMo 2 13B</td><td class="num">31%</td><td class="num">26%</td><td class="num">28%</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="prose">
+      The sentence this shape would produce: <strong>scale buys knowledge, not data quality.</strong> Type C falls with
+      size while Type B stays flat, because incorrect documents in the corpus do not disappear when the model grows.
+      The direct implication is that waiting for larger models will not solve Type B.
+    </p>
+
+    <h3 style="margin-top:1rem">One row of the released dataset</h3>
+<pre class="rec">{
+  "claim_id": "cite_0417_t2_c3",
+  "model": "olmo-2-7b-instruct",
+  "task": "scientific_citation",
+  "claim": "Ravichander et al. (2025) report that 72% of hallucinated
+            packages appear in pretraining corpora.",
+  "outcome": "HALLUCINATED",
+  "failure_mode": "ATTRIBUTION",
+  "provenance": "TYPE_A",
+  "intervention_locus": "training | inference",
+  "q_correct": { "form_1": 84, "form_2": 61, "form_3": 12, "max": 84 },
+  "q_halluc":  { "form_1": 0,  "form_2": 0,  "form_3": 0,  "max": 0  },
+  "evidence_doc_ids": ["dolma_cc_0031_882741", "dolma_s2_0009_11204"],
+  "verifier": "semantic_scholar + nli",
+  "corpus": "dolma_1.7",
+  "human_checked": false
+}</pre>
+    <p class="prose">
+      Note that <code>q_correct</code> keeps the count from every query form, not just the one that decided the label.
+      This is the concrete reason the schema must store raw counts: with only
+      <code>"provenance": "TYPE_A"</code> retained, the frequency table above could never be produced.
+    </p>
+
+    <h3 style="margin-top:1rem">Interpretation rules, fixed in advance</h3>
+    <p class="prose">
+      More important than any illustrative number. Agreeing now what each outcome would mean is what prevents the team
+      from constructing a story around whatever the data happens to show.
+    </p>
+    <div class="tscroll">
+      <table>
+        <thead><tr><th>If the result is</th><th>The conclusion is</th><th>Implication</th></tr></thead>
+        <tbody>
+          <tr><td class="lead">Type B above 30%</td><td>Corpus cleaning has real return</td><td>Evidence for investing in data curation</td></tr>
+          <tr><td class="lead">Type B below 10%</td><td>The corpus is largely not the problem</td><td>Effort belongs at inference time instead</td></tr>
+          <tr><td class="lead">Type C dominant</td><td>The problem is abstention, not knowledge</td><td>Retrieval has a low ceiling here; teach refusal</td></tr>
+          <tr><td class="lead">Type A dominant</td><td>The knowledge is present but unreachable</td><td>Retrieval augmentation is the right lever</td></tr>
+          <tr><td class="lead">Flat frequency curve</td><td>Frequency does not predict hallucination</td><td>Refutes Kalai — a stronger result than confirming it</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout">
+      <div class="mk">The row to watch</div>
+      <p>
+        If Type B comes out very low, someone on the team will read it as the project having failed. It has not — that
+        is an equally valuable answer, and it is worth a great deal to the people currently spending money on data
+        cleaning. Writing this table before seeing any data is what stops us bending the analysis in month three
+        toward a more exciting number.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Generalizability and use</h2>
+
+    <p class="subhead">Can this be applied to commercial models?</p>
+    <p class="prose">
+      Axis 1 fully; axis 2 not at all. The distinction has to be held firmly, because the temptation to blur it grows
+      the moment closed models enter the conversation.
+    </p>
+    <div class="tscroll">
+      <table>
+        <thead><tr><th>Operation</th><th>GPT · Claude · Gemini</th><th>Validity</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="lead">Measure failure mode</td>
+            <td><span class="chip ok">works fully</span></td>
+            <td>Decided from output alone — identical to open models</td>
+          </tr>
+          <tr>
+            <td class="lead">Assign Type A/B/C</td>
+            <td><span class="chip hot">impossible</span></td>
+            <td>No corpus to search</td>
+          </tr>
+          <tr>
+            <td class="lead">Substitute a proxy corpus</td>
+            <td><span class="chip warn">technically possible</span></td>
+            <td>Done in published work, but nobody has measured how wrong it is</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout verified">
+      <div class="mk">An opportunity that costs almost nothing</div>
+      <p>
+        Zhang et al. use RedPajama as a stand-in for closed models' data; QuCo-RAG uses OLMo 2's corpus as a stand-in
+        for Llama, Qwen and GPT. Neither can say how much error that substitution introduces, because doing so requires
+        holding the true corpus and a proxy at the same time. <strong>We hold both.</strong>
+      </p>
+      <p>
+        Run attribution on OLMo twice — once against Dolma, its actual corpus, and once against RedPajama as though we
+        did not know what it was trained on — then measure label agreement. The output is an error bar on
+        proxy-based attribution, which is exactly the number anyone attempting this on a closed model needs. The
+        infrastructure already exists; infini-gram indexes both. It is one extra run, added to Phase 5.
+      </p>
+    </div>
+
+    <p class="subhead">What the results are for</p>
+    <div class="tscroll">
+      <table>
+        <thead><tr><th>Audience</th><th>What they take from it</th></tr></thead>
+        <tbody>
+          <tr><td class="lead">Corpus builders</td><td>The Type B fraction is the return on data cleaning — currently spent against no estimate at all</td></tr>
+          <tr><td class="lead">Deployment engineers</td><td>Whether retrieval will help their workload, which depends on their mix of attribution versus non-abstention failures</td></tr>
+          <tr><td class="lead">Abstention research</td><td>The frequency curve is a candidate inference-time signal. QuCo-RAG already triggers retrieval this way without calibration; these numbers would supply it</td></tr>
+          <tr><td class="lead">Benchmark designers</td><td>A single hallucination rate conflates three failures with three different remedies — ranking models on one number hides that</td></tr>
+          <tr><td class="lead">Us</td><td>A citable released dataset, and a pipeline that reruns against the next open-data model the day it ships</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout">
+      <div class="mk">The ceiling, stated honestly</div>
+      <p>
+        <strong>This project fixes nothing.</strong> It measures and explains; impact arrives only when someone else
+        acts on the numbers. Say so plainly rather than claiming reduced hallucination, because the follow-up question
+        — reduced by how much? — has no answer. "We produce the number this decision requires, and nobody currently
+        has it" is both stronger and defensible.
+      </p>
+      <p>
+        And one line that must not be crossed: closed models may be measured on failure mode and reported as such, but
+        <strong>they never enter the cross-tabulation.</strong> Their Type A/B/C columns would be guesses wearing the
+        costume of measurements.
+      </p>
+    </div>
+  </section>
+
+  <section>
     <h2>Definition of done</h2>
     <ul class="plain">
       <li>RQ1 answered across all seven model configurations</li>
@@ -1022,7 +1250,7 @@
   </section>
 
   <footer>
-    Scope v0.6 · Twenty-eight of twenty-nine surveyed benchmarks verified against arXiv or ACL Anthology sources (HalluBench, CMC 2026, still pending); the
+    Scope v0.7 · Twenty-eight of twenty-nine surveyed benchmarks verified against arXiv or ACL Anthology sources (HalluBench, CMC 2026, still pending); the
     training-data-analysis field was checked individually for each. Prompt counts and model checkpoints to be
     reconfirmed after Phase 0. Two wording rules carried into the thesis: never write "the only work" where "the only
     benchmark" is what is defensible, and always distinguish content-based provenance from influence-based attribution.
