@@ -8,7 +8,7 @@
   body { margin: 0; }
   img { max-width: 100%; height: auto; }
 </style>
-<title>HalluTrace Taxonomy</title>
+<title>HalluTrace</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anuphan:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap">
@@ -35,7 +35,8 @@
     --f-body:    "IBM Plex Sans Thai", "Anuphan", ui-sans-serif, system-ui, sans-serif;
     --f-mono:    "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
 
-    --measure: 76ch;
+    --measure: 74ch;
+    --gap: 1.15rem;
   }
 
   @media (prefers-color-scheme: dark) {
@@ -91,53 +92,81 @@
   .wrap { max-width: 62rem; margin: 0 auto; display: flex; flex-direction: column; gap: 3.5rem; }
   .prose { max-width: var(--measure); }
 
-  header.masthead { padding-top: 4rem; display: flex; flex-direction: column; gap: 1.4rem; }
+  header.masthead { padding-top: 4rem; display: flex; flex-direction: column; gap: 1.5rem; }
 
   .eyebrow {
     font-family: var(--f-mono);
-    font-size: 0.72rem; font-weight: 500;
-    letter-spacing: 0.14em; text-transform: uppercase;
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
     color: var(--accent);
   }
 
   h1 {
     font-family: var(--f-display);
     font-weight: 700;
-    font-size: clamp(2.2rem, 5.2vw, 3.2rem);
-    line-height: 1.12; letter-spacing: -0.02em;
-    margin: 0; text-wrap: balance;
+    font-size: clamp(2.3rem, 5.5vw, 3.4rem);
+    line-height: 1.12;
+    letter-spacing: -0.02em;
+    margin: 0;
+    text-wrap: balance;
   }
 
-  .standfirst { font-size: 1.08rem; color: var(--ink-2); max-width: var(--measure); margin: 0; }
+  .standfirst { font-size: 1.09rem; color: var(--ink-2); max-width: var(--measure); margin: 0; }
 
   .metastrip {
     display: flex; flex-wrap: wrap; margin: 0;
-    border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
-  }
-  .metastrip div { flex: 1 1 9rem; padding: 0.9rem 1.1rem 0.9rem 0; display: flex; flex-direction: column; gap: 0.1rem; }
-  .metastrip dt, .mk {
-    font-family: var(--f-mono); font-size: 0.68rem;
-    letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
-  }
-  .metastrip dd {
-    margin: 0; font-family: var(--f-display); font-weight: 600;
-    font-size: 1rem; font-variant-numeric: tabular-nums;
+    border-top: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
   }
 
-  section { display: flex; flex-direction: column; gap: 1.15rem; }
+  .metastrip div {
+    flex: 1 1 8rem;
+    padding: 0.9rem 1.1rem 0.9rem 0;
+    display: flex; flex-direction: column; gap: 0.1rem;
+  }
+
+  .metastrip dt, .mk {
+    font-family: var(--f-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .metastrip dd, .mv {
+    margin: 0;
+    font-family: var(--f-display);
+    font-weight: 600;
+    font-size: 1.02rem;
+    font-variant-numeric: tabular-nums;
+  }
+
+  section { display: flex; flex-direction: column; gap: var(--gap); }
 
   h2 {
-    font-family: var(--f-display); font-weight: 600;
-    font-size: 1.55rem; letter-spacing: -0.01em; line-height: 1.25;
-    margin: 0; padding-bottom: 0.55rem;
-    border-bottom: 2px solid var(--ink); text-wrap: balance;
-  }
-  h2 .sn {
-    font-family: var(--f-mono); font-size: 0.95rem;
-    color: var(--accent); margin-right: 0.7rem; font-weight: 600;
+    font-family: var(--f-display);
+    font-weight: 600;
+    font-size: 1.6rem;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+    margin: 0;
+    padding-bottom: 0.55rem;
+    border-bottom: 2px solid var(--ink);
+    text-wrap: balance;
   }
 
-  h3 { font-family: var(--f-display); font-weight: 600; font-size: 1.06rem; margin: 0; line-height: 1.4; }
+  h3 { font-family: var(--f-display); font-weight: 600; font-size: 1.08rem; margin: 0; line-height: 1.4; }
+
+  .subhead {
+    font-family: var(--f-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0.4rem 0 -0.4rem;
+  }
 
   p { margin: 0; }
   .prose p + p { margin-top: 0.9rem; }
@@ -145,118 +174,157 @@
   a { color: var(--accent-ink); text-decoration-thickness: 1px; text-underline-offset: 2px; }
   a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
 
-  code { font-family: var(--f-mono); font-size: 0.85em; background: var(--surface-2); padding: 0.1em 0.36em; border-radius: 3px; }
-  .mono { font-family: var(--f-mono); }
+  code, .mono { font-family: var(--f-mono); font-size: 0.86em; }
+  code { background: var(--surface-2); padding: 0.08em 0.34em; border-radius: 3px; }
+
   strong { font-weight: 600; color: var(--ink); }
   em { font-style: italic; }
 
-  .tscroll { overflow-x: auto; border: 1px solid var(--rule); background: var(--surface); }
-  table { border-collapse: collapse; width: 100%; min-width: 42rem; font-size: 0.92rem; }
-  thead th {
-    text-align: left; font-family: var(--f-mono); font-weight: 600;
-    font-size: 0.68rem; letter-spacing: 0.09em; text-transform: uppercase;
-    color: var(--muted); padding: 0.8rem 1rem;
-    border-bottom: 1px solid var(--rule); white-space: nowrap; background: var(--surface-2);
+  ul.plain {
+    margin: 0; padding-left: 1.15rem;
+    display: flex; flex-direction: column; gap: 0.45rem;
+    max-width: var(--measure);
   }
-  tbody td { padding: 0.8rem 1rem; border-bottom: 1px solid var(--rule-soft); vertical-align: top; line-height: 1.6; }
+  ul.plain li::marker { color: var(--accent); }
+
+  .thesis {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--accent);
+    padding: 1.5rem 1.6rem;
+    display: flex; flex-direction: column; gap: 0.9rem;
+  }
+
+  .thesis .q { font-family: var(--f-display); font-weight: 600; font-size: 1.2rem; line-height: 1.5; margin: 0; }
+
+  .rqlist { display: flex; flex-direction: column; gap: 0.55rem; border-top: 1px solid var(--rule-soft); padding-top: 0.9rem; }
+  .rq { display: flex; gap: 0.7rem; align-items: baseline; }
+  .rq .tag { font-family: var(--f-mono); font-size: 0.72rem; font-weight: 600; color: var(--accent); flex: none; letter-spacing: 0.04em; }
+  .rq span:last-child { color: var(--ink-2); font-size: 0.96rem; }
+
+  .tscroll { overflow-x: auto; border: 1px solid var(--rule); background: var(--surface); }
+
+  table { border-collapse: collapse; width: 100%; min-width: 40rem; font-size: 0.92rem; }
+
+  thead th {
+    text-align: left;
+    font-family: var(--f-mono);
+    font-weight: 600;
+    font-size: 0.68rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 0.8rem 1rem;
+    border-bottom: 1px solid var(--rule);
+    white-space: nowrap;
+    background: var(--surface-2);
+  }
+
+  tbody td { padding: 0.8rem 1rem; border-bottom: 1px solid var(--rule-soft); vertical-align: top; line-height: 1.55; }
   tbody tr:last-child td { border-bottom: none; }
-  td.lead { font-weight: 600; }
-  td.code, .lbl { font-family: var(--f-mono); font-size: 0.82rem; font-weight: 600; white-space: nowrap; }
   td.num { font-family: var(--f-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
-  tr.hi td { background: var(--accent-wash); }
+  td.lead { font-weight: 600; }
+  td.code { font-family: var(--f-mono); font-size: 0.84rem; white-space: nowrap; }
+  td.no { font-family: var(--f-mono); font-weight: 600; color: var(--accent); text-align: center; }
+
+  table.compact { font-size: 0.87rem; min-width: 48rem; }
+  table.compact tbody td { padding: 0.55rem 0.85rem; }
 
   .chip {
-    display: inline-block; font-family: var(--f-mono);
-    font-size: 0.66rem; font-weight: 600; letter-spacing: 0.06em;
-    text-transform: uppercase; padding: 0.18rem 0.48rem;
-    border-radius: 2px; white-space: nowrap;
+    display: inline-block;
+    font-family: var(--f-mono);
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.2rem 0.5rem;
+    border-radius: 2px;
+    white-space: nowrap;
   }
   .chip.ok   { background: var(--accent-wash); color: var(--accent-ink); }
   .chip.warn { background: var(--signal-wash); color: var(--signal); }
   .chip.hot  { background: var(--alert-wash);  color: var(--alert); }
 
-  .thesis {
+  .axes { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 1rem; }
+
+  .axis {
+    background: var(--surface);
+    border: 1px solid var(--rule);
+    padding: 1.2rem 1.3rem;
+    display: flex; flex-direction: column; gap: 0.75rem;
+  }
+  .axis > .mk { color: var(--accent); }
+  .axis h3 { font-size: 1.15rem; }
+
+  .defs { display: flex; flex-direction: column; gap: 0.7rem; margin: 0; }
+  .defs .row { display: flex; flex-direction: column; gap: 0.1rem; }
+  .defs .name { font-family: var(--f-mono); font-size: 0.8rem; font-weight: 600; color: var(--ink); }
+  .defs .desc { font-size: 0.9rem; color: var(--ink-2); line-height: 1.55; }
+
+  .contribs { display: flex; flex-direction: column; gap: 0.9rem; }
+  .contrib {
+    display: grid; grid-template-columns: 2.2rem 1fr; gap: 0 1rem;
     background: var(--surface); border: 1px solid var(--rule);
-    border-left: 4px solid var(--accent);
-    padding: 1.5rem 1.6rem;
+    padding: 1.15rem 1.3rem;
   }
-  .thesis p {
-    font-family: var(--f-display); font-weight: 600;
-    font-size: 1.18rem; line-height: 1.55;
+  .contrib .n { font-family: var(--f-mono); font-size: 1.15rem; font-weight: 600; color: var(--accent); line-height: 1.3; }
+  .contrib .txt { display: flex; flex-direction: column; gap: 0.3rem; }
+  .contrib .txt p { font-size: 0.94rem; color: var(--ink-2); }
+  .contrib .hd { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.6rem; }
+
+  .rail { display: flex; flex-direction: column; border-left: 1px solid var(--rule); }
+
+  .phase {
+    display: grid; grid-template-columns: 5.5rem 1fr; gap: 0 1.4rem;
+    padding: 1.15rem 0 1.15rem 1.4rem;
+    border-bottom: 1px solid var(--rule-soft);
+    position: relative;
   }
+  .phase:last-child { border-bottom: none; }
+  .phase::before {
+    content: ""; position: absolute; left: -4px; top: 1.55rem;
+    width: 7px; height: 7px; background: var(--accent); border-radius: 50%;
+  }
+  .phase .wk {
+    font-family: var(--f-mono); font-size: 0.78rem; font-weight: 600;
+    color: var(--accent); font-variant-numeric: tabular-nums;
+    padding-top: 0.16rem; white-space: nowrap;
+  }
+  .phase .body { display: flex; flex-direction: column; gap: 0.4rem; }
+  .phase .body p { font-size: 0.94rem; color: var(--ink-2); }
+  .phase .out { font-family: var(--f-mono); font-size: 0.75rem; color: var(--muted); letter-spacing: 0.02em; }
+  .phase .out b { color: var(--ink-2); font-weight: 600; }
+
+  @media (max-width: 34rem) { .phase { grid-template-columns: 1fr; gap: 0.4rem; } }
 
   .callout {
-    background: var(--signal-wash); border: 1px solid var(--signal);
-    padding: 1.2rem 1.35rem; display: flex; flex-direction: column; gap: 0.5rem;
+    background: var(--signal-wash);
+    border: 1px solid var(--signal);
+    padding: 1.25rem 1.4rem;
+    display: flex; flex-direction: column; gap: 0.55rem;
   }
   .callout .mk { color: var(--signal); }
-  .callout p { font-size: 0.95rem; }
-  .callout.pos { background: var(--accent-wash); border-color: var(--accent); }
-  .callout.pos .mk { color: var(--accent-ink); }
+  .callout p { font-size: 0.96rem; }
 
-  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1rem; }
-  .card {
-    background: var(--surface); border: 1px solid var(--rule);
-    padding: 1.1rem 1.25rem; display: flex; flex-direction: column; gap: 0.45rem;
-  }
-  .card .cn {
-    font-family: var(--f-mono); font-size: 0.7rem; font-weight: 600;
-    letter-spacing: 0.08em; color: var(--accent);
-  }
-  .card p { font-size: 0.9rem; color: var(--ink-2); line-height: 1.6; }
+  .callout.verified { background: var(--accent-wash); border-color: var(--accent); }
+  .callout.verified .mk { color: var(--accent-ink); }
 
-  .tree {
-    background: var(--surface); border: 1px solid var(--rule);
-    padding: 1.3rem 1.4rem; display: flex; flex-direction: column; gap: 0.5rem;
+  .scope { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 1rem; }
+  .scope .col {
+    border: 1px solid var(--rule); background: var(--surface);
+    padding: 1.15rem 1.3rem; display: flex; flex-direction: column; gap: 0.7rem;
   }
-  .tnode {
-    display: grid; grid-template-columns: 11rem 1fr; gap: 0.4rem 1.1rem;
-    align-items: baseline;
-    padding: 0.6rem 0 0.6rem 0.9rem;
-    border-left: 3px solid var(--rule);
-  }
-  .tnode.good  { border-left-color: var(--accent); }
-  .tnode.skip  { border-left-color: var(--muted); }
-  .tnode.bad   { border-left-color: var(--alert); }
-  .tnode .lbl { color: var(--ink); }
-  .tnode .exp { font-size: 0.9rem; color: var(--ink-2); }
-  .tnode.sub { margin-left: 2.2rem; }
-  @media (max-width: 36rem) {
-    .tnode { grid-template-columns: 1fr; }
-    .tnode.sub { margin-left: 1rem; }
-  }
-
-  .formula {
-    background: var(--surface-2); border: 1px solid var(--rule);
-    padding: 1.1rem 1.3rem; font-family: var(--f-mono);
-    font-size: 0.9rem; line-height: 1.9; overflow-x: auto;
-  }
-  .formula b { color: var(--accent-ink); font-weight: 600; }
-
-  .decision {
-    display: grid; grid-template-columns: 2.4rem 1fr; gap: 0 1rem;
-    background: var(--surface); border: 1px solid var(--rule);
-    border-top: 3px solid var(--signal);
-    padding: 1.2rem 1.35rem;
-  }
-  .decision .dn { font-family: var(--f-mono); font-size: 1.1rem; font-weight: 600; color: var(--signal); }
-  .decision .dbody { display: flex; flex-direction: column; gap: 0.5rem; }
-  .decision .dbody p { font-size: 0.93rem; color: var(--ink-2); }
-  .decision .opts { display: flex; flex-direction: column; gap: 0.35rem; margin-top: 0.2rem; }
-  .decision .opt { font-size: 0.9rem; display: flex; gap: 0.6rem; align-items: baseline; }
-  .decision .opt .k {
-    font-family: var(--f-mono); font-size: 0.68rem; font-weight: 600;
-    letter-spacing: 0.06em; text-transform: uppercase;
-    color: var(--muted); flex: none; width: 5.2rem;
-  }
-  .decisions { display: flex; flex-direction: column; gap: 0.9rem; }
-
-  ul.plain { margin: 0; padding-left: 1.15rem; display: flex; flex-direction: column; gap: 0.45rem; max-width: var(--measure); }
-  ul.plain li::marker { color: var(--accent); }
+  .scope .col.out { background: var(--surface-2); }
+  .scope ul { margin: 0; padding-left: 1.1rem; display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.93rem; color: var(--ink-2); }
+  .scope .col.in li::marker  { color: var(--accent); }
+  .scope .col.out li::marker { color: var(--muted); }
 
   footer {
-    border-top: 1px solid var(--rule); padding-top: 1.3rem;
-    font-size: 0.86rem; color: var(--muted); max-width: var(--measure);
+    border-top: 1px solid var(--rule);
+    padding-top: 1.3rem;
+    font-size: 0.86rem;
+    color: var(--muted);
+    max-width: var(--measure);
   }
 </style>
 </head>
@@ -266,374 +334,698 @@
 <div class="wrap">
 
   <header class="masthead">
-    <div class="eyebrow">HalluTrace · Taxonomy proposal · draft for Wednesday</div>
-    <h1>Two axes, decided from <span style="color:var(--accent)">two separate</span> sources of evidence</h1>
+    <div class="eyebrow">Senior Project · Scope v0.3 · literature verified</div>
+    <h1>HalluTrace</h1>
     <p class="standfirst">
-      The field divides hallucination at least seven different ways. Six of them answer the same question — <em>what
-      kind of error is this?</em> Only one asks <em>where did it come from?</em> This proposal takes the strongest
-      option from each side and crosses them, under one hard rule: each axis must be decidable from evidence the other
-      axis never touches.
+      Hallucination can be attacked at three points — the pretraining corpus, the training process, or inference —
+      and those three differ entirely in cost, tractability, and <em>who owns them</em>. Nobody knows how a real
+      population of hallucinations distributes across them. This project measures that distribution, which requires
+      opening the corpus and looking.
     </p>
     <dl class="metastrip">
-      <div><dt>Surveyed</dt><dd>29 papers</dd></div>
-      <div><dt>Principles found</dt><dd>7</dd></div>
-      <div><dt>Axes adopted</dt><dd>2</dd></div>
-      <div><dt>Total labels</dt><dd>12</dd></div>
-      <div><dt>To decide</dt><dd>3</dd></div>
+      <div><dt>Duration</dt><dd>16 weeks</dd></div>
+      <div><dt>Team</dt><dd>4 people</dd></div>
+      <div><dt>Language</dt><dd>English</dd></div>
+      <div><dt>Tasks</dt><dd>3</dd></div>
+      <div><dt>Models</dt><dd>7</dd></div>
+      <div><dt>Contributions</dt><dd>5</dd></div>
+      <div><dt>Surveyed</dt><dd>29</dd></div>
     </dl>
   </header>
 
   <section>
-    <h2><span class="sn">01</span>What the taxonomy has to satisfy</h2>
-    <p class="prose">
-      Before arguing about how to divide, we should agree on what "good" means for this project. Four constraints,
-      which are then used in section 04 to eliminate options — so that options get cut by criteria the team agreed to,
-      not by the preferences of whoever wrote the proposal.
-    </p>
-    <div class="cards">
-      <div class="card">
-        <div class="cn">C1 · Automatable</div>
-        <h3>Decidable without a human</h3>
-        <p>We have four months, four people, and roughly 25,000 generations to label. Any category that requires someone to read and judge is unusable at that volume.</p>
-      </div>
-      <div class="card">
-        <div class="cn">C2 · Actionable</div>
-        <h3>Different categories, different fixes</h3>
-        <p>If two categories lead to the same remedy, separating them buys nothing. It is naming, not taxonomy.</p>
-      </div>
-      <div class="card">
-        <div class="cn">C3 · Comparable</div>
-        <h3>Anchored to prior work</h3>
-        <p>Invent every category from scratch and we cannot write related work, and nobody can build on the result.</p>
-      </div>
-      <div class="card">
-        <div class="cn">C4 · Independent</div>
-        <h3>The two axes cannot share evidence</h3>
-        <p>Axis 1 is decided from the model output. Axis 2 is decided from the corpus. If they mix, the cross-tabulation becomes circular.</p>
-      </div>
-    </div>
-    <div class="callout">
-      <div class="mk">C4 is the one people overlook</div>
+    <h2>Problem statement</h2>
+
+    <div class="prose">
+      <p class="subhead">1 · The failure users cannot see</p>
       <p>
-        The headline result of this project is a cross-tabulation of the two axes. If axis 1 quietly uses corpus
-        evidence to decide a label, that table is meaningless — it would be crossing one dataset against itself.
-        <strong>Every time we add or revise a definition on either axis, we come back and re-check this constraint.</strong>
+        Language models are now routine tools for finding and synthesizing information, and they continue to produce
+        fluent, confident claims that no evidence supports. The harm lies less in the errors themselves than in their
+        <strong>invisibility to the reader</strong>. A fabricated citation carries the same typographic authority as a
+        real one. A hallucinated package import runs until it doesn't — and has already been demonstrated as a software
+        supply-chain attack surface. In both cases the surface form gives the user no signal that anything is wrong.
       </p>
-    </div>
-  </section>
 
-  <section>
-    <h2><span class="sn">02</span>How the field currently divides it</h2>
-    <p class="prose">
-      I grouped every taxonomy across the 29 surveyed papers by its <strong>organizing principle</strong> — the question
-      it is really sorting on — rather than by category names. Seven principles emerge.
-    </p>
-    <div class="tscroll">
-      <table>
-        <thead><tr><th>Organizing principle</th><th>Sorts on</th><th>Used by</th></tr></thead>
-        <tbody>
-          <tr>
-            <td class="lead">1 · Grounding source</td>
-            <td>Inconsistent with what — the world, or the supplied context</td>
-            <td>Hallucinations Leaderboard · HalluDial · HalluScan · HalluScore · HalluLens · Lynx</td>
-          </tr>
-          <tr class="hi">
-            <td class="lead">2 · Verification locus</td>
-            <td>Where the citation chain breaks</td>
-            <td><strong>HalluHard</strong> — reference vs content grounding</td>
-          </tr>
-          <tr>
-            <td class="lead">3 · Surface form</td>
-            <td>What the error looks like linguistically</td>
-            <td>C-FAITH (6) · HaluEval 2.0 (6)</td>
-          </tr>
-          <tr>
-            <td class="lead">4 · Severity</td>
-            <td>Obvious error or subtle one</td>
-            <td>RAGTruth · FaithBench · MedHallu</td>
-          </tr>
-          <tr>
-            <td class="lead">5 · Reasoning complexity</td>
-            <td>How hard the question was</td>
-            <td>FactCHD · HalluWorld</td>
-          </tr>
-          <tr>
-            <td class="lead">6 · Knowledge scope</td>
-            <td>Breadth of knowledge or depth of it</td>
-            <td>KGHaluBench</td>
-          </tr>
-          <tr class="hi">
-            <td class="lead">7 · Provenance</td>
-            <td><strong>Where it came from in the training data</strong></td>
-            <td><strong>HALoGEN only</strong> — Type A / B / C</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="thesis">
+      <p class="subhead">2 · Measurement is no longer the bottleneck</p>
       <p>
-        Principles 1 through 6 all answer the same question: what kind of error is this. Exactly one asks why the error
-        happened — and exactly one paper out of twenty-nine uses it.
-      </p>
-    </div>
-  </section>
-
-  <section>
-    <h2><span class="sn">03</span>The proposal — two axes</h2>
-
-    <h3 style="margin-top:0.5rem">Axis 1 · Failure mode <span class="chip ok">decided from output</span></h3>
-    <div class="tscroll">
-      <table>
-        <thead><tr><th>Label</th><th>Operational definition</th><th>Verifier</th></tr></thead>
-        <tbody>
-          <tr><td class="code">EXISTENCE</td><td>The cited object is absent from the reference index</td><td>PyPI · Semantic Scholar lookup</td></tr>
-          <tr><td class="code">ATTRIBUTION</td><td>The cited object exists but does not support the claim made about it</td><td>retrieval + entailment</td></tr>
-          <tr><td class="code">NON_ABSTENTION</td><td>The model answers a question that has no correct answer</td><td>gazetteer + refusal classifier</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="prose">
-      Inherited from <strong>HalluHard</strong>'s reference-versus-content split, extended with non-abstention from
-      <strong>HalluLens</strong> and AbstentionBench. All three resolve through an index lookup or a classifier, with
-      no human adjudication — so the axis satisfies C1.
-    </p>
-
-    <h3 style="margin-top:1rem">Axis 2 · Provenance <span class="chip ok">decided from corpus</span></h3>
-    <div class="tscroll">
-      <table>
-        <thead><tr><th>Label</th><th>Condition</th><th>Reading</th></tr></thead>
-        <tbody>
-          <tr><td class="code">TYPE_A</td><td class="num">correct &gt; 0 · halluc = 0</td><td>The fact was available; recall failed</td></tr>
-          <tr><td class="code">TYPE_B</td><td class="num">correct = 0 · halluc &gt; 0</td><td>The error is genuinely present in the corpus</td></tr>
-          <tr><td class="code">TYPE_C</td><td class="num">both = 0</td><td>Nothing present; the model assembled it</td></tr>
-          <tr><td class="code">TYPE_AB</td><td class="num">both &gt; 0</td><td>Both present — reported jointly, never forced to one</td></tr>
-          <tr><td class="code">TYPE_NA</td><td class="num">no unique ground truth</td><td>Unmeasurable ≠ absent from corpus</td></tr>
-        </tbody>
-      </table>
-    </div>
-    <p class="prose">
-      Borrowed wholesale from <strong>HALoGEN</strong> rather than invented. Reusing their taxonomy makes our numbers
-      comparable to theirs (C3) and sharpens what we actually claim: we are not proposing a new taxonomy, we are
-      <strong>the first to operationalize this one automatically across a whole benchmark</strong>.
-    </p>
-  </section>
-
-  <section>
-    <h2><span class="sn">04</span>Why not the other five</h2>
-    <p class="prose">Prepared in advance, because these will be asked. Each is eliminated by a named constraint.</p>
-    <div class="tscroll">
-      <table>
-        <thead><tr><th>Principle</th><th>Fails</th><th>Reason</th></tr></thead>
-        <tbody>
-          <tr>
-            <td class="lead">Surface form</td>
-            <td><span class="chip hot">C1 + C2</span></td>
-            <td>Deciding whether something is an attribute error or a relation error requires a human reader — and once decided, it still doesn't tell you how to fix it</td>
-          </tr>
-          <tr>
-            <td class="lead">Severity</td>
-            <td><span class="chip hot">C1</span></td>
-            <td>"Subtle" is defined by annotator intuition and cannot be written as a rule code can follow. It is also only meaningful when there is supplied context to compare against, which our tasks do not have</td>
-          </tr>
-          <tr>
-            <td class="lead">Reasoning complexity</td>
-            <td><span class="chip warn">wrong unit</span></td>
-            <td>This is a property of the <em>question</em>, not of the <em>error</em>. It belongs in metadata, not on an axis</td>
-          </tr>
-          <tr>
-            <td class="lead">Knowledge scope</td>
-            <td><span class="chip warn">redundant</span></td>
-            <td>Requires a knowledge graph, and is ultimately a proxy for entity popularity — which we measure directly and more precisely as corpus frequency</td>
-          </tr>
-          <tr>
-            <td class="lead">Grounding source</td>
-            <td><span class="chip warn">degenerate</span></td>
-            <td>Faithfulness requires supplied context, and all three of our tasks are closed-book. The split would collapse into a single cell</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </section>
-
-  <section>
-    <h2><span class="sn">05</span>The complete label space</h2>
-    <div class="callout">
-      <div class="mk">The part that gets forgotten</div>
-      <p>
-        A taxonomy is not only the kinds of hallucination — it needs labels for outcomes that are
-        <strong>not</strong> hallucinations too. Without them the denominator of the metric is undefined, and any
-        number we report can be argued with immediately.
+        The community has answered with a dense wave of benchmarks. We surveyed twenty-nine, verifying each against its
+        arXiv or ACL Anthology source, and recorded one field above all others: <strong>does the paper inspect the
+        pretraining corpus to explain where a hallucination came from?</strong>
       </p>
     </div>
 
-    <div class="tree">
-      <div class="tnode good">
-        <span class="lbl">SUPPORTED</span>
-        <span class="exp">Evidence backs the claim — not a hallucination</span>
-      </div>
-      <div class="tnode good">
-        <span class="lbl">ABSTAINED</span>
-        <span class="exp">The model declined to answer — not a hallucination; reported separately as abstention rate</span>
-      </div>
-      <div class="tnode skip">
-        <span class="lbl">UNVERIFIABLE</span>
-        <span class="exp">The verifier could not reach a decision (403 · paywall · timeout) — <strong>excluded from the denominator</strong></span>
-      </div>
-      <div class="tnode skip">
-        <span class="lbl">PARSE_FAILURE</span>
-        <span class="exp">Atomic claims could not be extracted — <strong>excluded from the denominator, but the rate must be reported</strong></span>
-      </div>
-      <div class="tnode bad">
-        <span class="lbl">HALLUCINATED</span>
-        <span class="exp">Labeled on both axes ↓</span>
-      </div>
-      <div class="tnode bad sub">
-        <span class="lbl">Axis 1</span>
-        <span class="exp">EXISTENCE · ATTRIBUTION · NON_ABSTENTION</span>
-      </div>
-      <div class="tnode bad sub">
-        <span class="lbl">Axis 2</span>
-        <span class="exp">TYPE_A · TYPE_B · TYPE_C · TYPE_AB · TYPE_NA</span>
-      </div>
-    </div>
-
-    <div class="formula">
-      <b>H</b> = hallucinated claims ÷ verifiable claims<br>
-      <b>Abstention rate</b> = abstained claims ÷ all claims<br>
-      <b>Parse-failure rate</b> = parse failures ÷ all responses
-    </div>
-
-    <p class="prose">
-      H follows HalluHard; abstention is broken out separately following HALoGEN, which calls it response ratio.
-      <strong>Why the separation matters:</strong> fold abstentions into the denominator and a model that refuses
-      every question scores best, which is absurd. And parse failure must be reported rather than quietly dropped —
-      small models fail to parse often, and hiding that rate would make our numbers look cherry-picked.
-    </p>
-  </section>
-
-  <section>
-    <h2><span class="sn">06</span>Edge cases and proposed rulings</h2>
-    <p class="prose">
-      This is where taxonomy meetings usually spend all their time. Rulings are drafted in advance so the discussion
-      can be about disagreements rather than discovery.
-    </p>
     <div class="tscroll">
-      <table>
-        <thead><tr><th>Situation</th><th>Proposed ruling</th></tr></thead>
+      <table class="compact">
+        <thead>
+          <tr><th>Benchmark</th><th>arXiv</th><th class="num">Size</th><th>Taxonomy</th><th>Corpus?</th></tr>
+        </thead>
         <tbody>
-          <tr>
-            <td class="lead">One response contains several claims, some wrong and some right</td>
-            <td><strong>The unit of labeling is the atomic claim, not the response</strong> — except for the code task, which is scored per response, following HalluHard</td>
-          </tr>
-          <tr>
-            <td class="lead">Cites a real paper, but not the one it meant, with a similar title</td>
-            <td>If any metadata field mismatches it is <code>EXISTENCE</code>, not <code>ATTRIBUTION</code> — strict matching, following HalluHard</td>
-          </tr>
-          <tr>
-            <td class="lead">Hedged answer: "I'm not certain, but probably X"</td>
-            <td>If a checkable claim is present, check it. <code>ABSTAINED</code> means refusing to answer, nothing weaker</td>
-          </tr>
-          <tr>
-            <td class="lead">Real package, non-existent function inside it</td>
-            <td><code>EXISTENCE</code> at the function level — <strong>granularity must be settled, see decision 1</strong></td>
-          </tr>
-          <tr>
-            <td class="lead">More than one answer would be correct</td>
-            <td><code>TYPE_NA</code>, not <code>TYPE_C</code>. "We cannot measure this" and "this is absent from the corpus" are different findings; conflating them inflates Type C</td>
-          </tr>
-          <tr>
-            <td class="lead">Different query forms return different counts</td>
-            <td>Needs a combination rule — <strong>see decision 2</strong></td>
-          </tr>
+          <tr><td class="lead">TruthfulQA</td><td class="code">2109.07958</td><td class="num">817</td><td>imitative falsehood, 38 topics</td><td class="no">no</td></tr>
+          <tr><td class="lead">HaluEval</td><td class="code">2305.11747</td><td class="num">35,000</td><td>task-specific patterns (10)</td><td class="no">no</td></tr>
+          <tr><td class="lead">HalluQA <span class="chip warn">not reused</span></td><td class="code">2310.03368</td><td class="num">450</td><td>imitative falsehood vs factual error</td><td class="no">no</td></tr>
+          <tr><td class="lead">FactCHD</td><td class="code">2310.12086</td><td class="num">58,343</td><td>reasoning complexity (4)</td><td class="no">no</td></tr>
+          <tr><td class="lead">Galileo Index</td><td class="code">industry</td><td class="num">22 models</td><td>none defined</td><td class="no">no</td></tr>
+          <tr><td class="lead">HaluEval 2.0</td><td class="code">2401.03205</td><td class="num">8,770</td><td>entity · relation · incompleteness · outdatedness · overclaim · unverifiability</td><td class="no">no</td></tr>
+          <tr><td class="lead">RAGTruth</td><td class="code">2401.00396</td><td class="num">2,973</td><td>conflict vs baseless × evident vs subtle</td><td class="no">no</td></tr>
+          <tr><td class="lead">DiaHalu</td><td class="code">2403.00896</td><td class="num">1,103</td><td>non-factual · incoherence · irrelevance · overreliance · reasoning</td><td class="no">no</td></tr>
+          <tr><td class="lead">Hallucinations Leaderboard</td><td class="code">2404.05904</td><td class="num">15 tasks</td><td>factuality vs faithfulness</td><td class="no">no</td></tr>
+          <tr><td class="lead">HalluDial</td><td class="code">2406.07070</td><td class="num">18,357</td><td>factuality vs faithfulness × spontaneous vs induced</td><td class="no">no</td></tr>
+          <tr><td class="lead">DefAn</td><td class="code">2406.09155</td><td class="num">75,000+</td><td>factual · misalignment · consistency</td><td class="no">no</td></tr>
+          <tr><td class="lead">Lynx / HaluBench</td><td class="code">2407.08488</td><td class="num">15,000</td><td>intrinsic only (1)</td><td class="no">no</td></tr>
+          <tr><td class="lead">FaithBench</td><td class="code">2410.13210</td><td class="num">750</td><td>consistent · questionable · benign · unwanted</td><td class="no">no</td></tr>
+          <tr><td class="lead">FACTS Grounding</td><td class="code">2501.03200</td><td class="num">1,719</td><td>binary eligibility + grounding</td><td class="no">no</td></tr>
+          <tr><td class="lead">MedHallu</td><td class="code">2502.14302</td><td class="num">10,000</td><td>difficulty tiers, not error kinds</td><td class="no">no</td></tr>
+          <tr><td class="lead">C-FAITH <span class="chip warn">not reused</span></td><td class="code">2504.10167</td><td class="num">60,702</td><td>fabrication · attribute · entity · relation · spatiotemporal · reference</td><td class="no">no</td></tr>
+          <tr><td class="lead">HalluLens</td><td class="code">2504.17550</td><td class="num">~15,200</td><td>extrinsic vs intrinsic</td><td class="no">no</td></tr>
+          <tr><td class="lead">HalluMix</td><td class="code">2505.00506</td><td class="num">6,500</td><td>binary only</td><td class="no">no</td></tr>
+          <tr><td class="lead">FaithJudge / HHEM</td><td class="code">2505.04847</td><td class="num">~1,200</td><td>unwanted · benign · questionable</td><td class="no">no</td></tr>
+          <tr><td class="lead">BHRAM-IL <span class="chip warn">not reused</span></td><td class="code">2512.01852</td><td class="num">10,265</td><td>factual · numerical · reasoning · linguistic (9)</td><td class="no">no</td></tr>
+          <tr><td class="lead">FACTS Leaderboard</td><td class="code">2512.10791</td><td class="num">~5,510</td><td>coverage + no-contradiction</td><td class="no">no</td></tr>
+          <tr><td class="lead">CRS</td><td class="code">2512.24058</td><td class="num">n/a</td><td>none defined</td><td class="no">no</td></tr>
+          <tr><td class="lead">HalluBench <span class="chip warn">not reused</span></td><td class="code">CMC 2026</td><td class="num">pending</td><td>pending verification</td><td class="no">?</td></tr>
+          <tr><td class="lead">KGHaluBench</td><td class="code">2602.19643</td><td class="num">1,500</td><td>breadth vs depth of knowledge</td><td class="no">no</td></tr>
+          <tr><td class="lead">HalluHard</td><td class="code">2602.01031</td><td class="num">950</td><td>reference vs content grounding</td><td class="no">no</td></tr>
+          <tr><td class="lead">HalluScan</td><td class="code">2605.02443</td><td class="num">24</td><td>factual · faithfulness · instruction</td><td class="no">no</td></tr>
+          <tr><td class="lead">HalluScore <span class="chip warn">not reused</span></td><td class="code">2605.17007</td><td class="num">827</td><td>factual · faithfulness · partial</td><td class="no">no</td></tr>
+          <tr><td class="lead">HalluWorld <span class="chip warn">not reused</span></td><td class="code">2605.19341</td><td class="num">1,718</td><td>perceptual · memory · causal · uncertainty · compound</td><td class="no">no</td></tr>
+          <tr><td class="lead">HALoGEN</td><td class="code">2501.08292</td><td class="num">10,923</td><td>Type A / B / C</td><td><span class="chip warn">case study</span></td></tr>
         </tbody>
       </table>
     </div>
-  </section>
 
-  <section>
-    <h2><span class="sn">07</span>What this taxonomy lets us analyze</h2>
-    <p class="prose">Four layers of analysis, none of which requires collecting anything extra.</p>
-    <div class="tscroll">
-      <table>
-        <thead><tr><th>Layer</th><th>Operation</th><th>Answers</th></tr></thead>
-        <tbody>
-          <tr><td class="lead">Main cross-tabulation</td><td>3 failure modes × 5 provenance labels, per model</td><td>RQ2 — the headline result</td></tr>
-          <tr><td class="lead">Scale curve</td><td>OLMo 2 1B → 7B → 13B</td><td>RQ3 — which cause disappears first</td></tr>
-          <tr><td class="lead">Frequency bucketing</td><td>Raw counts binned 0 / 1 / 2–10 / 11–100 / 100+</td><td>Tests the Kalai singleton hypothesis</td></tr>
-          <tr><td class="lead">Cross-corpus check</td><td>OLMo (Dolma) against Pythia (The Pile)</td><td>Whether findings are corpus-specific</td></tr>
-        </tbody>
-      </table>
-    </div>
+    <p class="prose" style="font-size:0.88rem;color:var(--muted)">
+      Size units differ by paper — prompts, instances, dialogue turns, or annotated samples. Taxonomy counts are not
+      comparable across rows: C-FAITH counts error kinds, FactCHD counts reasoning complexities, HaluEval counts
+      sampling patterns. HalluScan's headline "72" is a count of configurations, not of data; its evaluation set is 24
+      QA pairs. HalluBench (Computers, Materials &amp; Continua, 2026) is located but not yet read — the only row in the
+      survey still unverified.
+    </p>
+
     <div class="callout pos">
-      <div class="mk">Implementation requirement to raise on Wednesday</div>
+      <div class="mk">Surveyed ≠ reused — six benchmarks marked "not reused"</div>
       <p>
-        The schema must store <strong>the raw infini-gram count, not a thresholded label</strong>. Layer three cannot
-        be reconstructed from binary labels. Getting this wrong now means re-running Phase 4 in week fourteen.
+        Six of the twenty-nine are outside the reuse pool because their material is not English natural language:
+        HalluQA and C-FAITH (Chinese), HalluScore (Arabic), BHRAM-IL (Indic), HalluBench (cross-lingual), and
+        HalluWorld (synthetic gridworld, chess and terminal states rather than language).
+      </p>
+      <p>
+        <strong>They remain inside the survey.</strong> All six were verified and all six answer no on the
+        corpus-inspection field, so they count as evidence for the gap even though we take no prompts from them.
+        Dropping them from the survey would shrink the claim from twenty-nine to twenty-three for no reason.
+      </p>
+    </div>
+
+    <div class="prose">
+      <p>
+        Twenty-eight of twenty-nine answer <strong>no</strong>. The near-misses are instructive rather than
+        contradictory. HalluLens defines extrinsic hallucination as inconsistency with training data and then declines
+        to look, stating that "given the vast and often opaque nature of training data, we chose Wikipedia data in our
+        benchmark" — a paper from the organization that trained Llama, treating its own corpus as unopenable.
+        HaluEval 2.0 analyzes hallucination sources across training stages, but by comparing checkpoints and comparing
+        models with differently-documented corpora, and by counting entity frequency in Wikipedia as a proxy. HaluEval
+        states the limitation outright: it "does not investigate the underlying reasons behind the appearance of
+        hallucinations."
+      </p>
+
+      <p class="subhead">3 · Twenty-nine benchmarks, roughly five lineages</p>
+      <p>
+        These are not twenty-nine independent attempts. Mapping their stated derivations yields roughly five families:
+        HaluEval seeds both HaluEval 2.0 and the HaluBench dataset behind Lynx; RAGTruth feeds both Lynx and
+        FaithJudge; FaithBench feeds FaithJudge; FACTS Grounding expands into the FACTS Leaderboard; and the Vectara
+        HHEM leaderboard evolves in place rather than being superseded. The remainder are largely independent but
+        structurally alike — a prompt set, a verifier, a score.
+      </p>
+      <p>
+        That concentration matters. If none of the root benchmarks inspects pretraining data, every descendant
+        inherits the blind spot by construction. What this survey documents is therefore not twenty-nine independent
+        oversights but <strong>a small number of foundational design decisions propagated forward, unexamined</strong>.
+      </p>
+      <p>
+        The exception proves the point. HALoGEN — the only benchmark whose categories are defined by their
+        relationship to pretraining data — sits in the derivation graph as an isolated node: it descends from none of
+        the surveyed benchmarks, and none descends from it.
+        <strong>The one paper that asked why models hallucinate, rather than how often, was never built upon.</strong>
+      </p>
+
+      <p class="subhead">4 · Two literatures that have not met</p>
+      <p>
+        Pretraining-data attribution is a real and active field — it has simply developed alongside hallucination
+        evaluation rather than with it. Influence-based methods now scale to full pretraining corpora: TrackStar traces
+        incorrect factual predictions back to proponent passages across 160B tokens of C4 and categorizes those
+        passages by whether they entail the fact, contain one entity, or contain neither. Verbatim-match infrastructure
+        exists too: OLMoTrace indexes trillions of training tokens and matches output spans in real time — while
+        explicitly refusing to draw the inference this project needs, stating that retrieved documents "should not be
+        interpreted as having a causal effect on the LM output, or as supporting evidence."
+      </p>
+      <p>
+        A parallel line establishes the statistical relationship in aggregate. Factual accuracy tracks pretraining
+        frequency; entity frequency in Dolma induces asymmetric recall of logically equivalent facts; n-gram coverage
+        of a question predicts whether the model will hallucinate on it. Theory has run ahead of measurement: Kalai et
+        al. derive an expected hallucination rate from the proportion of facts appearing exactly once in the corpus,
+        but validate it only on synthetic data.
+      </p>
+      <p>
+        Each side holds a piece. None produces what an evaluation needs: <strong>a per-instance provenance label,
+        assigned automatically, across a benchmark.</strong>
+      </p>
+    </div>
+
+    <div class="callout">
+      <div class="mk">The distinction to state early, before it is asked</div>
+      <p>
+        <strong>Content-based provenance</strong> asks whether the fact was literally present in the corpus. It is
+        answered by search, it is cheap, and it is what this project does.
+      </p>
+      <p>
+        <strong>Influence-based attribution</strong> asks which training examples shaped the weights that produced this
+        output. It is answered by gradients, it is expensive, and it is what TrackStar and influence functions do.
+      </p>
+      <p>
+        These answer different questions. Naming the difference in the first paragraphs of related work is the cleanest
+        way to neutralize the objection before a reviewer raises it.
+      </p>
+    </div>
+
+    <div class="prose">
+      <p class="subhead">5 · The precise gap</p>
+      <p>
+        HALoGEN is <strong>the only benchmark</strong> to propose a taxonomy defined by relationship to pretraining
+        data — Type A for misrecall despite the correct fact being present, Type B for incorrect facts genuinely in the
+        corpus, Type C for fabrication with no basis at all. But it operationalizes that taxonomy through targeted case
+        studies over three scenarios with samples in the low hundreds, and never connects cause to the <em>kind</em> of
+        hallucination observed. The claim this project can defend is therefore narrow and precise: no evaluation suite
+        exists in which every hallucinated claim carries an automatically derived, corpus-grounded provenance label.
+      </p>
+
+      <p class="subhead">6 · Why the gap has practical cost</p>
+      <p>
+        The three causes demand incompatible remedies. If the correct fact was present and recall failed, retrieval
+        augmentation or a change of decoding strategy addresses it. If the wrong fact was in the corpus, retrieval
+        augmentation actively cannot help — the datastore carries the same error. If nothing was there at all, the only
+        remedy is teaching the model to recognize the edge of its knowledge and decline.
+      </p>
+      <p>
+        HalluHard supplies direct evidence that undifferentiated mitigation underperforms: enabling web search collapses
+        reference-level failures while leaving content-grounding failures largely intact. That is the signature of a
+        remedy aimed at one cause being applied to a population containing several.
+        <strong>Without knowing the mix, mitigation effort is allocated blind.</strong>
       </p>
     </div>
   </section>
 
   <section>
-    <h2><span class="sn">08</span>Three decisions for Wednesday</h2>
-    <div class="decisions">
+    <h2>What kind of root cause</h2>
+    <p class="prose">
+      "Root cause analysis" is too vague to design against. Root cause of what, for whom, so that they can do what?
+      In engineering, a root cause is the thing that, once changed, stops the failure recurring — so the question that
+      carries meaning is <strong>where would you have to intervene</strong>.
+    </p>
+    <p class="prose">
+      A hallucination admits intervention at exactly three points, and Type A/B/C is a statement about which one applies.
+      This is the substantive content of the provenance axis: not an explanation, an <em>address</em>.
+    </p>
 
-      <div class="decision">
-        <div class="dn">1</div>
-        <div class="dbody">
-          <h3>At what granularity does EXISTENCE apply?</h3>
-          <p>The package is real but the function is not — is that one claim or two?</p>
-          <div class="opts">
-            <div class="opt"><span class="k">Proposed</span><span>Three levels, following HALoGEN — install, import, function call — reported separately</span></div>
-            <div class="opt"><span class="k">Alternative</span><span>Collapse to one level. Simpler, but loses the detail HALoGEN found most informative: function-call errors are by far the most common</span></div>
-          </div>
-        </div>
-      </div>
+    <div class="tscroll">
+      <table>
+        <thead><tr><th>Locus</th><th>Intervention</th><th>Addresses</th><th>Owned by</th><th>Cost profile</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="lead">Corpus</td>
+            <td>Remove or correct the offending documents</td>
+            <td><span class="chip hot">Type B</span></td>
+            <td>Whoever builds the dataset</td>
+            <td>One-off, but requires retraining to take effect</td>
+          </tr>
+          <tr>
+            <td class="lead">Training</td>
+            <td>Increase exposure, upweight rare facts, adjust the objective</td>
+            <td><span class="chip ok">Type A</span> <span class="chip warn">Type C</span></td>
+            <td>Whoever trains the model</td>
+            <td>Expensive, slow, affects everything else</td>
+          </tr>
+          <tr>
+            <td class="lead">Inference</td>
+            <td>Retrieval augmentation, abstention, decoding strategy</td>
+            <td>all three, unequally</td>
+            <td>Whoever deploys</td>
+            <td>Cheap and immediate, but recurring and bounded</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
-      <div class="decision">
-        <div class="dn">2</div>
-        <div class="dbody">
-          <h3>How do we combine counts across query forms?</h3>
-          <p>One fact can be queried several ways and return different counts. Which value decides the label?</p>
-          <div class="opts">
-            <div class="opt"><span class="k">Proposed</span><span>Take the maximum for the labeling decision, store every value in the schema — consistent with treating Type C as an upper bound</span></div>
-            <div class="opt"><span class="k">Alternative</span><span>Sum or median. Both inflate Type C and are harder to interpret</span></div>
-          </div>
-        </div>
-      </div>
+    <div class="thesis">
+      <p class="q">
+        We are not looking for the root cause of hallucination in general. We are measuring how a population of
+        hallucinations distributes across the three points where intervention is possible — because those three differ
+        entirely in cost and in who owns them, and no published estimate of the proportions exists.
+      </p>
+    </div>
 
-      <div class="decision">
-        <div class="dn">3</div>
-        <div class="dbody">
-          <h3>How many query forms per fact?</h3>
-          <p>More forms means fewer false Type C labels, but more API quota and more time.</p>
-          <div class="opts">
-            <div class="opt"><span class="k">Proposed</span><span>Start at three — literal, function-words stripped, entity order swapped — then measure in Phase 0 how much going to five reduces Type C</span></div>
-            <div class="opt"><span class="k">Alternative</span><span>Fix at one. Fastest, but Type C inflates until the numbers stop being credible</span></div>
-          </div>
-        </div>
-      </div>
+    <p class="prose">
+      Read this way, the three causes are not equally interesting to the same person. A corpus curator only cares
+      what fraction is Type B, because that is the entire return on data cleaning. A deployment engineer only cares
+      whether retrieval will help, which depends on how much is Type A. Today all three teams allocate effort against
+      the same population of errors <strong>without anyone knowing the split.</strong>
+    </p>
 
+    <div class="callout">
+      <div class="mk">On the objection that this is tool-driven research</div>
+      <p>
+        A fair challenge: did we pick corpus search because it was available, then invent a question to fit it?
+        The framing above answers it. <strong>Ask what fraction of hallucination is fixable in the corpus and
+        open-data models stop being a convenience — they become the only instrument that can answer.</strong>
+        The question forces the tool, not the other way around.
+      </p>
+      <p>
+        The discipline this imposes: we measure where a hallucination is <em>addressable</em>, never whether an
+        intervention would <em>succeed</em>. Verifying that a corpus fix removes the error would require retraining,
+        which is out of scope. The phrase "in principle" must survive every draft.
+      </p>
     </div>
   </section>
 
   <section>
-    <h2><span class="sn">09</span>What I will do before Wednesday</h2>
-    <ul class="plain">
-      <li><strong>Hand-label 20 real instances</strong> from any model's output, to find out whether these rules survive contact with actual data</li>
-      <li>Record any edge case that is not already covered in section 06</li>
-      <li>Time how long one claim takes to label, so Phase 2 can be budgeted properly</li>
-    </ul>
+    <h2>Positioning against the near-misses</h2>
     <p class="prose">
-      A taxonomy that looks clean on paper usually breaks on real data. Walking into the meeting able to say
-      "I labeled twenty and hit these three problems" carries more weight than everything else in this document combined.
+      Each row below will be raised by someone. Each is answered by a single structural difference, stated in advance.
     </p>
+    <div class="tscroll">
+      <table>
+        <thead><tr><th>Work</th><th>What it does</th><th>Why it is not this</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="lead">TrackStar<br><span class="mono" style="font-size:0.78rem;color:var(--muted)">2410.17413</span></td>
+            <td>Influence-based tracing over 160B tokens of C4; categorizes proponent passages for wrong answers by entailment</td>
+            <td>Influence-based, not content-based. Closed-form factual queries, not open generation. Labels a top-<em>k</em> retrieved set, not corpus-wide presence. Ships no benchmark</td>
+          </tr>
+          <tr>
+            <td class="lead">OLMoTrace<br><span class="mono" style="font-size:0.78rem;color:var(--muted)">2504.07096</span></td>
+            <td>Real-time verbatim span matching against trillions of training tokens</td>
+            <td>Explicitly declines causal or evidential interpretation. Lexical match only; no supported / contradicted / absent verdict; requires human inspection</td>
+          </tr>
+          <tr>
+            <td class="lead">QuCo-RAG<br><span class="mono" style="font-size:0.78rem;color:var(--muted)">2512.19134</span></td>
+            <td>infini-gram over the OLMo 2 corpus; tests entity-pair co-occurrence per generated sentence</td>
+            <td>Output is a retrieve / don't-retrieve trigger, not a provenance label. A co-occurrence hit cannot separate Type A from Type B</td>
+          </tr>
+          <tr>
+            <td class="lead">Zhang et al.<br><span class="mono" style="font-size:0.78rem;color:var(--muted)">2511.17946</span></td>
+            <td>Suffix-array index over RedPajama; asks whether n-gram coverage predicts hallucination</td>
+            <td>Labels are outcome-based and explicitly agnostic about etiology. No per-instance typing</td>
+          </tr>
+          <tr>
+            <td class="lead">HALoGEN<br><span class="mono" style="font-size:0.78rem;color:var(--muted)">2501.08292</span></td>
+            <td>Proposes Type A/B/C and spot-checks it against pretraining corpora</td>
+            <td>Case study over three scenarios, samples in the low hundreds. Never links cause to failure type. This project extends it rather than competing with it</td>
+          </tr>
+          <tr>
+            <td class="lead">HalluLens<br><span class="mono" style="font-size:0.78rem;color:var(--muted)">2504.17550</span></td>
+            <td>Defines extrinsic hallucination relative to training data</td>
+            <td>Substitutes Wikipedia as a proxy and never opens a corpus. Its stated reason is the strongest evidence for the gap</td>
+          </tr>
+          <tr>
+            <td class="lead">HaluEval 2.0<br><span class="mono" style="font-size:0.78rem;color:var(--muted)">2401.03205</span></td>
+            <td>Analyzes hallucination factors across pretraining, SFT, RLHF and inference</td>
+            <td>Compares checkpoints and models, not corpus contents. Entity frequency counted in Wikipedia, not in the evaluated model's data</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Research questions</h2>
+    <div class="thesis">
+      <p class="q">
+        For open-weight language models whose pretraining corpora are public: which kinds of hallucination
+        originate from which kinds of training-data condition?
+      </p>
+      <div class="rqlist">
+        <div class="rq"><span class="tag">RQ1</span><span>How does the distribution of failure modes differ across open models? (existence · attribution · non-abstention)</span></div>
+        <div class="rq"><span class="tag">RQ2</span><span>Within each failure mode, what proportion is Type A, B, or C — that is, at which locus is each addressable? — <em>the central claim</em></span></div>
+        <div class="rq"><span class="tag">RQ3</span><span>As model size grows within one family, which cause disappears first?</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Contributions</h2>
+    <p class="prose">
+      The scope is deliberately shifted away from benchmark construction. Twenty-nine already exist; a thirtieth adds
+      little. <strong>This is an explanatory study that reuses existing benchmark material</strong> and spends its effort
+      where both literatures stop.
+    </p>
+    <div class="contribs">
+      <div class="contrib">
+        <div class="n">01</div>
+        <div class="txt">
+          <div class="hd"><h3>The first failure-mode × cause cross-tabulation</h3><span class="chip hot">core</span></div>
+          <p>Every hallucination carries two labels rather than one. The survey above establishes that no existing evaluation suite produces this table.</p>
+        </div>
+      </div>
+      <div class="contrib">
+        <div class="n">02</div>
+        <div class="txt">
+          <div class="hd"><h3>A released cause-labeled hallucination corpus</h3><span class="chip hot">core</span></div>
+          <p>Roughly 2,000 hallucinated units annotated with Type A/B/C plus the corpus evidence behind each judgment. OLMoTrace supplies comparable search but explicitly leaves the labeling undone; this fills exactly that gap.</p>
+        </div>
+      </div>
+      <div class="contrib">
+        <div class="n">03</div>
+        <div class="txt">
+          <div class="hd"><h3>A reusable attribution pipeline and query protocol</h3><span class="chip ok">supporting</span></div>
+          <p>Query generation → corpus search → decision tree → verdict, packaged to run against any model whose pretraining data is public. Includes the protocol for turning an open-ended generated claim into searchable queries, handling paraphrase, and reporting bounds — a methodological problem nobody has yet written down in an orderly way.</p>
+        </div>
+      </div>
+      <div class="contrib">
+        <div class="n">04</div>
+        <div class="txt">
+          <div class="hd"><h3>The first test of the singleton hypothesis against a real corpus</h3><span class="chip warn">high risk · high reward</span></div>
+          <p>Kalai et al. derive expected hallucination rate from the corpus <em>singleton rate</em> — the fraction of facts appearing exactly once in training data. The theory has been validated only on synthetic data, because nobody has held an open corpus and labeled hallucinations at the same time. This project holds both. Bucketing facts by corpus frequency (0 · 1 · 2–10 · 11–100 · 100+) and plotting hallucination rate per bucket tests the prediction directly.</p>
+          <p><strong>This contribution cannot fail.</strong> Agreement with the theory is a first empirical confirmation; disagreement is a first empirical refutation. Both are publishable.</p>
+        </div>
+      </div>
+      <div class="contrib">
+        <div class="n">05</div>
+        <div class="txt">
+          <div class="hd"><h3>A verified survey of 24 hallucination benchmarks</h3><span class="chip ok">supporting · already complete</span></div>
+          <p>Each benchmark checked against its arXiv or ACL source along a dimension nobody has compiled before: whether it inspects the pretraining corpus. The table is not merely related work — it is the empirical evidence that the gap exists.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="mk">Weighting — state this explicitly in the thesis</div>
+      <p>
+        <strong>01 and 02 carry the project.</strong> If they do not land, nothing else rescues it.
+        03 and 05 are useful to others but are not the spine.
+        04 is the asymmetric bet: cheap to run, and interesting whichever way the numbers fall.
+      </p>
+      <p>
+        Deliberately <em>not</em> listed as contributions: RQ3, because the plan already permits cutting it;
+        the intermediate-checkpoint analysis, because it is optional in Phase 5; and the verifier validation
+        study, which is a section rather than a claim. Promising a contribution the plan allows you to drop is
+        how a defense goes wrong.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Taxonomy: two axes</h2>
+    <div class="axes">
+      <div class="axis">
+        <div class="mk">Axis 1 · observable, auto-labeled</div>
+        <h3>Failure mode</h3>
+        <div class="defs">
+          <div class="row"><span class="name">EXISTENCE</span><span class="desc">Cites something that does not exist — a package, a paper, an entity. Verified by index lookup.</span></div>
+          <div class="row"><span class="name">ATTRIBUTION</span><span class="desc">The source is real but does not support the claim made about it. Verified by retrieval plus entailment.</span></div>
+          <div class="row"><span class="name">NON-ABSTENTION</span><span class="desc">Answers where it should have declined — false premise, fabricated entity. Verified by gazetteer plus refusal classifier.</span></div>
+        </div>
+      </div>
+      <div class="axis">
+        <div class="mk">Axis 2 · provenance, corpus-searched</div>
+        <h3>Training-data cause</h3>
+        <div class="defs">
+          <div class="row"><span class="name">TYPE A — misrecall</span><span class="desc">The correct fact is in the corpus; retrieval from parameters failed. → <strong>addressable at training or inference</strong></span></div>
+          <div class="row"><span class="name">TYPE B — bad data</span><span class="desc">The incorrect fact genuinely appears in the corpus, or appears stripped of its context. → <strong>addressable at the corpus</strong></span></div>
+          <div class="row"><span class="name">TYPE C — fabrication</span><span class="desc">Neither correct nor incorrect form is present; the model over-generalized. → <strong>addressable only by abstention</strong></span></div>
+        </div>
+      </div>
+    </div>
+    <p class="prose">
+      Knowledge popularity, model scale, and prompt domain are recorded as <strong>metadata, not additional
+      categories</strong> — available at analysis time without inflating the label space.
+    </p>
+  </section>
+
+  <section>
+    <h2>Method: how a cause is assigned</h2>
+    <p class="prose">
+      For every hallucinated unit we construct two queries — the string the model produced, and the string of the correct
+      answer — and search both against the pretraining corpus with
+      <a href="https://infini-gram.io/">infini-gram</a>, which indexes Dolma, The Pile, RedPajama and C4 behind a free
+      API at roughly twenty milliseconds per query.
+    </p>
+
+    <div class="tscroll">
+      <table>
+        <thead><tr><th>Q_hallucinated</th><th>Q_correct</th><th>Verdict</th><th>Reading</th></tr></thead>
+        <tbody>
+          <tr><td class="code">0</td><td class="code">0</td><td><span class="chip warn">Type C</span></td><td>Nothing in the corpus — the model invented it</td></tr>
+          <tr><td class="code">0</td><td class="code">&gt; 0</td><td><span class="chip ok">Type A</span></td><td>The fact was available; recall failed</td></tr>
+          <tr><td class="code">&gt; 0</td><td class="code">0</td><td><span class="chip hot">Type B</span></td><td>The error is present in the training data</td></tr>
+          <tr><td class="code">&gt; 0</td><td class="code">&gt; 0</td><td><span class="chip hot">A + B</span></td><td>Both present — reported jointly, never forced to one</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="callout verified">
+      <div class="mk">Schema requirement — decide in Phase 1, not later</div>
+      <p>
+        The table above reads as binary, but the pipeline must <strong>store the raw occurrence count returned by
+        infini-gram, never the thresholded verdict.</strong> Thresholds are applied at analysis time.
+      </p>
+      <p>
+        Contribution 04 depends entirely on this. Frequency bucketing cannot be reconstructed from binary labels, so a
+        schema that discards counts forces a complete re-run of Phase 4 during Phase 5. It is a one-line decision in
+        week three that is expensive to reverse in week fourteen.
+      </p>
+    </div>
+
+    <div class="callout">
+      <div class="mk">Two honesty requirements</div>
+      <p>
+        <strong>This is evidence-based attribution, not causal proof.</strong> Establishing causation would require
+        influence functions over the full training set — the TrackStar approach — which is computationally out of reach
+        here and named as future work by HALoGEN itself. The report must say so plainly.
+      </p>
+      <p>
+        <strong>Exact-string search misses paraphrase.</strong> A fact present in another surface form counts as absent
+        and inflates Type C. Mitigation: multiple query forms per fact, and Type C reported as an
+        <em>upper bound</em> rather than a point estimate.
+      </p>
+    </div>
+
+    <p class="prose">
+      A count alone is insufficient. HALoGEN found repeatedly that hallucinated packages <em>do</em> appear in
+      pretraining data — as someone's local module, as a class inside another library, as a deprecated name. After the
+      automated pass, roughly 100 cases are opened by hand and the observed patterns reported.
+    </p>
+  </section>
+
+  <section>
+    <h2>Models</h2>
+    <div class="callout">
+      <div class="mk">Hard constraint</div>
+      <p>
+        <strong>Provenance analysis requires open pretraining data, not merely open weights.</strong>
+        Only OLMo 2 (Dolma) and Pythia (The Pile) qualify. Everything else may be measured but never explained.
+      </p>
+    </div>
+    <div class="tscroll">
+      <table>
+        <thead><tr><th>Model</th><th>Corpus</th><th>Tier</th><th>Role</th></tr></thead>
+        <tbody>
+          <tr><td class="lead">OLMo 2 1B Instruct</td><td class="mono">Dolma</td><td><span class="chip ok">Attribution</span></td><td>Lower end of the scale curve</td></tr>
+          <tr><td class="lead">OLMo 2 7B Instruct</td><td class="mono">Dolma</td><td><span class="chip ok">Attribution</span></td><td>Primary model</td></tr>
+          <tr><td class="lead">OLMo 2 13B Instruct</td><td class="mono">Dolma</td><td><span class="chip ok">Attribution</span></td><td>Upper end of the scale curve</td></tr>
+          <tr><td class="lead">Pythia 6.9B</td><td class="mono">The Pile</td><td><span class="chip ok">Attribution</span></td><td>Confirms findings are not corpus-specific</td></tr>
+          <tr><td class="lead">Llama 3.1 8B Instruct</td><td class="mono">closed</td><td><span class="chip warn">Comparison</span></td><td>Failure mode only</td></tr>
+          <tr><td class="lead">Qwen 2.5 7B Instruct</td><td class="mono">closed</td><td><span class="chip warn">Comparison</span></td><td>Failure mode only</td></tr>
+          <tr><td class="lead">Mistral 7B Instruct v0.3</td><td class="mono">closed</td><td><span class="chip warn">Comparison</span></td><td>Failure mode only</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Tasks — reused, not rebuilt</h2>
+    <div class="tscroll">
+      <table>
+        <thead><tr><th>Task</th><th>Failure mode</th><th>Source material</th><th class="num">Items</th><th>Verifier</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="lead">Scientific citation <span class="chip ok">primary</span></td>
+            <td>Existence + Attribution</td>
+            <td>HALoGEN scientific attribution</td>
+            <td class="num">400</td>
+            <td>Semantic Scholar lookup, then abstract-level entailment</td>
+          </tr>
+          <tr>
+            <td class="lead">Code packages</td>
+            <td>Existence</td>
+            <td>HALoGEN code prompts</td>
+            <td class="num">400</td>
+            <td>PyPI API + Python Module Index — exact match</td>
+          </tr>
+          <tr>
+            <td class="lead">Should-refuse</td>
+            <td>Non-abstention</td>
+            <td>HALoGEN false presuppositions + fabricated-entity probes</td>
+            <td class="num">400</td>
+            <td>Gazetteer + refusal phrase classifier</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="prose">
+      Citation is the primary task because it is the only one where <code>Q_correct</code> has an unambiguous ground
+      truth, making all three provenance types resolvable. Code cannot resolve Type A — there is no single correct
+      package — and that limitation is stated rather than hidden.
+    </p>
+    <p class="prose">
+      Total: <strong>1,200 prompts × 7 models × 3 samples ≈ 25,200 generations.</strong> Source prompts are permissively
+      licensed and reused directly; new authoring is confined to the ground-truth pairs that corpus search requires.
+      Summarization and RAG are excluded deliberately — as the survey shows, content-grounded benchmarks structurally
+      cannot ask where a hallucination came from, only whether the output matches the passage in front of it.
+    </p>
+  </section>
+
+  <section>
+    <h2>Sixteen weeks</h2>
+    <div class="rail">
+      <div class="phase">
+        <div class="wk">W1–2</div>
+        <div class="body">
+          <h3>Phase 0 · Feasibility spike</h3>
+          <p>Call the infini-gram API for real. Request a Semantic Scholar key. Run OLMo 2 7B over 50 prompts through the entire loop — generate, verify, attribute — until one complete result exists end to end.</p>
+          <p class="out"><b>Gate:</b> if corpus search fails, the plan changes here, not in month three</p>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="wk">W3–4</div>
+        <div class="body">
+          <h3>Phase 1 · Assemble tasks</h3>
+          <p>Subsample HALoGEN prompts, author the ground-truth pairs, implement all three verifiers. Fix the data schema — including the decision to store raw corpus counts rather than thresholded verdicts.</p>
+          <p class="out"><b>Output:</b> repo, dataset card, verifiers passing CI</p>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="wk">W5–6</div>
+        <div class="body">
+          <h3>Phase 2 · Validate verifiers</h3>
+          <p>100 items per task, two annotators each, report agreement and Cohen's κ, then freeze.</p>
+          <p class="out"><b>Gate:</b> agreement ≥ 85%, or narrow the task definition</p>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="wk">W7–9</div>
+        <div class="body">
+          <h3>Phase 3 · Generation sweep</h3>
+          <p>All seven models, all three tasks, three seeds, failure mode labeled automatically.</p>
+          <p class="out"><b>Output:</b> RQ1 complete — the thesis is viable from here even if Phase 4 stalls</p>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="wk">W10–13</div>
+        <div class="body">
+          <h3>Phase 4 · Attribution</h3>
+          <p>The longest phase, matching where the contribution lies. Sample 150 hallucinations per task per attribution-tier model, query Dolma and the Pile, apply the pre-registered decision tree, then hand-inspect 100 cases.</p>
+          <p class="out"><b>Output:</b> RQ2 — the central cross-tabulation</p>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="wk">W14</div>
+        <div class="body">
+          <h3>Phase 5 · Analysis</h3>
+          <p>Cross-tabulation, scale curves, significance testing, final figures. Bucket every fact by its recorded corpus frequency and plot hallucination rate per bucket — this is where contribution 04 is produced.</p>
+          <p class="out"><b>Optional:</b> replay prompts across OLMo/Pythia intermediate checkpoints to see when each type emerges</p>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="wk">W15–16</div>
+        <div class="body">
+          <h3>Phase 6 · Write and buffer</h3>
+          <p>Thesis, slides, rehearsal, dataset release. Re-run the adversarial literature check before submission.</p>
+          <p class="out"><b>Note:</b> one full week held back for the delays that will happen</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Four people</h2>
+    <div class="tscroll">
+      <table>
+        <thead><tr><th>Role</th><th>Owns</th><th>Peak</th></tr></thead>
+        <tbody>
+          <tr><td class="lead">Task lead</td><td>Prompt subsampling, ground-truth pairs, schema, annotation coordination</td><td class="num">W3–6</td></tr>
+          <tr><td class="lead">Infra lead</td><td>vLLM serving, model zoo, generation sweep, reproducibility</td><td class="num">W7–9</td></tr>
+          <tr><td class="lead">Verifier lead</td><td>PyPI / Semantic Scholar / entailment verifiers, validation study</td><td class="num">W3–6</td></tr>
+          <tr><td class="lead">Attribution lead</td><td>infini-gram pipeline, decision tree, statistics and figures</td><td class="num">W10–14</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="prose">
+      Load is deliberately staggered — task and verifier leads peak early, infra and attribution late.
+      <strong>All four annotate during Phase 2</strong>, both because two annotators per task are required and because
+      seeing raw output is what makes the analysis arguments productive later.
+    </p>
+  </section>
+
+  <section>
+    <h2>Risks</h2>
+    <div class="tscroll">
+      <table>
+        <thead><tr><th>Risk</th><th>Level</th><th>Fallback</th><th>Decide by</th></tr></thead>
+        <tbody>
+          <tr><td class="lead">infini-gram unavailable or rate-limited</td><td><span class="chip hot">High</span></td><td>WIMBD, or self-hosted index over a Dolma subset — both cost weeks, so this must surface in week one</td><td class="num">W1</td></tr>
+          <tr><td class="lead">GPU request denied</td><td><span class="chip hot">High</span></td><td>Hosted API; token count is already known, so cost is estimable in Phase 0</td><td class="num">W2</td></tr>
+          <tr><td class="lead">New corpus-attribution work appears mid-project</td><td><span class="chip warn">Medium</span></td><td>The two literatures barely cite each other, so novel overlapping work may appear without warning. Re-run the adversarial literature check in Phase 6</td><td class="num">W15</td></tr>
+          <tr><td class="lead">Semantic Scholar rate limits</td><td><span class="chip warn">Medium</span></td><td>Request the key on day one, cache every response to disk</td><td class="num">W1</td></tr>
+          <tr><td class="lead">Verifier agreement below 85%</td><td><span class="chip warn">Medium</span></td><td>Narrow the task definition, or drop the attribution sub-check and keep existence only</td><td class="num">W6</td></tr>
+          <tr><td class="lead">Small models ignore output format</td><td><span class="chip warn">Medium</span></td><td>Few-shot prompting plus a fault-tolerant parser; report parse-failure rate openly</td><td class="num">W8</td></tr>
+          <tr><td class="lead">Type C inflated by paraphrase blindness</td><td><span class="chip warn">Medium</span></td><td>Multiple query forms per fact; report Type C as an upper bound</td><td class="num">W10</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Scope</h2>
+    <div class="scope">
+      <div class="col in">
+        <div class="mk">In scope</div>
+        <ul>
+          <li>1,200 English prompts across 3 tasks, reused from permissively licensed sources</li>
+          <li>~25,200 generations labeled by failure mode</li>
+          <li>Type A/B/C attribution on OLMo 2 (1B/7B/13B) and Pythia 6.9B</li>
+          <li>Cross-tabulation, scale curve, released cause-labeled corpus</li>
+        </ul>
+      </div>
+      <div class="col out">
+        <div class="mk">Out of scope — written down to prevent drift</div>
+        <ul>
+          <li>Thai and multilingual evaluation</li>
+          <li>Multi-turn settings — ceded to HalluHard</li>
+          <li>RAG and faithfulness — structurally cannot answer the question</li>
+          <li>Mitigation methods — this project measures and explains, it does not fix</li>
+          <li>Influence-based attribution — that is TrackStar's territory</li>
+          <li>Building a thirtieth benchmark</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Definition of done</h2>
+    <ul class="plain">
+      <li>RQ1 answered across all seven model configurations</li>
+      <li>RQ2 answered for at least OLMo 2 7B — <strong>the minimum that constitutes a contribution</strong></li>
+      <li>Verifier agreement ≥ 85% on all three tasks, with κ reported</li>
+      <li>Cause-labeled corpus released with corpus evidence attached to each judgment, <strong>raw counts included</strong></li>
+      <li>Hallucination rate reported per corpus-frequency bucket, with the singleton bucket called out</li>
+      <li>Code and data reproducible from a single command</li>
+    </ul>
+    <p class="prose">RQ3 is a bonus. If time runs short it can be cut without weakening the thesis.</p>
   </section>
 
   <footer>
-    Draft for discussion, not a settled decision · Principal sources: HALoGEN (arXiv:2501.08292) for the provenance
-    axis · HalluHard (arXiv:2602.01031) for the verification-locus axis and the H formula ·
-    HalluLens (arXiv:2504.17550) and AbstentionBench (arXiv:2506.09038) for non-abstention ·
-    The seven-principle grouping comes from the 29-paper survey, each verified against its primary source.
+    Scope v0.6 · Twenty-eight of twenty-nine surveyed benchmarks verified against arXiv or ACL Anthology sources (HalluBench, CMC 2026, still pending); the
+    training-data-analysis field was checked individually for each. Prompt counts and model checkpoints to be
+    reconfirmed after Phase 0. Two wording rules carried into the thesis: never write "the only work" where "the only
+    benchmark" is what is defensible, and always distinguish content-based provenance from influence-based attribution.
   </footer>
 
 </div>
