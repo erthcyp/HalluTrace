@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; }
+  img { max-width: 100%; height: auto; }
+</style>
+<title>HalluTrace Taxonomy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anuphan:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Thai:wght@400;500;600&display=swap">
+
+<style>
+  :root {
+    --paper:      #F4F6F3;
+    --surface:    #FFFFFF;
+    --surface-2:  #EBEFEA;
+    --ink:        #141A17;
+    --ink-2:      #3D4843;
+    --muted:      #6B776F;
+    --rule:       #D3DAD4;
+    --rule-soft:  #E2E7E2;
+    --accent:     #0E6B57;
+    --accent-ink: #0A5344;
+    --accent-wash:#DFEDE8;
+    --signal:     #A8541A;
+    --signal-wash:#F4E6D8;
+    --alert:      #A32F2F;
+    --alert-wash: #F6E1E1;
+
+    --f-display: "Anuphan", "IBM Plex Sans Thai", ui-sans-serif, system-ui, sans-serif;
+    --f-body:    "IBM Plex Sans Thai", "Anuphan", ui-sans-serif, system-ui, sans-serif;
+    --f-mono:    "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
+
+    --measure: 76ch;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper:      #0F1411;
+      --surface:    #171D19;
+      --surface-2:  #1E2621;
+      --ink:        #E7ECE8;
+      --ink-2:      #B4C0B9;
+      --muted:      #8B978F;
+      --rule:       #2C352F;
+      --rule-soft:  #232B26;
+      --accent:     #56C7A4;
+      --accent-ink: #7FDCBE;
+      --accent-wash:#16302A;
+      --signal:     #D9924F;
+      --signal-wash:#2E2318;
+      --alert:      #E0776F;
+      --alert-wash: #331B1B;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --paper:      #0F1411;
+    --surface:    #171D19;
+    --surface-2:  #1E2621;
+    --ink:        #E7ECE8;
+    --ink-2:      #B4C0B9;
+    --muted:      #8B978F;
+    --rule:       #2C352F;
+    --rule-soft:  #232B26;
+    --accent:     #56C7A4;
+    --accent-ink: #7FDCBE;
+    --accent-wash:#16302A;
+    --signal:     #D9924F;
+    --signal-wash:#2E2318;
+    --alert:      #E0776F;
+    --alert-wash: #331B1B;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--f-body);
+    font-size: 16px;
+    line-height: 1.72;
+    -webkit-font-smoothing: antialiased;
+    padding: 0 1.5rem 6rem;
+  }
+
+  .wrap { max-width: 62rem; margin: 0 auto; display: flex; flex-direction: column; gap: 3.5rem; }
+  .prose { max-width: var(--measure); }
+
+  header.masthead { padding-top: 4rem; display: flex; flex-direction: column; gap: 1.4rem; }
+
+  .eyebrow {
+    font-family: var(--f-mono);
+    font-size: 0.72rem; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent);
+  }
+
+  h1 {
+    font-family: var(--f-display);
+    font-weight: 700;
+    font-size: clamp(2.2rem, 5.2vw, 3.2rem);
+    line-height: 1.12; letter-spacing: -0.02em;
+    margin: 0; text-wrap: balance;
+  }
+
+  .standfirst { font-size: 1.08rem; color: var(--ink-2); max-width: var(--measure); margin: 0; }
+
+  .metastrip {
+    display: flex; flex-wrap: wrap; margin: 0;
+    border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule);
+  }
+  .metastrip div { flex: 1 1 9rem; padding: 0.9rem 1.1rem 0.9rem 0; display: flex; flex-direction: column; gap: 0.1rem; }
+  .metastrip dt, .mk {
+    font-family: var(--f-mono); font-size: 0.68rem;
+    letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted);
+  }
+  .metastrip dd {
+    margin: 0; font-family: var(--f-display); font-weight: 600;
+    font-size: 1rem; font-variant-numeric: tabular-nums;
+  }
+
+  section { display: flex; flex-direction: column; gap: 1.15rem; }
+
+  h2 {
+    font-family: var(--f-display); font-weight: 600;
+    font-size: 1.55rem; letter-spacing: -0.01em; line-height: 1.25;
+    margin: 0; padding-bottom: 0.55rem;
+    border-bottom: 2px solid var(--ink); text-wrap: balance;
+  }
+  h2 .sn {
+    font-family: var(--f-mono); font-size: 0.95rem;
+    color: var(--accent); margin-right: 0.7rem; font-weight: 600;
+  }
+
+  h3 { font-family: var(--f-display); font-weight: 600; font-size: 1.06rem; margin: 0; line-height: 1.4; }
+
+  p { margin: 0; }
+  .prose p + p { margin-top: 0.9rem; }
+
+  a { color: var(--accent-ink); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+  code { font-family: var(--f-mono); font-size: 0.85em; background: var(--surface-2); padding: 0.1em 0.36em; border-radius: 3px; }
+  .mono { font-family: var(--f-mono); }
+  strong { font-weight: 600; color: var(--ink); }
+  em { font-style: italic; }
+
+  .tscroll { overflow-x: auto; border: 1px solid var(--rule); background: var(--surface); }
+  table { border-collapse: collapse; width: 100%; min-width: 42rem; font-size: 0.92rem; }
+  thead th {
+    text-align: left; font-family: var(--f-mono); font-weight: 600;
+    font-size: 0.68rem; letter-spacing: 0.09em; text-transform: uppercase;
+    color: var(--muted); padding: 0.8rem 1rem;
+    border-bottom: 1px solid var(--rule); white-space: nowrap; background: var(--surface-2);
+  }
+  tbody td { padding: 0.8rem 1rem; border-bottom: 1px solid var(--rule-soft); vertical-align: top; line-height: 1.6; }
+  tbody tr:last-child td { border-bottom: none; }
+  td.lead { font-weight: 600; }
+  td.code, .lbl { font-family: var(--f-mono); font-size: 0.82rem; font-weight: 600; white-space: nowrap; }
+  td.num { font-family: var(--f-mono); font-variant-numeric: tabular-nums; white-space: nowrap; }
+  tr.hi td { background: var(--accent-wash); }
+
+  .chip {
+    display: inline-block; font-family: var(--f-mono);
+    font-size: 0.66rem; font-weight: 600; letter-spacing: 0.06em;
+    text-transform: uppercase; padding: 0.18rem 0.48rem;
+    border-radius: 2px; white-space: nowrap;
+  }
+  .chip.ok   { background: var(--accent-wash); color: var(--accent-ink); }
+  .chip.warn { background: var(--signal-wash); color: var(--signal); }
+  .chip.hot  { background: var(--alert-wash);  color: var(--alert); }
+
+  .thesis {
+    background: var(--surface); border: 1px solid var(--rule);
+    border-left: 4px solid var(--accent);
+    padding: 1.5rem 1.6rem;
+  }
+  .thesis p {
+    font-family: var(--f-display); font-weight: 600;
+    font-size: 1.18rem; line-height: 1.55;
+  }
+
+  .callout {
+    background: var(--signal-wash); border: 1px solid var(--signal);
+    padding: 1.2rem 1.35rem; display: flex; flex-direction: column; gap: 0.5rem;
+  }
+  .callout .mk { color: var(--signal); }
+  .callout p { font-size: 0.95rem; }
+  .callout.pos { background: var(--accent-wash); border-color: var(--accent); }
+  .callout.pos .mk { color: var(--accent-ink); }
+
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr)); gap: 1rem; }
+  .card {
+    background: var(--surface); border: 1px solid var(--rule);
+    padding: 1.1rem 1.25rem; display: flex; flex-direction: column; gap: 0.45rem;
+  }
+  .card .cn {
+    font-family: var(--f-mono); font-size: 0.7rem; font-weight: 600;
+    letter-spacing: 0.08em; color: var(--accent);
+  }
+  .card p { font-size: 0.9rem; color: var(--ink-2); line-height: 1.6; }
+
+  .tree {
+    background: var(--surface); border: 1px solid var(--rule);
+    padding: 1.3rem 1.4rem; display: flex; flex-direction: column; gap: 0.5rem;
+  }
+  .tnode {
+    display: grid; grid-template-columns: 11rem 1fr; gap: 0.4rem 1.1rem;
+    align-items: baseline;
+    padding: 0.6rem 0 0.6rem 0.9rem;
+    border-left: 3px solid var(--rule);
+  }
+  .tnode.good  { border-left-color: var(--accent); }
+  .tnode.skip  { border-left-color: var(--muted); }
+  .tnode.bad   { border-left-color: var(--alert); }
+  .tnode .lbl { color: var(--ink); }
+  .tnode .exp { font-size: 0.9rem; color: var(--ink-2); }
+  .tnode.sub { margin-left: 2.2rem; }
+  @media (max-width: 36rem) {
+    .tnode { grid-template-columns: 1fr; }
+    .tnode.sub { margin-left: 1rem; }
+  }
+
+  .formula {
+    background: var(--surface-2); border: 1px solid var(--rule);
+    padding: 1.1rem 1.3rem; font-family: var(--f-mono);
+    font-size: 0.9rem; line-height: 1.9; overflow-x: auto;
+  }
+  .formula b { color: var(--accent-ink); font-weight: 600; }
+
+  .decision {
+    display: grid; grid-template-columns: 2.4rem 1fr; gap: 0 1rem;
+    background: var(--surface); border: 1px solid var(--rule);
+    border-top: 3px solid var(--signal);
+    padding: 1.2rem 1.35rem;
+  }
+  .decision .dn { font-family: var(--f-mono); font-size: 1.1rem; font-weight: 600; color: var(--signal); }
+  .decision .dbody { display: flex; flex-direction: column; gap: 0.5rem; }
+  .decision .dbody p { font-size: 0.93rem; color: var(--ink-2); }
+  .decision .opts { display: flex; flex-direction: column; gap: 0.35rem; margin-top: 0.2rem; }
+  .decision .opt { font-size: 0.9rem; display: flex; gap: 0.6rem; align-items: baseline; }
+  .decision .opt .k {
+    font-family: var(--f-mono); font-size: 0.68rem; font-weight: 600;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--muted); flex: none; width: 5.2rem;
+  }
+  .decisions { display: flex; flex-direction: column; gap: 0.9rem; }
+
+  ul.plain { margin: 0; padding-left: 1.15rem; display: flex; flex-direction: column; gap: 0.45rem; max-width: var(--measure); }
+  ul.plain li::marker { color: var(--accent); }
+
+  footer {
+    border-top: 1px solid var(--rule); padding-top: 1.3rem;
+    font-size: 0.86rem; color: var(--muted); max-width: var(--measure);
+  }
+</style>
+</head>
+<body>
+
+
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="eyebrow">HalluTrace · Taxonomy proposal · draft for Wednesday</div>
+    <h1>Two axes, decided from <span style="color:var(--accent)">two separate</span> sources of evidence</h1>
+    <p class="standfirst">
+      The field divides hallucination at least seven different ways. Six of them answer the same question — <em>what
+      kind of error is this?</em> Only one asks <em>where did it come from?</em> This proposal takes the strongest
+      option from each side and crosses them, under one hard rule: each axis must be decidable from evidence the other
+      axis never touches.
+    </p>
+    <dl class="metastrip">
+      <div><dt>Surveyed</dt><dd>29 papers</dd></div>
+      <div><dt>Principles found</dt><dd>7</dd></div>
+      <div><dt>Axes adopted</dt><dd>2</dd></div>
+      <div><dt>Total labels</dt><dd>12</dd></div>
+      <div><dt>To decide</dt><dd>3</dd></div>
+    </dl>
+  </header>
+
+  <section>
+    <h2><span class="sn">01</span>What the taxonomy has to satisfy</h2>
+    <p class="prose">
+      Before arguing about how to divide, we should agree on what "good" means for this project. Four constraints,
+      which are then used in section 04 to eliminate options — so that options get cut by criteria the team agreed to,
+      not by the preferences of whoever wrote the proposal.
+    </p>
+    <div class="cards">
+      <div class="card">
+        <div class="cn">C1 · Automatable</div>
+        <h3>Decidable without a human</h3>
+        <p>We have four months, four people, and roughly 25,000 generations to label. Any category that requires someone to read and judge is unusable at that volume.</p>
+      </div>
+      <div class="card">
+        <div class="cn">C2 · Actionable</div>
+        <h3>Different categories, different fixes</h3>
+        <p>If two categories lead to the same remedy, separating them buys nothing. It is naming, not taxonomy.</p>
+      </div>
+      <div class="card">
+        <div class="cn">C3 · Comparable</div>
+        <h3>Anchored to prior work</h3>
+        <p>Invent every category from scratch and we cannot write related work, and nobody can build on the result.</p>
+      </div>
+      <div class="card">
+        <div class="cn">C4 · Independent</div>
+        <h3>The two axes cannot share evidence</h3>
+        <p>Axis 1 is decided from the model output. Axis 2 is decided from the corpus. If they mix, the cross-tabulation becomes circular.</p>
+      </div>
+    </div>
+    <div class="callout">
+      <div class="mk">C4 is the one people overlook</div>
+      <p>
+        The headline result of this project is a cross-tabulation of the two axes. If axis 1 quietly uses corpus
+        evidence to decide a label, that table is meaningless — it would be crossing one dataset against itself.
+        <strong>Every time we add or revise a definition on either axis, we come back and re-check this constraint.</strong>
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="sn">02</span>How the field currently divides it</h2>
+    <p class="prose">
+      I grouped every taxonomy across the 29 surveyed papers by its <strong>organizing principle</strong> — the question
+      it is really sorting on — rather than by category names. Seven principles emerge.
+    </p>
+    <div class="tscroll">
+      <table>
+        <thead><tr><th>Organizing principle</th><th>Sorts on</th><th>Used by</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="lead">1 · Grounding source</td>
+            <td>Inconsistent with what — the world, or the supplied context</td>
+            <td>Hallucinations Leaderboard · HalluDial · HalluScan · HalluScore · HalluLens · Lynx</td>
+          </tr>
+          <tr class="hi">
+            <td class="lead">2 · Verification locus</td>
+            <td>Where the citation chain breaks</td>
+            <td><strong>HalluHard</strong> — reference vs content grounding</td>
+          </tr>
+          <tr>
+            <td class="lead">3 · Surface form</td>
+            <td>What the error looks like linguistically</td>
+            <td>C-FAITH (6) · HaluEval 2.0 (6)</td>
+          </tr>
+          <tr>
+            <td class="lead">4 · Severity</td>
+            <td>Obvious error or subtle one</td>
+            <td>RAGTruth · FaithBench · MedHallu</td>
+          </tr>
+          <tr>
+            <td class="lead">5 · Reasoning complexity</td>
+            <td>How hard the question was</td>
+            <td>FactCHD · HalluWorld</td>
+          </tr>
+          <tr>
+            <td class="lead">6 · Knowledge scope</td>
+            <td>Breadth of knowledge or depth of it</td>
+            <td>KGHaluBench</td>
+          </tr>
+          <tr class="hi">
+            <td class="lead">7 · Provenance</td>
+            <td><strong>Where it came from in the training data</strong></td>
+            <td><strong>HALoGEN only</strong> — Type A / B / C</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="thesis">
+      <p>
+        Principles 1 through 6 all answer the same question: what kind of error is this. Exactly one asks why the error
+        happened — and exactly one paper out of twenty-nine uses it.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="sn">03</span>The proposal — two axes</h2>
+
+    <h3 style="margin-top:0.5rem">Axis 1 · Failure mode <span class="chip ok">decided from output</span></h3>
+    <div class="tscroll">
+      <table>
+        <thead><tr><th>Label</th><th>Operational definition</th><th>Verifier</th></tr></thead>
+        <tbody>
+          <tr><td class="code">EXISTENCE</td><td>The cited object is absent from the reference index</td><td>PyPI · Semantic Scholar lookup</td></tr>
+          <tr><td class="code">ATTRIBUTION</td><td>The cited object exists but does not support the claim made about it</td><td>retrieval + entailment</td></tr>
+          <tr><td class="code">NON_ABSTENTION</td><td>The model answers a question that has no correct answer</td><td>gazetteer + refusal classifier</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="prose">
+      Inherited from <strong>HalluHard</strong>'s reference-versus-content split, extended with non-abstention from
+      <strong>HalluLens</strong> and AbstentionBench. All three resolve through an index lookup or a classifier, with
+      no human adjudication — so the axis satisfies C1.
+    </p>
+
+    <h3 style="margin-top:1rem">Axis 2 · Provenance <span class="chip ok">decided from corpus</span></h3>
+    <div class="tscroll">
+      <table>
+        <thead><tr><th>Label</th><th>Condition</th><th>Reading</th></tr></thead>
+        <tbody>
+          <tr><td class="code">TYPE_A</td><td class="num">correct &gt; 0 · halluc = 0</td><td>The fact was available; recall failed</td></tr>
+          <tr><td class="code">TYPE_B</td><td class="num">correct = 0 · halluc &gt; 0</td><td>The error is genuinely present in the corpus</td></tr>
+          <tr><td class="code">TYPE_C</td><td class="num">both = 0</td><td>Nothing present; the model assembled it</td></tr>
+          <tr><td class="code">TYPE_AB</td><td class="num">both &gt; 0</td><td>Both present — reported jointly, never forced to one</td></tr>
+          <tr><td class="code">TYPE_NA</td><td class="num">no unique ground truth</td><td>Unmeasurable ≠ absent from corpus</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="prose">
+      Borrowed wholesale from <strong>HALoGEN</strong> rather than invented. Reusing their taxonomy makes our numbers
+      comparable to theirs (C3) and sharpens what we actually claim: we are not proposing a new taxonomy, we are
+      <strong>the first to operationalize this one automatically across a whole benchmark</strong>.
+    </p>
+  </section>
+
+  <section>
+    <h2><span class="sn">04</span>Why not the other five</h2>
+    <p class="prose">Prepared in advance, because these will be asked. Each is eliminated by a named constraint.</p>
+    <div class="tscroll">
+      <table>
+        <thead><tr><th>Principle</th><th>Fails</th><th>Reason</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="lead">Surface form</td>
+            <td><span class="chip hot">C1 + C2</span></td>
+            <td>Deciding whether something is an attribute error or a relation error requires a human reader — and once decided, it still doesn't tell you how to fix it</td>
+          </tr>
+          <tr>
+            <td class="lead">Severity</td>
+            <td><span class="chip hot">C1</span></td>
+            <td>"Subtle" is defined by annotator intuition and cannot be written as a rule code can follow. It is also only meaningful when there is supplied context to compare against, which our tasks do not have</td>
+          </tr>
+          <tr>
+            <td class="lead">Reasoning complexity</td>
+            <td><span class="chip warn">wrong unit</span></td>
+            <td>This is a property of the <em>question</em>, not of the <em>error</em>. It belongs in metadata, not on an axis</td>
+          </tr>
+          <tr>
+            <td class="lead">Knowledge scope</td>
+            <td><span class="chip warn">redundant</span></td>
+            <td>Requires a knowledge graph, and is ultimately a proxy for entity popularity — which we measure directly and more precisely as corpus frequency</td>
+          </tr>
+          <tr>
+            <td class="lead">Grounding source</td>
+            <td><span class="chip warn">degenerate</span></td>
+            <td>Faithfulness requires supplied context, and all three of our tasks are closed-book. The split would collapse into a single cell</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="sn">05</span>The complete label space</h2>
+    <div class="callout">
+      <div class="mk">The part that gets forgotten</div>
+      <p>
+        A taxonomy is not only the kinds of hallucination — it needs labels for outcomes that are
+        <strong>not</strong> hallucinations too. Without them the denominator of the metric is undefined, and any
+        number we report can be argued with immediately.
+      </p>
+    </div>
+
+    <div class="tree">
+      <div class="tnode good">
+        <span class="lbl">SUPPORTED</span>
+        <span class="exp">Evidence backs the claim — not a hallucination</span>
+      </div>
+      <div class="tnode good">
+        <span class="lbl">ABSTAINED</span>
+        <span class="exp">The model declined to answer — not a hallucination; reported separately as abstention rate</span>
+      </div>
+      <div class="tnode skip">
+        <span class="lbl">UNVERIFIABLE</span>
+        <span class="exp">The verifier could not reach a decision (403 · paywall · timeout) — <strong>excluded from the denominator</strong></span>
+      </div>
+      <div class="tnode skip">
+        <span class="lbl">PARSE_FAILURE</span>
+        <span class="exp">Atomic claims could not be extracted — <strong>excluded from the denominator, but the rate must be reported</strong></span>
+      </div>
+      <div class="tnode bad">
+        <span class="lbl">HALLUCINATED</span>
+        <span class="exp">Labeled on both axes ↓</span>
+      </div>
+      <div class="tnode bad sub">
+        <span class="lbl">Axis 1</span>
+        <span class="exp">EXISTENCE · ATTRIBUTION · NON_ABSTENTION</span>
+      </div>
+      <div class="tnode bad sub">
+        <span class="lbl">Axis 2</span>
+        <span class="exp">TYPE_A · TYPE_B · TYPE_C · TYPE_AB · TYPE_NA</span>
+      </div>
+    </div>
+
+    <div class="formula">
+      <b>H</b> = hallucinated claims ÷ verifiable claims<br>
+      <b>Abstention rate</b> = abstained claims ÷ all claims<br>
+      <b>Parse-failure rate</b> = parse failures ÷ all responses
+    </div>
+
+    <p class="prose">
+      H follows HalluHard; abstention is broken out separately following HALoGEN, which calls it response ratio.
+      <strong>Why the separation matters:</strong> fold abstentions into the denominator and a model that refuses
+      every question scores best, which is absurd. And parse failure must be reported rather than quietly dropped —
+      small models fail to parse often, and hiding that rate would make our numbers look cherry-picked.
+    </p>
+  </section>
+
+  <section>
+    <h2><span class="sn">06</span>Edge cases and proposed rulings</h2>
+    <p class="prose">
+      This is where taxonomy meetings usually spend all their time. Rulings are drafted in advance so the discussion
+      can be about disagreements rather than discovery.
+    </p>
+    <div class="tscroll">
+      <table>
+        <thead><tr><th>Situation</th><th>Proposed ruling</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="lead">One response contains several claims, some wrong and some right</td>
+            <td><strong>The unit of labeling is the atomic claim, not the response</strong> — except for the code task, which is scored per response, following HalluHard</td>
+          </tr>
+          <tr>
+            <td class="lead">Cites a real paper, but not the one it meant, with a similar title</td>
+            <td>If any metadata field mismatches it is <code>EXISTENCE</code>, not <code>ATTRIBUTION</code> — strict matching, following HalluHard</td>
+          </tr>
+          <tr>
+            <td class="lead">Hedged answer: "I'm not certain, but probably X"</td>
+            <td>If a checkable claim is present, check it. <code>ABSTAINED</code> means refusing to answer, nothing weaker</td>
+          </tr>
+          <tr>
+            <td class="lead">Real package, non-existent function inside it</td>
+            <td><code>EXISTENCE</code> at the function level — <strong>granularity must be settled, see decision 1</strong></td>
+          </tr>
+          <tr>
+            <td class="lead">More than one answer would be correct</td>
+            <td><code>TYPE_NA</code>, not <code>TYPE_C</code>. "We cannot measure this" and "this is absent from the corpus" are different findings; conflating them inflates Type C</td>
+          </tr>
+          <tr>
+            <td class="lead">Different query forms return different counts</td>
+            <td>Needs a combination rule — <strong>see decision 2</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="sn">07</span>What this taxonomy lets us analyze</h2>
+    <p class="prose">Four layers of analysis, none of which requires collecting anything extra.</p>
+    <div class="tscroll">
+      <table>
+        <thead><tr><th>Layer</th><th>Operation</th><th>Answers</th></tr></thead>
+        <tbody>
+          <tr><td class="lead">Main cross-tabulation</td><td>3 failure modes × 5 provenance labels, per model</td><td>RQ2 — the headline result</td></tr>
+          <tr><td class="lead">Scale curve</td><td>OLMo 2 1B → 7B → 13B</td><td>RQ3 — which cause disappears first</td></tr>
+          <tr><td class="lead">Frequency bucketing</td><td>Raw counts binned 0 / 1 / 2–10 / 11–100 / 100+</td><td>Tests the Kalai singleton hypothesis</td></tr>
+          <tr><td class="lead">Cross-corpus check</td><td>OLMo (Dolma) against Pythia (The Pile)</td><td>Whether findings are corpus-specific</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout pos">
+      <div class="mk">Implementation requirement to raise on Wednesday</div>
+      <p>
+        The schema must store <strong>the raw infini-gram count, not a thresholded label</strong>. Layer three cannot
+        be reconstructed from binary labels. Getting this wrong now means re-running Phase 4 in week fourteen.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="sn">08</span>Three decisions for Wednesday</h2>
+    <div class="decisions">
+
+      <div class="decision">
+        <div class="dn">1</div>
+        <div class="dbody">
+          <h3>At what granularity does EXISTENCE apply?</h3>
+          <p>The package is real but the function is not — is that one claim or two?</p>
+          <div class="opts">
+            <div class="opt"><span class="k">Proposed</span><span>Three levels, following HALoGEN — install, import, function call — reported separately</span></div>
+            <div class="opt"><span class="k">Alternative</span><span>Collapse to one level. Simpler, but loses the detail HALoGEN found most informative: function-call errors are by far the most common</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="decision">
+        <div class="dn">2</div>
+        <div class="dbody">
+          <h3>How do we combine counts across query forms?</h3>
+          <p>One fact can be queried several ways and return different counts. Which value decides the label?</p>
+          <div class="opts">
+            <div class="opt"><span class="k">Proposed</span><span>Take the maximum for the labeling decision, store every value in the schema — consistent with treating Type C as an upper bound</span></div>
+            <div class="opt"><span class="k">Alternative</span><span>Sum or median. Both inflate Type C and are harder to interpret</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="decision">
+        <div class="dn">3</div>
+        <div class="dbody">
+          <h3>How many query forms per fact?</h3>
+          <p>More forms means fewer false Type C labels, but more API quota and more time.</p>
+          <div class="opts">
+            <div class="opt"><span class="k">Proposed</span><span>Start at three — literal, function-words stripped, entity order swapped — then measure in Phase 0 how much going to five reduces Type C</span></div>
+            <div class="opt"><span class="k">Alternative</span><span>Fix at one. Fastest, but Type C inflates until the numbers stop being credible</span></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="sn">09</span>What I will do before Wednesday</h2>
+    <ul class="plain">
+      <li><strong>Hand-label 20 real instances</strong> from any model's output, to find out whether these rules survive contact with actual data</li>
+      <li>Record any edge case that is not already covered in section 06</li>
+      <li>Time how long one claim takes to label, so Phase 2 can be budgeted properly</li>
+    </ul>
+    <p class="prose">
+      A taxonomy that looks clean on paper usually breaks on real data. Walking into the meeting able to say
+      "I labeled twenty and hit these three problems" carries more weight than everything else in this document combined.
+    </p>
+  </section>
+
+  <footer>
+    Draft for discussion, not a settled decision · Principal sources: HALoGEN (arXiv:2501.08292) for the provenance
+    axis · HalluHard (arXiv:2602.01031) for the verification-locus axis and the H formula ·
+    HalluLens (arXiv:2504.17550) and AbstentionBench (arXiv:2506.09038) for non-abstention ·
+    The seven-principle grouping comes from the 29-paper survey, each verified against its primary source.
+  </footer>
+
+</div>
+
+</body>
+</html>
