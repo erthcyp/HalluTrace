@@ -28,12 +28,13 @@
     --accent-wash:#DFEDE8;
     --signal:     #A8541A;
     --signal-wash:#F4E6D8;
+    --alert:      #A32F2F;
 
     --f-display: "Anuphan", "IBM Plex Sans Thai", ui-sans-serif, system-ui, sans-serif;
     --f-body:    "IBM Plex Sans Thai", "Anuphan", ui-sans-serif, system-ui, sans-serif;
     --f-mono:    "IBM Plex Mono", ui-monospace, "SFMono-Regular", monospace;
 
-    --measure: 72ch;
+    --measure: 74ch;
   }
 
   @media (prefers-color-scheme: dark) {
@@ -51,6 +52,7 @@
       --accent-wash:#16302A;
       --signal:     #D9924F;
       --signal-wash:#2E2318;
+      --alert:      #E0776F;
     }
   }
 
@@ -68,6 +70,7 @@
     --accent-wash:#16302A;
     --signal:     #D9924F;
     --signal-wash:#2E2318;
+    --alert:      #E0776F;
   }
 
   * { box-sizing: border-box; }
@@ -77,15 +80,15 @@
     color: var(--ink);
     font-family: var(--f-body);
     font-size: 16px;
-    line-height: 1.74;
+    line-height: 1.72;
     -webkit-font-smoothing: antialiased;
     padding: 0 1.5rem 6rem;
   }
 
-  .wrap { max-width: 58rem; margin: 0 auto; display: flex; flex-direction: column; gap: 3.2rem; }
+  .wrap { max-width: 58rem; margin: 0 auto; display: flex; flex-direction: column; gap: 3rem; }
   .prose { max-width: var(--measure); }
 
-  header.masthead { padding-top: 4rem; display: flex; flex-direction: column; gap: 1.3rem; }
+  header.masthead { padding-top: 4rem; display: flex; flex-direction: column; gap: 1.25rem; }
 
   .eyebrow {
     font-family: var(--f-mono); font-size: 0.72rem; font-weight: 500;
@@ -94,27 +97,26 @@
 
   h1 {
     font-family: var(--f-display); font-weight: 700;
-    font-size: clamp(2.2rem, 5.2vw, 3.1rem);
+    font-size: clamp(2.1rem, 5vw, 3rem);
     line-height: 1.12; letter-spacing: -0.02em;
     margin: 0; text-wrap: balance;
   }
 
-  .standfirst { font-size: 1.07rem; color: var(--ink-2); max-width: var(--measure); margin: 0; }
+  .standfirst { font-size: 1.05rem; color: var(--ink-2); max-width: var(--measure); margin: 0; }
 
-  section { display: flex; flex-direction: column; gap: 1.1rem; }
+  section { display: flex; flex-direction: column; gap: 1.05rem; }
 
   h2 {
     font-family: var(--f-display); font-weight: 600;
-    font-size: 1.5rem; letter-spacing: -0.01em; line-height: 1.25;
+    font-size: 1.45rem; letter-spacing: -0.01em; line-height: 1.25;
     margin: 0; padding-bottom: 0.5rem;
     border-bottom: 2px solid var(--ink); text-wrap: balance;
   }
-  h2 .sn { font-family: var(--f-mono); font-size: 0.92rem; color: var(--accent); margin-right: 0.65rem; font-weight: 600; }
+  h2 .sn { font-family: var(--f-mono); font-size: 0.9rem; color: var(--accent); margin-right: 0.6rem; font-weight: 600; }
 
-  h3 { font-family: var(--f-display); font-weight: 600; font-size: 1.02rem; margin: 0; line-height: 1.4; }
+  h3 { font-family: var(--f-display); font-weight: 600; font-size: 1rem; margin: 0; line-height: 1.4; }
 
   p { margin: 0; }
-  .prose p + p { margin-top: 0.85rem; }
   strong { font-weight: 600; color: var(--ink); }
   em { font-style: italic; }
   code { font-family: var(--f-mono); font-size: 0.85em; background: var(--surface-2); padding: 0.1em 0.36em; border-radius: 3px; }
@@ -125,52 +127,79 @@
   }
 
   .tscroll { overflow-x: auto; border: 1px solid var(--rule); background: var(--surface); }
-  table { border-collapse: collapse; width: 100%; min-width: 34rem; font-size: 0.92rem; }
-  tbody td { padding: 0.7rem 1rem; border-bottom: 1px solid var(--rule-soft); vertical-align: top; line-height: 1.6; }
+  table { border-collapse: collapse; width: 100%; min-width: 32rem; font-size: 0.9rem; }
+  tbody td { padding: 0.62rem 1rem; border-bottom: 1px solid var(--rule-soft); vertical-align: top; line-height: 1.6; }
   tbody tr:last-child td { border-bottom: none; }
   td.k {
-    font-family: var(--f-mono); font-size: 0.72rem; font-weight: 600;
+    font-family: var(--f-mono); font-size: 0.7rem; font-weight: 600;
     letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted);
-    white-space: nowrap; width: 9rem;
+    white-space: nowrap; width: 8.5rem;
   }
 
-  .bb { display: grid; grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr)); gap: 1rem; }
+  .bb { display: grid; grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr)); gap: 1rem; }
   .col {
-    border: 1px solid var(--rule); padding: 1.2rem 1.35rem;
-    display: flex; flex-direction: column; gap: 0.85rem;
+    border: 1px solid var(--rule); padding: 1.15rem 1.3rem;
+    display: flex; flex-direction: column; gap: 0.75rem;
   }
   .col.borrowed { background: var(--surface-2); }
   .col.built { background: var(--surface); border-color: var(--accent); border-width: 2px; }
-  .col h3 { font-size: 1.12rem; }
+  .col h3 { font-size: 1.08rem; }
   .col.built h3 { color: var(--accent-ink); }
-  .col ul { margin: 0; padding-left: 1.05rem; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.92rem; color: var(--ink-2); }
+  .col ul { margin: 0; padding-left: 1.05rem; display: flex; flex-direction: column; gap: 0.4rem; font-size: 0.9rem; color: var(--ink-2); }
   .col.borrowed li::marker { color: var(--muted); }
   .col.built li::marker { color: var(--accent); }
-  .col .note { font-size: 0.85rem; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 0.7rem; }
+  .col .note { font-size: 0.84rem; color: var(--muted); border-top: 1px solid var(--rule); padding-top: 0.6rem; }
 
-  .say {
-    background: var(--surface); border: 1px solid var(--rule);
-    border-left: 4px solid var(--accent);
-    padding: 1.25rem 1.4rem;
-    display: flex; flex-direction: column; gap: 0.55rem;
+  .beats { display: flex; flex-direction: column; gap: 1.15rem; }
+  .beat {
+    display: grid; grid-template-columns: 7.5rem 1fr; gap: 0.35rem 1.5rem;
+    align-items: start;
+    padding-bottom: 1.15rem;
+    border-bottom: 1px solid var(--rule-soft);
   }
-  .say .cue {
+  .beat:last-child { border-bottom: none; padding-bottom: 0; }
+  .beat .bl {
     font-family: var(--f-mono); font-size: 0.68rem; font-weight: 600;
-    letter-spacing: 0.09em; text-transform: uppercase; color: var(--signal);
+    letter-spacing: 0.11em; text-transform: uppercase; color: var(--accent);
+    padding-top: 0.35rem;
   }
-  .say .line {
+  .beat .bt { font-size: 0.97rem; color: var(--ink-2); line-height: 1.72; max-width: var(--measure); }
+  .beat .bt strong { color: var(--ink); }
+  @media (max-width: 36rem) { .beat { grid-template-columns: 1fr; } }
+
+  /* Q&A */
+  .qagroup { display: flex; flex-direction: column; gap: 0.75rem; }
+  .qalabel {
+    font-family: var(--f-mono); font-size: 0.68rem; font-weight: 600;
+    letter-spacing: 0.11em; text-transform: uppercase; color: var(--accent);
+    margin-top: 0.5rem;
+  }
+  .qa {
+    border-left: 3px solid var(--rule);
+    padding: 0.15rem 0 0.15rem 1rem;
+    display: flex; flex-direction: column; gap: 0.28rem;
+  }
+  .qa:hover { border-left-color: var(--accent); }
+  .qa .q {
     font-family: var(--f-display); font-weight: 600;
-    font-size: 1.06rem; line-height: 1.6;
+    font-size: 1rem; line-height: 1.45; color: var(--ink);
   }
-  .says { display: flex; flex-direction: column; gap: 1rem; }
+  .qa .a { font-size: 0.93rem; color: var(--ink-2); line-height: 1.68; max-width: var(--measure); }
 
   .strong2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: 1rem; }
   .pillar {
     background: var(--accent-wash); border: 1px solid var(--accent);
-    padding: 1.15rem 1.3rem; display: flex; flex-direction: column; gap: 0.4rem;
+    padding: 1.1rem 1.25rem; display: flex; flex-direction: column; gap: 0.35rem;
   }
   .pillar .pn { font-family: var(--f-mono); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em; color: var(--accent-ink); }
-  .pillar p { font-size: 0.9rem; color: var(--ink-2); }
+  .pillar p { font-size: 0.89rem; color: var(--ink-2); }
+
+  .redline {
+    background: var(--signal-wash); border: 1px solid var(--signal);
+    padding: 1.1rem 1.3rem; display: flex; flex-direction: column; gap: 0.4rem;
+  }
+  .redline .mk { color: var(--signal); }
+  .redline p { font-size: 0.93rem; }
 
   footer {
     border-top: 1px solid var(--rule); padding-top: 1.2rem;
@@ -187,24 +216,72 @@
     <div class="eyebrow">HalluTrace · scope and standing · one-pager</div>
     <h1>What we borrowed, what we built</h1>
     <p class="standfirst">
-      A short document for answering "how is this different from what already exists" — the scope in brief, what we
-      take from prior work and cite openly, what is ours, and the lines that can be said with a straight face.
+      The scope in brief, what comes from prior work and what is ours, and short answers to the questions this
+      project keeps being asked. Open this one when someone challenges the work; the full detail lives in the plan.
     </p>
   </header>
 
   <section>
-    <h2><span class="sn">01</span>Scope in brief</h2>
+    <h2><span class="sn">01</span>Scope</h2>
     <p class="prose">
-      <strong>The question:</strong> across which intervention points — the pretraining corpus, the training process,
-      or inference — do an open model's hallucinations fall, and in what proportion?
+      <strong>The question:</strong> across which intervention points — the pretraining corpus, the training
+      process, or inference — do an open model's hallucinations fall, and in what proportion?
     </p>
+
+    <div class="beats">
+      <div class="beat">
+        <div class="bl">What we do</div>
+        <p class="bt">
+          We take three tasks where hallucination can be verified automatically, run seven models over them, and
+          label every hallucinated claim <strong>twice</strong> — once for the kind of failure it is, once for where
+          it came from in the pretraining data. Crossing those two labels produces a table showing which kinds of
+          error arise from which kinds of cause, which is the result the field currently lacks.
+        </p>
+      </div>
+
+      <div class="beat">
+        <div class="bl">How we do it</div>
+        <p class="bt">
+          The <strong>failure-mode</strong> label comes from the output alone: a cited paper either exists in
+          Semantic Scholar or it does not, a package either exists on PyPI or it does not, a question with no correct
+          answer was either refused or it was not. The <strong>provenance</strong> label comes from the corpus. For
+          each hallucinated claim we build two search queries — the string the model produced, and the string of the
+          correct answer — and count both against the model's actual pretraining data using infini-gram. Which of the
+          two returns hits determines whether the fact was available and misrecalled, present but wrong, or absent
+          altogether. Because the two labels are decided from different evidence, crossing them is meaningful rather
+          than circular.
+        </p>
+      </div>
+
+      <div class="beat">
+        <div class="bl">Why it matters</div>
+        <p class="bt">
+          The three causes demand incompatible remedies, and they belong to different people. If the error came from
+          a bad document, cleaning the corpus fixes it and retrieval cannot — the datastore carries the same mistake.
+          If the fact was present and the model failed to recall it, retrieval is exactly the right lever. If nothing
+          was there at all, the only remedy is teaching the model to decline. Corpus, training and deployment are
+          three different teams with three different budgets, and today
+          <strong>all three allocate effort against the same population of errors without knowing the split.</strong>
+        </p>
+      </div>
+
+      <div class="beat">
+        <div class="bl">Why us</div>
+        <p class="bt">
+          Answering it requires searching the data a model was actually trained on, which is possible for only a
+          handful of model families. That constraint is what has kept the question open — and it is why the study is
+          built around OLMo 2 and Pythia rather than the models most people use.
+        </p>
+      </div>
+    </div>
+
     <div class="tscroll">
       <table>
         <tbody>
           <tr><td class="k">What we do</td><td>Label every hallucination on two axes, then report the cross-tabulation</td></tr>
           <tr><td class="k">Axis 1</td><td>existence · attribution · non-abstention — decided from model output</td></tr>
           <tr><td class="k">Axis 2</td><td>Type A · B · C — decided by searching the pretraining corpus</td></tr>
-          <tr><td class="k">Models</td><td>OLMo 2 (1B/7B/13B) + Pythia = cause can be assigned · Llama · Qwen · Mistral = measured only</td></tr>
+          <tr><td class="k">Models</td><td>OLMo 2 (1B/7B/13B) + Pythia = cause assignable · Llama · Qwen · Mistral = measured only</td></tr>
           <tr><td class="k">Tasks</td><td>scientific citation (primary) · code packages · should-refuse — 1,200 prompts</td></tr>
           <tr><td class="k">Volume</td><td>~25,000 generations · ~2,000 cause-labeled instances</td></tr>
           <tr><td class="k">Time</td><td>16 weeks · 4 people</td></tr>
@@ -222,16 +299,13 @@
         <h3>What the field already had</h3>
         <ul>
           <li><strong>The Type A/B/C concept</strong> — HALoGEN</li>
-          <li><strong>Prompt sets</strong> — HALoGEN, under permissive licences</li>
-          <li><strong>Reference versus content grounding</strong> — HalluHard</li>
+          <li><strong>Prompt sets</strong> — HALoGEN, permissively licensed</li>
+          <li><strong>Reference vs content grounding</strong> — HalluHard</li>
           <li><strong>Non-abstention as a failure mode</strong> — HalluLens, AbstentionBench</li>
           <li><strong>infini-gram</strong> as the corpus search tool</li>
-          <li><strong>Models and corpora</strong> released by AI2 and EleutherAI</li>
+          <li><strong>Models and corpora</strong> from AI2 and EleutherAI</li>
         </ul>
-        <p class="note">
-          Every item in this column was built to be reused. Using it is following the field's norms, not taking a
-          shortcut.
-        </p>
+        <p class="note">Every item here was built to be reused. Using it follows the field's norms rather than cutting a corner.</p>
       </div>
 
       <div class="col built">
@@ -239,69 +313,95 @@
         <h3>What nobody has done</h3>
         <ul>
           <li><strong>Crossing the two axes</strong> — absent from all 29 surveyed papers</li>
-          <li><strong>One decision rule</strong> applied identically across every task, so results compare</li>
-          <li><strong>The query protocol</strong> — how many forms, how to combine them, how to report bounds</li>
-          <li><strong>Automatic labeling across a whole benchmark</strong> rather than spot-checks</li>
-          <li><strong>Retaining raw counts</strong> → the frequency curve and the Kalai test</li>
-          <li><strong>Measuring how wrong proxy-corpus attribution is</strong></li>
-          <li><strong>A 29-paper survey</strong> verified against primary sources, one at a time</li>
-          <li><strong>The intervention-locus framing</strong> — turning A/B/C from an explanation into an address</li>
+          <li><strong>One decision rule</strong> across every task, so results compare</li>
+          <li><strong>The query protocol</strong> — how many forms, how combined, how bounds are reported</li>
+          <li><strong>Automatic labeling benchmark-wide</strong>, not spot-checks</li>
+          <li><strong>Retaining raw counts</strong> → frequency curve and the Kalai test</li>
+          <li><strong>An error bar on proxy-corpus attribution</strong></li>
+          <li><strong>A 29-paper survey</strong> verified against primary sources</li>
+          <li><strong>The intervention-locus framing</strong> — A/B/C as an address, not an explanation</li>
         </ul>
       </div>
     </div>
   </section>
 
   <section>
-    <h2><span class="sn">03</span>Lines that hold up</h2>
-    <div class="says">
+    <h2><span class="sn">03</span>Questions this keeps getting</h2>
 
-      <div class="say">
-        <div class="cue">If asked · why not invent your own taxonomy</div>
-        <p class="line">
-          We deliberately did not invent a new taxonomy. The field already has seven mutually incompatible ones;
-          an eighth would make the situation worse, not better. We took the one that answers the question nobody
-          else asks, and made it measurable.
-        </p>
+    <div class="qagroup">
+      <div class="qalabel">On the problem</div>
+
+      <div class="qa">
+        <p class="q">What is the problem, precisely?</p>
+        <p class="a">Hallucination can be attacked at three points — the corpus, the training process, or inference — and those three differ entirely in cost and in who owns them. Nobody knows how a real population of errors distributes across them, so all three teams currently allocate effort blind.</p>
       </div>
 
-      <div class="say">
-        <div class="cue">If asked · how is this different from HALoGEN</div>
-        <p class="line">
-          HALoGEN proposed the concept; we build the instrument. It established that the three causes exist by
-          spot-checking dozens of cases across a few scenarios, using a different method in each, and mostly against
-          proxy corpora. We turn that into one decision rule that labels every instance, against real corpora only,
-          and then cross it with the kind of failure — which HALoGEN never does.
-        </p>
+      <div class="qa">
+        <p class="q">"Root cause" of what, exactly?</p>
+        <p class="a">Not cause in general. In engineering a root cause is what, once changed, stops the failure recurring — so the meaningful question is <em>where would you have to intervene</em>. Type A/B/C is not an explanation of an error; it is an address for it.</p>
       </div>
 
-      <div class="say">
-        <div class="cue">If asked · isn't reusing their prompts a shortcut</div>
-        <p class="line">
-          Reusing the prompts makes our numbers directly comparable to HALoGEN's, which is a methodological virtue
-          rather than a saving. They published the licences precisely so the material would be reused. Our effort
-          belongs where nothing exists yet, not in rewriting questions that already work.
-        </p>
+      <div class="qa">
+        <p class="q">Isn't this tool-driven? You had corpus search and invented a question to fit it.</p>
+        <p class="a">Ask what fraction of hallucination is fixable in the corpus, and open-data models stop being a convenience — they become the only instrument that can answer. The question forces the tool, not the other way around.</p>
       </div>
 
-      <div class="say">
-        <div class="cue">If pressed · this is just combining other people's work</div>
-        <p class="line">
-          Yes — and that is precisely why it has not been done. The pieces have been available since HALoGEN
-          appeared over a year ago, but assembling them requires an open-data model, one decision rule that holds
-          across every task, and the discipline to store raw counts from day one. A year on, nobody has assembled
-          them — and HALoGEN itself has no descendants.
-        </p>
+      <div class="qalabel">On novelty</div>
+
+      <div class="qa">
+        <p class="q">How is this different from HALoGEN?</p>
+        <p class="a">HALoGEN proposed the concept; we build the instrument. It established the three causes exist by spot-checking dozens of cases across a few scenarios, using a different method in each, mostly against proxy corpora. We make it one decision rule labeling every instance against real corpora — then cross it with the kind of failure, which HALoGEN never does.</p>
       </div>
 
+      <div class="qa">
+        <p class="q">And from the other twenty-eight?</p>
+        <p class="a">Four properties are needed together: it studies hallucination, inspects the real corpus, labels per instance, and covers a whole benchmark. Every prior work has some. None has all four.</p>
+      </div>
+
+      <div class="qa">
+        <p class="q">Why not design your own taxonomy?</p>
+        <p class="a">The field already has seven mutually incompatible ones — our own survey documents them. An eighth makes things worse. We took the one that answers the question nobody else asks and made it measurable.</p>
+      </div>
+
+      <div class="qa">
+        <p class="q">Isn't reusing their prompts a shortcut?</p>
+        <p class="a">It makes our numbers directly comparable to HALoGEN's, which is a methodological virtue. They published the licences precisely so the material would be reused. Effort belongs where nothing exists yet.</p>
+      </div>
+
+      <div class="qa">
+        <p class="q">So this is just combining other people's work?</p>
+        <p class="a">Yes — and that is why it has not been done. Assembling the pieces needs an open-data model, one rule that holds across every task, and the discipline to store raw counts from day one. A year after HALoGEN, nobody has assembled them, and HALoGEN itself has no descendants.</p>
+      </div>
+
+      <div class="qalabel">On limits</div>
+
+      <div class="qa">
+        <p class="q">Can you run this on GPT, Claude or Gemini?</p>
+        <p class="a">We can measure them — axis 1 needs only the output. We cannot explain them, because there is no corpus to search. They appear in the failure-mode results and never in the cross-tabulation.</p>
+      </div>
+
+      <div class="qa">
+        <p class="q">So it only works on open-source models?</p>
+        <p class="a">Open <em>data</em>, which is narrower than open source. Llama, Qwen and Mistral release weights but not their corpora, so they are measured, not explained. Only OLMo 2 and Pythia release both.</p>
+      </div>
+
+      <div class="qa">
+        <p class="q">Does this reduce hallucination?</p>
+        <p class="a">No. It measures and explains; impact arrives when someone else acts on the numbers. "We produce the number this decision requires, and nobody currently has it" is both stronger and defensible.</p>
+      </div>
+
+      <div class="qa">
+        <p class="q">What if the corpus-fixable share turns out to be tiny?</p>
+        <p class="a">That is an equally valuable answer, and worth a great deal to anyone currently spending money on data cleaning. The interpretation rules are fixed in advance precisely so this outcome cannot be read as failure.</p>
+      </div>
     </div>
   </section>
 
   <section>
     <h2><span class="sn">04</span>Two positions to fall back on</h2>
     <p class="prose">
-      If the discussion gets difficult enough that every other argument is contested, retreat to these two. Neither
-      requires explaining how it differs from prior work, because
-      <strong>neither exists anywhere in the literature to begin with</strong>.
+      If every other argument gets contested, retreat here. Neither needs a comparison to prior work, because
+      <strong>neither exists in the literature at all</strong>.
     </p>
     <div class="strong2">
       <div class="pillar">
@@ -312,13 +412,22 @@
       <div class="pillar">
         <div class="pn">02</div>
         <h3>An error bar on proxy-corpus attribution</h3>
-        <p>Others have substituted proxy corpora without knowing the cost, because nobody held the real corpus and a proxy at the same time. We hold both.</p>
+        <p>Others substitute proxy corpora without knowing the cost, because nobody held the real corpus and a proxy at once. We hold both.</p>
       </div>
+    </div>
+
+    <div class="redline">
+      <div class="mk">The line not to cross</div>
+      <p>
+        Closed models may be measured on failure mode and reported as such, but they never enter the
+        cross-tabulation. Their Type A/B/C columns would be guesses wearing the costume of measurements — and the
+        empty cells make the point better than filled ones would.
+      </p>
     </div>
   </section>
 
   <footer>
-    Short reference for use during discussion · full detail in the project plan, taxonomy rationale in the taxonomy
+    Short reference for use during discussion · full detail in the project plan · taxonomy rationale in the taxonomy
     document · the count of 29 comes from checking each paper against its primary source, with HalluBench
     (Computers, Materials &amp; Continua, 2026) still unread.
   </footer>
