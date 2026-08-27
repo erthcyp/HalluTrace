@@ -316,14 +316,14 @@
     <div class="eyebrow">HalluTrace · project scope · senior project</div>
     <h1>Where do hallucinations actually come from?</h1>
     <p class="standfirst">
-      We surveyed twenty-nine hallucination benchmarks, narrowed them to the material we can use, and found a gap
-      none of them fills. This page walks from that survey to the problem it exposed, the solution we propose, what
-      is ours versus borrowed, and how sixteen weeks are spent.
+      Twenty-nine papers surveyed, six cut as out of scope, and one gap none of the rest fills. This page follows
+      that line — what we found, the problem it exposes, our solution, what we use from other work against what we
+      built ourselves, and how sixteen weeks are spent.
     </p>
   </header>
 
   <section>
-    <h2><span class="sn">01</span>What we found — twenty-nine benchmarks</h2>
+    <h2><span class="sn">01</span>The twenty-nine papers we found</h2>
     <p class="prose">
       We collected every hallucination benchmark we could identify and checked each against its arXiv or ACL
       Anthology source rather than trusting secondary summaries. For each one we recorded a single field above all
@@ -374,7 +374,7 @@
   </section>
 
   <section>
-    <h2><span class="sn">02</span>Narrowing to what we can use</h2>
+    <h2><span class="sn">02</span>What we cut, and why</h2>
     <p class="prose">
       Six of the twenty-nine cannot supply material for an English study. Five are in other languages; one is not
       natural language at all.
@@ -404,7 +404,7 @@
   </section>
 
   <section>
-    <h2><span class="sn">03</span>What the survey revealed</h2>
+    <h2><span class="sn">03</span>What we found</h2>
 
     <div class="findings">
       <div class="finding">
@@ -441,8 +441,9 @@
           <h3>The one paper that asked <em>why</em> has no descendants</h3>
           <p>
             HALoGEN is the only benchmark whose categories are defined by their relationship to pretraining data —
-            Type A for misrecall despite the fact being present, Type B for an incorrect fact genuinely in the corpus,
-            Type C for fabrication with no basis. In the derivation graph it sits as an isolated node: it descends
+            Truth when the correct fact is present and the model still failed, Error when the corpus itself carries the
+            wrong version, Silence when nothing is there at all. HALoGEN calls these Type A, B and C; we rename them
+            for readability and keep the mapping explicit. In the derivation graph it sits as an isolated node: it descends
             from none of the surveyed benchmarks and none descends from it. Over a year on, nobody has built on it.
           </p>
         </div>
@@ -487,6 +488,16 @@
         number.
       </p>
     </div>
+
+    <div class="redline">
+      <div class="mk">On the objection that this is tool-driven</div>
+      <p>
+        A fair challenge: did we pick corpus search because it was available, then invent a question to fit?
+        Ask what fraction of hallucination is fixable in the corpus and open-data models stop being a convenience —
+        <strong>they become the only instrument that can answer.</strong> The question forces the tool, not the
+        other way around.
+      </p>
+    </div>
   </section>
 
   <section>
@@ -510,7 +521,7 @@
         <p class="note">Checked against PyPI, Semantic Scholar, and a gazetteer. No human judgement needed.</p>
       </div>
       <div class="col built">
-        <div class="mk">Axis 2 · from the corpus</div>
+        <div class="mk">Axis 2 · from the corpus — HALoGEN's Type A/B/C, renamed</div>
         <h3>Where it came from</h3>
         <ul>
           <li><strong>TYPE A</strong> — the fact was there; recall failed → <em>training or inference</em></li>
@@ -526,7 +537,7 @@
       <div class="wstep"><span class="ws">Prompt</span><span class="wt">"Write Python code to read a JSONL file."</span></div>
       <div class="wstep"><span class="ws">Model says</span><span class="wt"><code>pd.read_jsonl("data.jsonl")</code></span></div>
       <div class="wstep"><span class="ws">Axis 1</span><span class="wt">PyPI check: <code>pandas</code> exists, <code>read_jsonl</code> does not → <strong>EXISTENCE</strong></span></div>
-      <div class="wstep"><span class="ws">Axis 2</span><span class="wt">Search Dolma: <code>read_jsonl</code> appears 340 times, <code>read_json</code> appears 12,000 → <strong>TYPE A+B</strong></span></div>
+      <div class="wstep"><span class="ws">Axis 2</span><span class="wt">Search Dolma: <code>read_jsonl</code> appears 340 times, <code>read_json</code> appears 12,000 → <strong>TYPE Mixed</strong></span></div>
       <div class="wstep last"><span class="ws">Reading</span><span class="wt">The wrong form really is in the training data — forum posts where people misremembered — and the model reached for it over the far more common correct form. <strong>Addressable in the corpus.</strong></span></div>
     </div>
     <p class="prose" style="font-size:0.86rem;color:var(--muted)">
@@ -558,13 +569,13 @@
   </section>
 
   <section>
-    <h2><span class="sn">06</span>What we take, what we make</h2>
+    <h2><span class="sn">06</span>What we use, and what we made</h2>
     <div class="bb">
       <div class="col borrowed">
         <div class="mk">Taken from prior work — cited openly</div>
         <h3>What the field already had</h3>
         <ul>
-          <li><strong>The Type A/B/C concept</strong> — HALoGEN</li>
+          <li><strong>The Truth / Error / Silence taxonomy (Type A/B/C)</strong> — HALoGEN</li>
           <li><strong>Prompt sets</strong> — HALoGEN, permissively licensed</li>
           <li><strong>Reference vs content grounding</strong> — HalluHard</li>
           <li><strong>Non-abstention as a failure mode</strong> — HalluLens, AbstentionBench</li>
@@ -585,7 +596,7 @@
           <li><strong>Retaining raw counts</strong> → the frequency curve and the Kalai singleton test</li>
           <li><strong>An error bar on proxy-corpus attribution</strong> — nobody has measured this</li>
           <li><strong>The twenty-nine-paper survey</strong>, verified against primary sources</li>
-          <li><strong>The intervention-locus framing</strong> — A/B/C as an address, not an explanation</li>
+          <li><strong>The intervention-point framing</strong> — A/B/C as an address, not an explanation</li>
         </ul>
       </div>
     </div>
@@ -602,7 +613,7 @@
       </p>
       <p class="gsub">
         And the test that settles it: <strong>an assembly cannot produce a wrong answer — a measurement can.</strong>
-        Ours can be wrong in several ways. The Kalai prediction may fail. Type B may come back at two percent. OLMo
+        Ours can be wrong in several ways. The Kalai prediction may fail. Error may come back at two percent. OLMo
         and Pythia may disagree. That the result can be wrong is what proves it is a finding rather than a
         construction.
       </p>
@@ -673,38 +684,6 @@
           <p>Thesis, slides, dataset release, and one re-run of the adversarial literature check before submission.</p>
         </div>
       </div>
-    </div>
-  </section>
-
-  <section>
-    <h2><span class="sn">08</span>Questions this keeps getting</h2>
-    <div class="qagroup">
-
-      <div class="qa">
-        <p class="q">Isn't this tool-driven? You had corpus search and invented a question to fit it.</p>
-        <p class="a">Ask what fraction of hallucination is fixable in the corpus, and open-data models stop being a convenience — they become the only instrument that can answer. The question forces the tool, not the other way around.</p>
-      </div>
-
-      <div class="qa">
-        <p class="q">Can you run this on GPT, Claude or Gemini?</p>
-        <p class="a">We can measure them — axis 1 needs only the output. We cannot explain them, because there is no corpus to search. Not by us, not by anyone. This is a closed door rather than a scoping decision.</p>
-      </div>
-
-      <div class="qa">
-        <p class="q">Then does the finding say anything about the models people actually use?</p>
-        <p class="a">OLMo and Pythia are model organisms — biology studies mice because it cannot open a living human brain. The analogy holds here better than usual, because these corpora are all built from the same raw web: Common Crawl, Wikipedia, GitHub, Stack Overflow. The flawed posts that mislead OLMo are almost certainly in everyone's training data. We claim a property of web-pretrained models as a class, supported by two independent corpora — not a claim about GPT specifically.</p>
-      </div>
-
-      <div class="qa">
-        <p class="q">Does this reduce hallucination?</p>
-        <p class="a">No. It measures and explains; impact arrives when someone else acts on the numbers. "We produce the number this decision requires, and nobody currently has it" is both stronger and defensible.</p>
-      </div>
-
-      <div class="qa">
-        <p class="q">What if the corpus-fixable share turns out to be tiny?</p>
-        <p class="a">That is an equally valuable answer, and worth a great deal to anyone currently funding data cleaning. The interpretation rules are fixed in advance precisely so this outcome cannot be read as failure.</p>
-      </div>
-
     </div>
   </section>
 
