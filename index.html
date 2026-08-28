@@ -318,7 +318,7 @@
     <p class="standfirst">
       Twenty-nine papers surveyed, six cut as out of scope, and one gap none of the rest fills. This page follows
       that line — what we found, the problem it exposes, our solution, what we use from other work against what we
-      built ourselves, and how the six weeks to the 10 October workshop deadline are spent.
+      built ourselves, and how the nine weeks to the 31 October workshop deadline are spent.
     </p>
   </header>
 
@@ -547,52 +547,84 @@
     <h3 style="margin-top:0.8rem">Which models we can use</h3>
     <p class="prose">
       The two axes have different entry requirements, and that single fact decides the whole model list.
-      <strong>Axis 1 needs only the model's output</strong>, so it runs on anything. <strong>Axis 2 needs to read the
-      corpus the model was trained on</strong> — and almost nobody publishes that. Llama, Qwen and Mistral release
-      their weights but not their data; GPT and Claude release neither.
+      <strong>Axis 1 needs only the model's output</strong>, so it runs on anything we can call. <strong>Axis 2 needs
+      to read the corpus the model was trained on</strong> — and that corpus must also be searchable, which in
+      practice means it has an infini-gram index.
     </p>
     <p class="prose">
-      So the models split into two groups, not by choice but by what is possible with each.
+      So the models split into two groups, not by choice but by what each one permits. The asymmetry in cost between
+      them is what shapes the plan: adding a group 2 model is nearly free, while adding a group 1 model buys another
+      round of attribution work.
     </p>
 
+    <h3 style="margin-top:0.9rem">Group 1 · Open data — both axes</h3>
+    <p class="prose">
+      Weights <em>and</em> pretraining corpus published, with the corpus indexed. This is close to the complete set
+      that exists; there are not many.
+    </p>
     <div class="tscroll">
       <table>
-        <thead><tr><th>Group</th><th>Models</th><th>Corpus</th><th>What we can do with them</th></tr></thead>
+        <thead><tr><th>Model</th><th>Corpus</th><th>infini-gram index</th><th>Note</th></tr></thead>
         <tbody>
-          <tr>
-            <td class="lead">1 · Open data</td>
-            <td>OLMo 2 — 1B, 7B, 13B</td>
-            <td class="mono">olmo-mix-1124</td>
-            <td><strong>Both axes.</strong> These carry the study: what kind of failure, and where it came from</td>
-          </tr>
-          <tr>
-            <td class="lead">2 · Open weights only</td>
-            <td>Llama 3.1 8B · Qwen 2.5 7B</td>
-            <td class="mono">not published</td>
-            <td><strong>Axis 1 only.</strong> We can say what they get wrong, never why</td>
-          </tr>
+          <tr class="us"><td class="lead">OLMo 2 — 1B · 7B · 13B</td><td>OLMo-mix-1124</td><td class="mono">v4_olmo-mix-1124_llama</td><td>Primary. Three sizes on one corpus gives the scale curve</td></tr>
+          <tr><td class="lead">OLMo 2 — 32B</td><td>—</td><td class="mono">v4_olmo-2-0325-32b-instruct_llama</td><td>Extends the scale curve to a fourth point</td></tr>
+          <tr><td class="lead">OLMoE — 1B-7B</td><td>—</td><td class="mono">v4_olmoe-0125-1b-7b-instruct_llama</td><td>Mixture-of-experts, same lab</td></tr>
+          <tr><td class="lead">DCLM-7B</td><td>DCLM-baseline</td><td class="mono">v4_dclm-baseline_llama</td><td>Different lab, different corpus — the strongest cross-corpus evidence</td></tr>
+          <tr><td class="lead">RedPajama-INCITE 7B Instruct</td><td>RedPajama-1T</td><td class="mono">v4_rpj_llama_s4</td><td>Older but instruction-tuned</td></tr>
+          <tr><td class="lead">Pythia 6.9B · 12B</td><td>The Pile</td><td class="mono">v4_piletrain_llama</td><td><span class="chip warn">base only</span> needs few-shot prompting</td></tr>
+          <tr><td class="lead">GPT-NeoX-20B</td><td>The Pile</td><td class="mono">v4_piletrain_llama</td><td><span class="chip warn">base only</span></td></tr>
         </tbody>
       </table>
     </div>
 
+    <h3 style="margin-top:0.9rem">Group 2 · Open weights only — axis 1</h3>
+    <p class="prose">
+      Downloadable, widely deployed, and impossible to explain. Each costs a generation run and nothing else, so we
+      take the current field broadly rather than sampling it.
+    </p>
+    <div class="tscroll">
+      <table>
+        <thead><tr><th>Family</th><th>Configurations</th><th>Corpus</th></tr></thead>
+        <tbody>
+          <tr><td class="lead">Llama</td><td>3.1 8B Instruct · 3.3 70B Instruct</td><td class="mono">not published</td></tr>
+          <tr><td class="lead">Qwen</td><td>2.5 7B Instruct · 2.5 32B Instruct</td><td class="mono">not published</td></tr>
+          <tr><td class="lead">Mistral</td><td>7B Instruct v0.3</td><td class="mono">not published</td></tr>
+          <tr><td class="lead">Gemma</td><td>2 9B Instruct</td><td class="mono">not published</td></tr>
+          <tr><td class="lead">Phi</td><td>4 14B</td><td class="mono">not published</td></tr>
+          <tr><td class="lead">DeepSeek</td><td>R1-Distill-Qwen 7B</td><td class="mono">not published</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="goal">
+      <div class="mk">The rule that keeps this affordable</div>
+      <p class="gline">
+        Go wide on group 2. Go deep, in order, on group 1.
+      </p>
+      <p class="gsub">
+        A group 2 model costs one generation run and automatic labeling — so breadth there is close to free, and it
+        turns "does this generalize?" from a hope into a measurement across ten configurations. A group 1 model costs
+        all of that <em>plus</em> attribution, sampling and manual inspection. We therefore run axis 1 on everything,
+        and spend attribution effort in a fixed priority order: <strong>OLMo 2 sizes first</strong> for the scale
+        curve, <strong>DCLM next</strong> for cross-corpus evidence, then the rest while time allows.
+      </p>
+    </div>
+
     <p class="prose">
       <strong>Group 2 is not a group we ran out of time on.</strong> It answers a question group 1 cannot ask of
-      itself: is this pattern a quirk of OLMo, or a property of language models? If Llama and Qwen fail in similar
-      proportions, our conclusions about cause carry weight beyond the models we could open. Drop group 2 and the
-      question "does this only apply to OLMo?" has one honest answer — we don't know.
+      itself: is this pattern a quirk of one training recipe, or a property of language models? Its cause columns
+      stay empty, marked <code>n/a — corpus not public</code> rather than left blank. Blank reads as unfinished;
+      <code>n/a</code> reads as impossible. Those empty cells make the project's point better than invented numbers
+      would.
     </p>
-    <p class="prose">
-      In the results table, group 2's cause columns stay empty, marked <code>n/a — corpus not public</code> rather
-      than left blank. The distinction matters: blank reads as unfinished, <code>n/a</code> reads as impossible. And
-      those empty cells make the project's point better than invented numbers would.
-    </p>
+
     <div class="redline">
       <div class="mk">One risk closed early</div>
       <p>
         infini-gram indexes <code>olmo-mix-1124</code> — the exact pretraining mix behind the OLMo 2 checkpoints,
         not a stand-in. We search the corpus the model actually read, so a count of zero means the fact is absent
-        rather than that we queried the wrong collection. Pythia and the cross-corpus check are dropped for time;
-        with one corpus we claim less, and claim it cleanly.
+        rather than that we queried the wrong collection. The same holds for every group 1 model: each is paired
+        with the index of the corpus it actually read, never a stand-in.
       </p>
     </div>
   </section>
@@ -627,6 +659,7 @@
           <li><strong>Automatic labeling benchmark-wide</strong>, not spot-checks</li>
           <li><strong>Retaining raw counts</strong> → the frequency curve and the Kalai singleton test</li>
           <li><strong>An error bar on proxy-corpus attribution</strong> — nobody has measured this</li>
+          <li><strong>Near-complete coverage of open-data models</strong> — the set is small enough to take whole rather than sample</li>
           <li><strong>The twenty-nine-paper survey</strong>, verified against primary sources</li>
           <li><strong>The intervention-point framing</strong> — A/B/C as an address, not an explanation</li>
         </ul>
@@ -658,10 +691,10 @@
     <div class="redline">
       <div class="mk">Six weeks, not sixteen</div>
       <p>
-        Target is a workshop submission on <strong>10 October</strong>. From 28 August that is 6.1 weeks, and one of
-        them belongs to writing — so roughly <strong>4.5 weeks of execution</strong>. Four people make three
-        verifiers buildable in parallel; they do not shorten the chain from feasibility to attribution to analysis.
-        Scope below is cut to what that chain can carry.
+        Target is a workshop submission on <strong>31 October</strong>. From 28 August that is 9.1 weeks, with the
+        final eleven days reserved for writing — so <strong>7.4 weeks of execution</strong>, with four people working
+        on nothing else. That buys breadth, but not a shorter chain: feasibility still gates attribution, which still
+        gates analysis. The sequencing below protects that chain.
       </p>
     </div>
 
@@ -669,11 +702,11 @@
       <table>
         <tbody>
           <tr><td class="k">Tasks</td><td>scientific citation (primary) · code packages · should-refuse — 1,200 prompts</td></tr>
-          <tr><td class="k">Models</td><td>OLMo 2 at 1B / 7B / 13B, plus Llama 3.1 8B and Qwen 2.5 7B for comparison</td></tr>
-          <tr><td class="k">Volume</td><td>~6,000 generations, one sample per prompt · ~900 cause-labeled instances</td></tr>
-          <tr><td class="k">Team</td><td>4 people — attribution · citation verifier · code verifier · infra</td></tr>
-          <tr><td class="k">Cut for time</td><td>Pythia and the cross-corpus check · the proxy-corpus error bar · repeated sampling</td></tr>
-          <tr><td class="k">Stretch</td><td>The corpus-frequency curve, if the buckets hold enough data</td></tr>
+          <tr><td class="k">Models</td><td>~9 open-data configurations on both axes · ~9 open-weight configurations on axis 1</td></tr>
+          <tr><td class="k">Volume</td><td>~65,000 generations at three samples per prompt · ~4,000 cause-labeled instances</td></tr>
+          <tr><td class="k">Team</td><td>4 people, full time — attribution · citation verifier · code verifier · infra</td></tr>
+          <tr><td class="k">Also in</td><td>Three samples per prompt for error bars · the corpus-frequency curve · a freshly authored prompt subset · the proxy-corpus error bar</td></tr>
+          <tr><td class="k">Still cut</td><td>Intermediate training checkpoints — a separate study, not an addition to this one</td></tr>
           <tr><td class="k">Not in scope</td><td>Thai and multilingual · multi-turn · RAG · mitigation methods · influence functions · a thirtieth benchmark</td></tr>
         </tbody>
       </table>
@@ -685,7 +718,7 @@
         Do not run three tasks in parallel to the finish. Take citation all the way through first.
       </p>
       <p class="gsub">
-        A paper with one complete task beats a paper with three half-finished ones, and in six weeks half-finished is
+        A paper with one complete task beats a paper with three half-finished ones, and on this calendar half-finished is
         the likely outcome. Once citation closes end to end, every week that follows has a submittable paper on the
         table — the others only make it better.
       </p>
@@ -696,39 +729,53 @@
         <div class="wk">Aug 28<br>– Sep 3</div>
         <div class="pb">
           <h3>Gate week</h3>
-          <p>Run <code>phase0_check.py</code> against infini-gram. Request the Semantic Scholar key. Build the citation verifier. <strong>If corpus search does not work, replan by 1 September — there is time for exactly one change of direction.</strong></p>
+          <p>Run <code>phase0_check.py</code> against infini-gram. Request the Semantic Scholar key. Build the citation verifier. Confirm which group 1 indexes actually respond and whether the <code>-instruct</code> indexes cover post-training data. <strong>If corpus search does not work, replan by 1 September.</strong></p>
         </div>
       </div>
       <div class="phase">
         <div class="wk">Sep 4<br>– Sep 10</div>
         <div class="pb">
-          <h3>Citation end to end</h3>
-          <p>Generate, label failure mode, attribute against <code>olmo-mix-1124</code>. Schema stores raw counts. Code and should-refuse verifiers built in parallel by whoever is free.</p>
+          <h3>Citation end to end, OLMo 2 7B</h3>
+          <p>One task, one model, all the way through: generate, label failure mode, attribute against <code>olmo-mix-1124</code>. Schema stores raw counts. Other verifiers built in parallel.</p>
         </div>
       </div>
       <div class="phase">
         <div class="wk">Sep 11<br>– Sep 17</div>
         <div class="pb">
           <h3>Validate, and reach a submittable state</h3>
-          <p>A hundred items, two annotators, agreement and κ. <strong>From this point a paper exists</strong> — citation task, three OLMo sizes, cross-tabulation, validated verifier.</p>
+          <p>A hundred items, two annotators, agreement and κ. Extend citation across the OLMo 2 sizes. <strong>From this point a paper exists</strong> — everything after is additive and can be dropped without breaking it.</p>
         </div>
       </div>
       <div class="phase">
         <div class="wk">Sep 18<br>– Sep 24</div>
         <div class="pb">
-          <h3>Add the other two tasks</h3>
-          <p>Code and should-refuse through the same pipeline. Additive only — if either slips, it is dropped rather than allowed to delay the rest.</p>
+          <h3>Breadth on axis 1</h3>
+          <p>All three tasks across every model in both groups, three samples each. Cheap per model, and it delivers the generalization evidence in one sweep. Base models need few-shot prompting and a tolerant parser; parse-failure rate is reported, not hidden.</p>
         </div>
       </div>
       <div class="phase">
-        <div class="wk">Sep 25<br>– Oct 2</div>
+        <div class="wk">Sep 25<br>– Oct 8</div>
+        <div class="pb">
+          <h3>Depth on axis 2, in priority order</h3>
+          <p>Attribution for the remaining group 1 models: OLMo 2 32B and OLMoE, then DCLM for cross-corpus evidence, then RedPajama-INCITE and the Pile models while time allows. <strong>Stop when the calendar says so, not when the list is finished.</strong></p>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="wk">Oct 9<br>– Oct 15</div>
+        <div class="pb">
+          <h3>The additions</h3>
+          <p>Freshly authored prompt subset and the contamination comparison. Proxy-corpus error bar — the same queries against RedPajama and C4. Corpus-frequency curve for the singleton test.</p>
+        </div>
+      </div>
+      <div class="phase">
+        <div class="wk">Oct 16<br>– Oct 19</div>
         <div class="pb">
           <h3>Analysis and figures</h3>
-          <p>Cross-tabulation, scale curve across the three OLMo sizes, comparison-tier distributions, hand-inspection of a hundred cases. Frequency bucketing if the data supports it.</p>
+          <p>Cross-tabulation, scale curve across four OLMo sizes, cross-corpus comparison, hand-inspection of a hundred cases.</p>
         </div>
       </div>
       <div class="phase">
-        <div class="wk">Oct 3<br>– Oct 10</div>
+        <div class="wk">Oct 20<br>– Oct 31</div>
         <div class="pb">
           <h3>Write</h3>
           <p>Related work is largely done — the survey in section 01 and the positioning against near-misses are already written. Re-run the adversarial literature check before submitting.</p>
@@ -745,7 +792,7 @@
         Twenty-nine benchmarks verified against primary sources, none of which opens the pretraining corpus, five
         lineages rather than twenty-nine independent efforts, and the observation that the one paper asking why has
         no descendants. That is an analysis paper needing about a week of writing and no further experiments — and
-        it still meets 10 October.
+        it still meets 31 October.
       </p>
     </div>
   </section>
