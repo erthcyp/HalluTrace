@@ -414,22 +414,26 @@
           <tr><td class="lead">HalluScan</td><td class="code">2605.02443</td><td class="num">24</td><td class="no">no</td></tr>
           <tr><td class="lead">HalluScore</td><td class="code">2605.17007</td><td class="num">827</td><td class="no">no</td></tr>
           <tr><td class="lead">HalluWorld</td><td class="code">2605.19341</td><td class="num">1,718</td><td class="no">no</td></tr>
-          <tr><td class="lead">HalluBench</td><td class="code">CMC 2026</td><td class="num">pending</td><td class="no">?</td></tr>
+          <tr><td class="lead">HalluBench</td><td class="code">CMC 2026</td><td class="num">9,804</td><td class="no">no</td></tr>
         </tbody>
       </table>
     </div>
     <p class="prose" style="font-size:0.86rem;color:var(--muted)">
       Size units differ by paper — prompts, instances, dialogue turns, annotated samples. HalluScan's headline "72"
       is a count of configurations, not data; its evaluation set is 24 QA pairs. HalluBench (Computers, Materials
-      &amp; Continua, 2026) is located but not yet read — the one row still unverified.
+      &amp; Continua 88(3):48, 2026) is not on arXiv and was verified from the publisher's full text; its 9,804
+      instances are five splits of four existing datasets — TruthfulQA 817, TruthfulQA-TR 817, SciFact/MTEB 7,550,
+      JudgeBench 270 + 350 — so TruthfulQA is counted twice in this table, once standalone and once inside HalluBench.
+      Note also a three-way name collision in the literature: HaluBench (Lynx, arXiv:2407.08488), this HalluBench,
+      and FinReflectKG-HalluBench (arXiv:2603.20252) are unrelated works.
     </p>
   </section>
 
   <section>
     <h2><span class="sn">02</span>What we cut, and why</h2>
     <p class="prose">
-      Six of the twenty-nine cannot supply material for an English study. Five are in other languages; one is not
-      natural language at all.
+      Six of the twenty-nine cannot supply material for an English study. Four are in other languages, one is not
+      natural language at all, and one turns out to carry no prompts of its own.
     </p>
 
     <div class="tscroll">
@@ -439,7 +443,7 @@
           <tr><td class="lead">C-FAITH</td><td>Chinese</td></tr>
           <tr><td class="lead">HalluScore</td><td>Arabic</td></tr>
           <tr><td class="lead">BHRAM-IL</td><td>Hindi, Gujarati, Marathi, Odia, English</td></tr>
-          <tr><td class="lead">HalluBench</td><td>Cross-lingual</td></tr>
+          <tr><td class="lead">HalluBench</td><td>Re-hosts TruthfulQA, SciFact and JudgeBench — no original prompts; the one new split is Turkish</td></tr>
           <tr><td class="lead">HalluWorld</td><td>Gridworlds, chess and terminal states rather than language</td></tr>
         </tbody>
       </table>
@@ -462,7 +466,7 @@
       <div class="finding">
         <div class="fn">01</div>
         <div class="ft">
-          <h3>Twenty-eight of twenty-nine never open the corpus</h3>
+          <h3>Not one of the twenty-nine opens the corpus</h3>
           <p>
             The near-misses are the instructive part. HalluLens defines extrinsic hallucination as inconsistency with
             training data and then declines to look — "given the vast and often opaque nature of training data, we
@@ -479,7 +483,9 @@
           <h3>These are not twenty-nine independent attempts — they are roughly five lineages</h3>
           <p>
             HaluEval seeds both HaluEval 2.0 and the HaluBench dataset behind Lynx. RAGTruth feeds both Lynx and
-            FaithJudge. FaithBench feeds FaithJudge. FACTS Grounding expands into the FACTS Leaderboard. The Vectara
+            FaithJudge. FaithBench feeds FaithJudge. FACTS Grounding expands into the FACTS Leaderboard. HalluBench,
+            the most recent entry in the table, is five splits of TruthfulQA, SciFact and JudgeBench with a Turkish
+            translation added. The Vectara
             leaderboard evolves in place. <strong>If none of the roots inspects pretraining data, every descendant
             inherits the blind spot by construction</strong> — what we document is a small number of foundational
             decisions propagated forward, not twenty-nine separate oversights.
@@ -969,7 +975,7 @@
         The community has responded with a dense wave of benchmarks. We surveyed twenty-nine, verifying each against
         its arXiv or ACL Anthology source rather than relying on secondary summaries, and recorded one field above
         all others: whether the paper opens the model's pretraining data to explain where an error originated.
-        Twenty-eight answer no. The near-misses are instructive rather than contradictory — HalluLens defines
+        All twenty-nine answer no. The near-misses are instructive rather than contradictory — HalluLens defines
         extrinsic hallucination as inconsistency with training data and then declines to look, substituting Wikipedia
         because "the vast and often opaque nature of training data" makes the corpus impractical to inspect; HaluEval
         states outright that it does not investigate underlying reasons.
@@ -1154,8 +1160,8 @@
   </section>
 
   <footer>
-    Twenty-eight of twenty-nine surveyed benchmarks verified against arXiv or ACL Anthology sources; HalluBench
-    (Computers, Materials &amp; Continua, 2026) still pending. Principal references: HALoGEN (arXiv:2501.08292) for
+    All twenty-nine surveyed benchmarks verified against primary sources — arXiv or ACL Anthology, except HalluBench,
+    verified from the Computers, Materials &amp; Continua full text (doi:10.32604/cmc.2026.081260). Principal references: HALoGEN (arXiv:2501.08292) for
     the provenance taxonomy and source prompts · HalluHard (arXiv:2602.01031) for the reference/content grounding
     distinction · infini-gram and Dolma (arXiv:2402.00159) for corpus search.
   </footer>
