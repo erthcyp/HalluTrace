@@ -611,25 +611,88 @@
 
     <h3 style="margin-top:0.9rem">Group 1 · Axis 1 — every model we can call</h3>
     <p class="prose">
-      Axis 1 needs nothing but the output, so it runs on all of them — <strong>the open-data models included</strong>.
-      Every configuration below is measured for what kind of failure it makes. Adding one costs a generation run and
-      automatic labeling, so we take the field broadly rather than sampling it.
+      Axis 1 needs nothing but the output, so it runs on all of them — <strong>the open-data models included, and the
+      closed frontier models too</strong>. Adding one costs a generation run and automatic labeling, so we take the
+      current field broadly rather than sampling it. Three tiers, listed by how much of the model is visible.
     </p>
+
     <div class="tscroll">
       <table>
-        <thead><tr><th>Family</th><th>Configurations</th><th>Corpus</th></tr></thead>
+        <thead><tr><th>Tier</th><th>Models</th><th>Corpus</th><th>Axis 2?</th></tr></thead>
         <tbody>
-          <tr class="us"><td class="lead">OLMo 2 · OLMoE</td><td>1B · 7B · 13B · 32B · OLMoE 1B-7B</td><td class="mono">published</td></tr>
-          <tr class="us"><td class="lead">DCLM · RedPajama-INCITE · Pythia · GPT-NeoX</td><td>DCLM-7B · INCITE 7B · Pythia 6.9B / 12B · NeoX 20B</td><td class="mono">published</td></tr>
-          <tr><td class="lead">Llama</td><td>3.1 8B Instruct · 3.3 70B Instruct</td><td class="mono">not published</td></tr>
-          <tr><td class="lead">Qwen</td><td>2.5 7B Instruct · 2.5 32B Instruct</td><td class="mono">not published</td></tr>
-          <tr><td class="lead">Mistral · Gemma · Phi · DeepSeek</td><td>Mistral 7B v0.3 · Gemma 2 9B · Phi-4 14B · R1-Distill-Qwen 7B</td><td class="mono">not published</td></tr>
+          <tr class="us">
+            <td class="lead">A · Open data</td>
+            <td>OLMo 2 1B/7B/13B/32B · OLMoE · DCLM-7B · RedPajama-INCITE 7B · Pythia 6.9B/12B · GPT-NeoX-20B</td>
+            <td class="mono">published + indexed</td>
+            <td class="no">yes</td>
+          </tr>
+          <tr>
+            <td class="lead">B · Open weight</td>
+            <td>DeepSeek V4-Flash · Qwen3.8-27B · Qwen3.6-35B-A3B · Llama 4 Scout · Gemma 4 31B · Mistral Large 3 · Kimi K2.6</td>
+            <td class="mono">not published</td>
+            <td>no</td>
+          </tr>
+          <tr>
+            <td class="lead">C · Closed</td>
+            <td>GPT-5.6 Sol · Claude Opus 5 · Gemini 3.6 Flash</td>
+            <td class="mono">no weights, no corpus</td>
+            <td>no</td>
+          </tr>
         </tbody>
       </table>
     </div>
     <p class="prose" style="font-size:0.88rem;color:var(--muted)">
-      Rows highlighted in green also appear in group 2. Roughly eighteen configurations in total.
+      Roughly nineteen configurations. Tier A is repeated in group 2 below. Model names and pricing were checked in
+      August 2026 and move quickly — reconfirm before the generation sweep.
     </p>
+
+    <div class="redline">
+      <div class="mk">What tier C costs us, beyond money</div>
+      <p>
+        Closed models are the ones the twenty-nine surveyed benchmarks actually rank, so leaving them out would mean
+        our criteria could never be compared against the criteria they replace. They are included for that reason —
+        and because the empty cause column beside a frontier model states the project's problem more plainly than a
+        paragraph could.
+      </p>
+      <p>
+        The cost is reproducibility. API models change without notice, so <strong>the exact model version and run
+        date are recorded, and the thesis states plainly that this tier cannot be re-run the way tiers A and B
+        can.</strong> Provider terms on publishing comparative evaluations are checked before the sweep.
+      </p>
+    </div>
+
+    <h3 style="margin-top:1rem">What the generation sweep costs</h3>
+    <p class="prose">
+      1,200 prompts × 3 samples = 3,600 calls per model. Measured against pilot outputs, roughly 70 input and 300
+      output tokens per call — so 0.25M input and 1.08M output tokens per model.
+    </p>
+    <div class="tscroll">
+      <table>
+        <thead><tr><th>Model</th><th class="num">$ / M in</th><th class="num">$ / M out</th><th class="num">Cost for the sweep</th></tr></thead>
+        <tbody>
+          <tr><td class="lead">GPT-5.6 Sol</td><td class="num">5.00</td><td class="num">30.00</td><td class="num">$33.66</td></tr>
+          <tr><td class="lead">Claude Opus 5</td><td class="num">5.00</td><td class="num">25.00</td><td class="num">$28.26</td></tr>
+          <tr><td class="lead">Gemini 3.6 Flash</td><td class="num">1.50</td><td class="num">7.50</td><td class="num">$8.48</td></tr>
+          <tr><td class="lead">Kimi K3</td><td class="num">3.00</td><td class="num">15.00</td><td class="num">$16.96</td></tr>
+          <tr><td class="lead">DeepSeek V3.2</td><td class="num">0.28</td><td class="num">0.42</td><td class="num">$0.52</td></tr>
+          <tr><td class="lead">Qwen3.7 Flash</td><td class="num">0.03</td><td class="num">0.13</td><td class="num">$0.15</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="goal">
+      <div class="mk">Budget</div>
+      <p class="gline">
+        Around 130 US dollars for the entire generation sweep.
+      </p>
+      <p class="gsub">
+        Tier C at flagship rates is roughly $70 for all three. Tier B, served through an aggregator, sits between
+        fifteen cents and a few dollars per model — call it $20 for the seven. Tier A is small enough to self-host,
+        or a few dollars each on a hosted endpoint. <strong>Cost is not the binding constraint; rate limits and the
+        attribution work are.</strong> If the budget needs halving, drop tier C to mid-range models — GPT-5.4,
+        Claude Sonnet 5 and Gemini 3 Flash come to about $31 together.
+      </p>
+    </div>
 
     <h3 style="margin-top:0.9rem">Group 2 · Axis 2 — the subset whose corpus we can read</h3>
     <p class="prose">
@@ -660,7 +723,7 @@
       </p>
       <p class="gsub">
         A group 1 model costs one generation run and automatic labeling — so breadth there is close to free, and it
-        turns "does this generalize?" from a hope into a measurement across eighteen configurations. A group 2 model
+        turns "does this generalize?" from a hope into a measurement across nineteen configurations. A group 2 model
         costs all of that <em>plus</em> attribution, sampling and manual inspection. Attribution effort therefore
         follows a fixed priority: <strong>OLMo 2 sizes first</strong> for the scale curve, <strong>DCLM next</strong>
         for cross-corpus evidence, then the remainder while time allows.
@@ -758,7 +821,7 @@
         <tbody>
           <tr><td class="k">Tasks</td><td>scientific citation (primary) · code packages · should-refuse — 1,200 prompts</td></tr>
           <tr><td class="k">Models</td><td>~9 open-data configurations on both axes · ~9 open-weight configurations on axis 1</td></tr>
-          <tr><td class="k">Volume</td><td>~65,000 generations at three samples per prompt · ~4,000 cause-labeled instances</td></tr>
+          <tr><td class="k">Volume</td><td>~68,000 generations at three samples per prompt · ~4,000 cause-labeled instances</td></tr>
           <tr><td class="k">Team</td><td>4 people, full time — attribution · citation verifier · code verifier · infra</td></tr>
           <tr><td class="k">Also in</td><td>Three samples per prompt for error bars · the corpus-frequency curve · a freshly authored prompt subset · the proxy-corpus error bar</td></tr>
           <tr><td class="k">Still cut</td><td>Intermediate training checkpoints — a separate study, not an addition to this one</td></tr>
@@ -879,7 +942,7 @@
         rather than circular.
       </p>
       <p>
-        We evaluate eighteen model configurations on the first axis, of which nine — the near-complete set of models
+        We evaluate nineteen model configurations on the first axis, of which nine — the near-complete set of models
         publishing both weights and an indexed pretraining corpus — also receive provenance labels. We report the
         resulting cross-tabulation, a scale curve across four OLMo 2 sizes, a cross-corpus comparison against
         DCLM-baseline and the Pile, and the relationship between corpus frequency and hallucination rate. We release
@@ -964,7 +1027,7 @@
 
         <rect class="bx" x="100" y="96" width="300" height="46" rx="4"/>
         <text class="ttl" x="250" y="118" text-anchor="middle">Generate</text>
-        <text class="sub" x="250" y="133" text-anchor="middle">18 model configurations × 3 samples</text>
+        <text class="sub" x="250" y="133" text-anchor="middle">19 model configurations × 3 samples</text>
         <line class="ln" x1="250" y1="142" x2="250" y2="174" marker-end="url(#ah)"/>
 
         <rect class="bx" x="100" y="176" width="300" height="46" rx="4"/>
