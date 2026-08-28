@@ -303,6 +303,58 @@
   .phase .pb p { font-size: 0.91rem; color: var(--ink-2); line-height: 1.65; }
   @media (max-width: 34rem) { .phase { grid-template-columns: 1fr; gap: 0.3rem; } }
 
+  .divider {
+    border-top: 2px solid var(--ink); padding-top: 1.2rem;
+    display: flex; flex-direction: column; gap: 0.3rem;
+  }
+  .divider .dt {
+    font-family: var(--f-display); font-weight: 700; font-size: 1.7rem;
+    letter-spacing: -0.02em; margin: 0;
+  }
+  .divider .ds { font-size: 0.95rem; color: var(--muted); max-width: var(--measure); }
+
+  .draft {
+    background: var(--surface); border: 1px solid var(--rule);
+    border-left: 4px solid var(--accent);
+    padding: 1.5rem 1.6rem;
+    display: flex; flex-direction: column; gap: 0.9rem;
+  }
+  .draft p { font-size: 0.99rem; line-height: 1.78; max-width: 78ch; }
+  .draft p.first::first-letter { font-weight: 600; }
+
+  .fml { display: flex; flex-direction: column; gap: 1rem; }
+  .fmlrow {
+    display: grid; grid-template-columns: 13rem 1fr; gap: 0.35rem 1.4rem;
+    padding-bottom: 0.95rem; border-bottom: 1px solid var(--rule-soft);
+  }
+  .fmlrow:last-child { border-bottom: none; padding-bottom: 0; }
+  .fmlrow .fn {
+    font-family: var(--f-display); font-weight: 600; font-size: 0.97rem;
+    line-height: 1.45;
+  }
+  .fmlrow .fe {
+    font-family: var(--f-mono); font-size: 0.86rem; line-height: 1.9;
+    color: var(--accent-ink); overflow-x: auto;
+  }
+  .fmlrow .fd { grid-column: 2; font-size: 0.9rem; color: var(--ink-2); line-height: 1.65; }
+  @media (max-width: 40rem) {
+    .fmlrow { grid-template-columns: 1fr; }
+    .fmlrow .fd { grid-column: 1; }
+  }
+
+  .flowwrap {
+    border: 1px solid var(--rule); background: var(--surface);
+    padding: 1.2rem; overflow-x: auto;
+  }
+  .flow { display: block; margin: 0 auto; min-width: 700px; }
+  .flow .ttl { font-family: "Anuphan", sans-serif; font-size: 13px; font-weight: 600; fill: var(--ink); }
+  .flow .sub { font-family: "IBM Plex Mono", monospace; font-size: 10.5px; fill: var(--muted); }
+  .flow .acc { fill: var(--accent-ink); }
+  .flow .bx { fill: var(--surface); stroke: var(--rule); stroke-width: 1.5; }
+  .flow .bxa { fill: var(--accent-wash); stroke: var(--accent); stroke-width: 2; }
+  .flow .bxm { fill: var(--surface-2); stroke: var(--rule); stroke-width: 1.5; stroke-dasharray: 4 3; }
+  .flow .ln { stroke: var(--rule); stroke-width: 1.5; fill: none; }
+
   footer {
     border-top: 1px solid var(--rule); padding-top: 1.2rem;
     font-size: 0.85rem; color: var(--muted); max-width: var(--measure);
@@ -557,10 +609,34 @@
       round of attribution work.
     </p>
 
-    <h3 style="margin-top:0.9rem">Group 1 · Open data — both axes</h3>
+    <h3 style="margin-top:0.9rem">Group 1 · Axis 1 — every model we can call</h3>
     <p class="prose">
-      Weights <em>and</em> pretraining corpus published, with the corpus indexed. This is close to the complete set
-      that exists; there are not many.
+      Axis 1 needs nothing but the output, so it runs on all of them — <strong>the open-data models included</strong>.
+      Every configuration below is measured for what kind of failure it makes. Adding one costs a generation run and
+      automatic labeling, so we take the field broadly rather than sampling it.
+    </p>
+    <div class="tscroll">
+      <table>
+        <thead><tr><th>Family</th><th>Configurations</th><th>Corpus</th></tr></thead>
+        <tbody>
+          <tr class="us"><td class="lead">OLMo 2 · OLMoE</td><td>1B · 7B · 13B · 32B · OLMoE 1B-7B</td><td class="mono">published</td></tr>
+          <tr class="us"><td class="lead">DCLM · RedPajama-INCITE · Pythia · GPT-NeoX</td><td>DCLM-7B · INCITE 7B · Pythia 6.9B / 12B · NeoX 20B</td><td class="mono">published</td></tr>
+          <tr><td class="lead">Llama</td><td>3.1 8B Instruct · 3.3 70B Instruct</td><td class="mono">not published</td></tr>
+          <tr><td class="lead">Qwen</td><td>2.5 7B Instruct · 2.5 32B Instruct</td><td class="mono">not published</td></tr>
+          <tr><td class="lead">Mistral · Gemma · Phi · DeepSeek</td><td>Mistral 7B v0.3 · Gemma 2 9B · Phi-4 14B · R1-Distill-Qwen 7B</td><td class="mono">not published</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="prose" style="font-size:0.88rem;color:var(--muted)">
+      Rows highlighted in green also appear in group 2. Roughly eighteen configurations in total.
+    </p>
+
+    <h3 style="margin-top:0.9rem">Group 2 · Axis 2 — the subset whose corpus we can read</h3>
+    <p class="prose">
+      A <strong>subset of group 1</strong>, not a separate population. These are the models that additionally allow
+      the cause question, because their pretraining corpus is published <em>and</em> indexed. Group 2 is what turns
+      group 1's measurements into an explanation — it supplies the provenance that the rest of the field cannot.
+      The set is small enough to take whole rather than sample.
     </p>
     <div class="tscroll">
       <table>
@@ -577,45 +653,24 @@
       </table>
     </div>
 
-    <h3 style="margin-top:0.9rem">Group 2 · Open weights only — axis 1</h3>
-    <p class="prose">
-      Downloadable, widely deployed, and impossible to explain. Each costs a generation run and nothing else, so we
-      take the current field broadly rather than sampling it.
-    </p>
-    <div class="tscroll">
-      <table>
-        <thead><tr><th>Family</th><th>Configurations</th><th>Corpus</th></tr></thead>
-        <tbody>
-          <tr><td class="lead">Llama</td><td>3.1 8B Instruct · 3.3 70B Instruct</td><td class="mono">not published</td></tr>
-          <tr><td class="lead">Qwen</td><td>2.5 7B Instruct · 2.5 32B Instruct</td><td class="mono">not published</td></tr>
-          <tr><td class="lead">Mistral</td><td>7B Instruct v0.3</td><td class="mono">not published</td></tr>
-          <tr><td class="lead">Gemma</td><td>2 9B Instruct</td><td class="mono">not published</td></tr>
-          <tr><td class="lead">Phi</td><td>4 14B</td><td class="mono">not published</td></tr>
-          <tr><td class="lead">DeepSeek</td><td>R1-Distill-Qwen 7B</td><td class="mono">not published</td></tr>
-        </tbody>
-      </table>
-    </div>
-
     <div class="goal">
       <div class="mk">The rule that keeps this affordable</div>
       <p class="gline">
-        Go wide on group 2. Go deep, in order, on group 1.
+        Go wide on group 1. Go deep, in a fixed order, on group 2.
       </p>
       <p class="gsub">
-        A group 2 model costs one generation run and automatic labeling — so breadth there is close to free, and it
-        turns "does this generalize?" from a hope into a measurement across ten configurations. A group 1 model costs
-        all of that <em>plus</em> attribution, sampling and manual inspection. We therefore run axis 1 on everything,
-        and spend attribution effort in a fixed priority order: <strong>OLMo 2 sizes first</strong> for the scale
-        curve, <strong>DCLM next</strong> for cross-corpus evidence, then the rest while time allows.
+        A group 1 model costs one generation run and automatic labeling — so breadth there is close to free, and it
+        turns "does this generalize?" from a hope into a measurement across eighteen configurations. A group 2 model
+        costs all of that <em>plus</em> attribution, sampling and manual inspection. Attribution effort therefore
+        follows a fixed priority: <strong>OLMo 2 sizes first</strong> for the scale curve, <strong>DCLM next</strong>
+        for cross-corpus evidence, then the remainder while time allows.
       </p>
     </div>
 
     <p class="prose">
-      <strong>Group 2 is not a group we ran out of time on.</strong> It answers a question group 1 cannot ask of
-      itself: is this pattern a quirk of one training recipe, or a property of language models? Its cause columns
-      stay empty, marked <code>n/a — corpus not public</code> rather than left blank. Blank reads as unfinished;
-      <code>n/a</code> reads as impossible. Those empty cells make the project's point better than invented numbers
-      would.
+      For the models outside group 2, the cause columns stay empty, marked <code>n/a — corpus not public</code>
+      rather than left blank. Blank reads as unfinished; <code>n/a</code> reads as impossible. Those empty cells make
+      the project's point better than invented numbers would.
     </p>
 
     <div class="redline">
@@ -623,7 +678,7 @@
       <p>
         infini-gram indexes <code>olmo-mix-1124</code> — the exact pretraining mix behind the OLMo 2 checkpoints,
         not a stand-in. We search the corpus the model actually read, so a count of zero means the fact is absent
-        rather than that we queried the wrong collection. The same holds for every group 1 model: each is paired
+        rather than that we queried the wrong collection. The same holds for every group 2 model: each is paired
         with the index of the corpus it actually read, never a stand-in.
       </p>
     </div>
@@ -794,6 +849,244 @@
         no descendants. That is an analysis paper needing about a week of writing and no further experiments — and
         it still meets 31 October.
       </p>
+    </div>
+  </section>
+
+  <section>
+    <div class="divider">
+      <p class="dt">Paper drafts</p>
+      <p class="ds">Working text for the 31 October submission. Everything above is the plan; everything below is the paper.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="sn">08</span>Abstract</h2>
+    <div class="draft">
+      <p>
+        Large language models hallucinate, and a substantial literature now measures how often. We surveyed
+        twenty-nine hallucination benchmarks and verified each against its primary source: all of them quantify
+        hallucination and none inspects the pretraining corpus to establish where an error came from. The one paper
+        that proposes a provenance taxonomy applies it as a case study and has no descendants. As a result, the
+        practical question — whether a given hallucination is addressable in the training data, during training, or
+        only at inference — has no measured answer.
+      </p>
+      <p>
+        We present a benchmark that labels every hallucination twice. The first axis records the kind of failure
+        (citing a source that does not exist, misdescribing one that does, or answering a question that has no
+        answer) and is decided from the model output alone by lookup against authoritative indexes. The second axis
+        records provenance (Truth, Error, or Silence) and is decided by searching the model's own pretraining corpus
+        with infini-gram. Because the two axes are decided from disjoint evidence, crossing them is informative
+        rather than circular.
+      </p>
+      <p>
+        We evaluate eighteen model configurations on the first axis, of which nine — the near-complete set of models
+        publishing both weights and an indexed pretraining corpus — also receive provenance labels. We report the
+        resulting cross-tabulation, a scale curve across four OLMo 2 sizes, a cross-corpus comparison against
+        DCLM-baseline and the Pile, and the relationship between corpus frequency and hallucination rate. We release
+        the cause-labeled corpus, with the raw corpus counts and the retrieved evidence attached to every judgment.
+      </p>
+      <p style="color:var(--muted);font-size:0.9rem">
+        [Numeric results to be inserted once experiments complete: headline share of hallucinations addressable at
+        the corpus, verifier agreement and κ, and the direction of the frequency relationship.]
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="sn">09</span>Introduction</h2>
+    <div class="draft">
+      <p>
+        Language models are now routine tools for finding and synthesizing information, and they continue to produce
+        fluent, confident claims that no evidence supports. The damage lies less in the errors than in their
+        invisibility: a fabricated citation carries the same typographic authority as a real one, and a hallucinated
+        package import runs until it does not — a failure already demonstrated as a software supply-chain attack
+        surface. In both cases the surface form of the output gives the reader no signal that anything is wrong.
+      </p>
+      <p>
+        The community has responded with a dense wave of benchmarks. We surveyed twenty-nine, verifying each against
+        its arXiv or ACL Anthology source rather than relying on secondary summaries, and recorded one field above
+        all others: whether the paper opens the model's pretraining data to explain where an error originated.
+        Twenty-eight answer no. The near-misses are instructive rather than contradictory — HalluLens defines
+        extrinsic hallucination as inconsistency with training data and then declines to look, substituting Wikipedia
+        because "the vast and often opaque nature of training data" makes the corpus impractical to inspect; HaluEval
+        states outright that it does not investigate underlying reasons.
+      </p>
+      <p>
+        These are not twenty-nine independent efforts. Mapping their stated derivations yields roughly five lineages,
+        and if none of the roots inspects pretraining data, every descendant inherits the blind spot by construction.
+        The exception proves the point: HALoGEN, the only benchmark whose categories are defined by their
+        relationship to pretraining data, sits in the derivation graph as an isolated node — descending from none of
+        the surveyed benchmarks, and with none descending from it.
+      </p>
+      <p>
+        The gap matters because the remedies are incompatible. A hallucination can be attacked at three points — the
+        pretraining corpus, the training process, or inference — and those three differ entirely in cost, in
+        tractability, and in who owns them. If an error came from a bad document, cleaning the corpus removes it and
+        retrieval augmentation cannot, because the datastore carries the same mistake. If the fact was present and
+        recall failed, retrieval is exactly the right lever. If nothing was present at all, the only remedy is
+        teaching the model to decline. Three different teams with three different budgets currently allocate effort
+        against the same population of errors without knowing the split.
+      </p>
+      <p>
+        This paper measures that split. We contribute: (i) the first cross-tabulation of hallucination failure mode
+        against training-data provenance, applied across a whole benchmark rather than spot-checked; (ii) a single
+        decision rule that holds across three heterogeneous tasks, making their results comparable; (iii) a released
+        corpus of cause-labeled hallucinations with raw corpus counts and retrieved evidence attached; and (iv) a
+        verified survey of twenty-nine benchmarks along a dimension no prior work has compiled. We are explicit about
+        what this does not establish: corpus presence and absence show where an error is addressable in principle,
+        not that a given intervention would succeed, and because exact-string search cannot detect facts expressed in
+        other surface forms, the fabrication rate is reported as an upper bound.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <h2><span class="sn">10</span>Framework</h2>
+
+    <p class="prose">
+      One prompt enters at the top; a doubly-labeled claim leaves at the bottom. The branch is the only place the two
+      model groups diverge.
+    </p>
+
+    <div class="flowwrap">
+      <svg class="flow" viewBox="0 0 760 760" width="760" height="760" role="img"
+           aria-label="Pipeline flowchart from prompts through dual labeling to cross-tabulation">
+        <defs>
+          <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+            <path d="M0,0 L10,5 L0,10 z" fill="var(--rule)"/>
+          </marker>
+        </defs>
+
+        <rect class="bx" x="100" y="16" width="300" height="46" rx="4"/>
+        <text class="ttl" x="250" y="38" text-anchor="middle">1,200 prompts across 3 tasks</text>
+        <text class="sub" x="250" y="53" text-anchor="middle">citation · code packages · should-refuse</text>
+        <line class="ln" x1="250" y1="62" x2="250" y2="94" marker-end="url(#ah)"/>
+
+        <rect class="bx" x="100" y="96" width="300" height="46" rx="4"/>
+        <text class="ttl" x="250" y="118" text-anchor="middle">Generate</text>
+        <text class="sub" x="250" y="133" text-anchor="middle">18 model configurations × 3 samples</text>
+        <line class="ln" x1="250" y1="142" x2="250" y2="174" marker-end="url(#ah)"/>
+
+        <rect class="bx" x="100" y="176" width="300" height="46" rx="4"/>
+        <text class="ttl" x="250" y="198" text-anchor="middle">Decompose into atomic claims</text>
+        <text class="sub" x="250" y="213" text-anchor="middle">unit of labeling is the claim, not the response</text>
+        <line class="ln" x1="250" y1="222" x2="250" y2="254" marker-end="url(#ah)"/>
+
+        <rect class="bx" x="100" y="256" width="300" height="46" rx="4"/>
+        <text class="ttl" x="250" y="278" text-anchor="middle">Verify against authoritative index</text>
+        <text class="sub" x="250" y="293" text-anchor="middle">PyPI · Semantic Scholar · gazetteer</text>
+
+        <line class="ln" x1="400" y1="279" x2="486" y2="279" marker-end="url(#ah)"/>
+        <rect class="bxm" x="488" y="248" width="256" height="62" rx="4"/>
+        <text class="sub" x="616" y="268" text-anchor="middle">SUPPORTED · ABSTAINED</text>
+        <text class="sub" x="616" y="283" text-anchor="middle">UNVERIFIABLE · PARSE FAILURE</text>
+        <text class="sub" x="616" y="300" text-anchor="middle">reported separately or excluded</text>
+
+        <line class="ln" x1="250" y1="302" x2="250" y2="336" marker-end="url(#ah)"/>
+
+        <rect class="bxa" x="100" y="338" width="300" height="62" rx="4"/>
+        <text class="ttl acc" x="250" y="359" text-anchor="middle">AXIS 1 · failure mode</text>
+        <text class="sub" x="250" y="376" text-anchor="middle">EXISTENCE · ATTRIBUTION</text>
+        <text class="sub" x="250" y="391" text-anchor="middle">NON-ABSTENTION</text>
+        <line class="ln" x1="250" y1="400" x2="250" y2="432" marker-end="url(#ah)"/>
+
+        <path class="bx" d="M250,434 L370,486 L250,538 L130,486 Z"/>
+        <text class="ttl" x="250" y="482" text-anchor="middle">corpus published</text>
+        <text class="ttl" x="250" y="498" text-anchor="middle">and indexed?</text>
+
+        <line class="ln" x1="370" y1="486" x2="486" y2="486" marker-end="url(#ah)"/>
+        <text class="sub" x="428" y="478" text-anchor="middle">no</text>
+        <rect class="bxm" x="488" y="462" width="256" height="48" rx="4"/>
+        <text class="sub" x="616" y="482" text-anchor="middle">n/a — cause not assignable</text>
+        <text class="sub" x="616" y="498" text-anchor="middle">group 1 only</text>
+
+        <line class="ln" x1="250" y1="538" x2="250" y2="570" marker-end="url(#ah)"/>
+        <text class="sub" x="266" y="558">yes · group 2</text>
+
+        <rect class="bxa" x="100" y="572" width="300" height="76" rx="4"/>
+        <text class="ttl acc" x="250" y="593" text-anchor="middle">AXIS 2 · provenance</text>
+        <text class="sub" x="250" y="610" text-anchor="middle">two queries per claim into infini-gram</text>
+        <text class="sub" x="250" y="627" text-anchor="middle">TRUTH · ERROR · SILENCE</text>
+        <text class="sub" x="250" y="642" text-anchor="middle">MIXED · N/A</text>
+        <line class="ln" x1="250" y1="648" x2="250" y2="680" marker-end="url(#ah)"/>
+
+        <rect class="bx" x="100" y="682" width="300" height="52" rx="4"/>
+        <text class="ttl" x="250" y="704" text-anchor="middle">Cross-tabulation</text>
+        <text class="sub" x="250" y="720" text-anchor="middle">failure mode × provenance, per model</text>
+      </svg>
+    </div>
+
+    <h3 style="margin-top:1rem">Measures</h3>
+    <p class="prose">
+      Let <code>C</code> be the set of atomic claims extracted from a model's responses, partitioned into supported
+      claims <code>C_sup</code>, hallucinated claims <code>C_hal</code>, and claims the verifier could not decide
+      <code>C_unv</code>. Let <code>R</code> be the set of responses.
+    </p>
+
+    <div class="tscroll">
+      <div class="fml" style="padding:1.3rem 1.4rem;">
+
+        <div class="fmlrow">
+          <div class="fn">Hallucination rate</div>
+          <div class="fe">H = |C_hal| / ( |C_hal| + |C_sup| )</div>
+          <div class="fd">Undecidable claims are excluded from the denominator rather than counted as either outcome. Reported per model and per task.</div>
+        </div>
+
+        <div class="fmlrow">
+          <div class="fn">Abstention rate</div>
+          <div class="fe">A = |R_abstained| / |R|</div>
+          <div class="fd">Reported separately, never folded into H. Were abstentions placed in the denominator, a model that refuses everything would score best.</div>
+        </div>
+
+        <div class="fmlrow">
+          <div class="fn">Parse-failure rate</div>
+          <div class="fe">F = |R_parse-fail| / |R|</div>
+          <div class="fd">Reported openly. Base models without instruction tuning fail to parse more often, and hiding that rate would make the remaining numbers look selected.</div>
+        </div>
+
+        <div class="fmlrow">
+          <div class="fn">Verifier validation<br><span style="font-weight:400;color:var(--muted);font-size:0.86rem">against human annotation</span></div>
+          <div class="fe">P = TP / (TP + FP)<br>R = TP / (TP + FN)<br>F1 = 2PR / (P + R)</div>
+          <div class="fd">100 items per task, two annotators each, with the automatic verdict as the prediction and the human consensus as ground truth. Acceptance threshold: agreement ≥ 0.85.</div>
+        </div>
+
+        <div class="fmlrow">
+          <div class="fn">Inter-annotator agreement</div>
+          <div class="fe">κ = (p_o − p_e) / (1 − p_e)</div>
+          <div class="fd">Cohen's κ, where p_o is observed agreement and p_e the agreement expected by chance. Reported alongside raw agreement, since raw agreement alone is inflated when one class dominates.</div>
+        </div>
+
+        <div class="fmlrow">
+          <div class="fn">Corpus counts</div>
+          <div class="fe">c_true(i)  = max over query forms q of count(q, correct_i)<br>c_false(i) = max over query forms q of count(q, halluc_i)</div>
+          <div class="fd">Three query forms per fact: literal, function words stripped, entity order swapped. The maximum is taken because any single hit proves presence; every individual count is stored, not just the maximum.</div>
+        </div>
+
+        <div class="fmlrow">
+          <div class="fn">Provenance label</div>
+          <div class="fe">TRUTH   if c_true &gt; 0 and c_false = 0<br>ERROR   if c_true = 0 and c_false &gt; 0<br>SILENCE if c_true = 0 and c_false = 0<br>MIXED   if c_true &gt; 0 and c_false &gt; 0</div>
+          <div class="fd">Applied identically across all three tasks. N/A where no unique correct answer exists, which is distinct from SILENCE and must not be merged with it.</div>
+        </div>
+
+        <div class="fmlrow">
+          <div class="fn">Cross-tabulation cell</div>
+          <div class="fe">P(cause = k | mode = j) = n_jk / n_j</div>
+          <div class="fd">The principal result. n_jk is the count of hallucinations with failure mode j and provenance k; n_j is the total for that mode. Reported with Wilson confidence intervals over the three samples.</div>
+        </div>
+
+        <div class="fmlrow">
+          <div class="fn">Singleton rate<br><span style="font-weight:400;color:var(--muted);font-size:0.86rem">Kalai et al. test</span></div>
+          <div class="fe">s = |{ i : c_true(i) = 1 }| / |C_hal ∪ C_sup|<br><br>prediction:  H ≥ s</div>
+          <div class="fd">The theory predicts hallucination rate is lower-bounded by the fraction of facts appearing exactly once. Reported alongside H per frequency bucket (0, 1, 2–10, 11–100, 100+). Because we count string occurrences rather than facts, s is an upper bound.</div>
+        </div>
+
+        <div class="fmlrow">
+          <div class="fn">Proxy-corpus agreement</div>
+          <div class="fe">A_proxy = |{ i : label_proxy(i) = label_true(i) }| / N</div>
+          <div class="fd">Labels derived from RedPajama or C4 compared against labels from the model's actual corpus. Quantifies the error incurred by prior work that substitutes a proxy corpus for an unavailable one.</div>
+        </div>
+
+      </div>
     </div>
   </section>
 
