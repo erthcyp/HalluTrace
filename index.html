@@ -544,26 +544,47 @@
       Illustrative numbers, not measured.
     </p>
 
-    <h3 style="margin-top:0.8rem">Which models, and why two groups</h3>
+    <h3 style="margin-top:0.8rem">Which models we can use</h3>
+    <p class="prose">
+      The two axes have different entry requirements, and that single fact decides the whole model list.
+      <strong>Axis 1 needs only the model's output</strong>, so it runs on anything. <strong>Axis 2 needs to read the
+      corpus the model was trained on</strong> — and almost nobody publishes that. Llama, Qwen and Mistral release
+      their weights but not their data; GPT and Claude release neither.
+    </p>
+    <p class="prose">
+      So the models split into two groups, not by choice but by what is possible with each.
+    </p>
+
     <div class="tscroll">
       <table>
-        <thead><tr><th>Model</th><th>Corpus</th><th>Role</th></tr></thead>
+        <thead><tr><th>Group</th><th>Models</th><th>Corpus</th><th>What we can do with them</th></tr></thead>
         <tbody>
-          <tr><td class="lead">OLMo 2 · 1B / 7B / 13B</td><td class="mono">olmo-mix-1124</td><td>Both axes — the core of the study</td></tr>
-          <tr><td class="lead">Llama 3.1 8B · Qwen 2.5 7B</td><td class="mono">closed</td><td>Axis 1 only — establishes whether the failure pattern generalizes</td></tr>
+          <tr>
+            <td class="lead">1 · Open data</td>
+            <td>OLMo 2 — 1B, 7B, 13B</td>
+            <td class="mono">olmo-mix-1124</td>
+            <td><strong>Both axes.</strong> These carry the study: what kind of failure, and where it came from</td>
+          </tr>
+          <tr>
+            <td class="lead">2 · Open weights only</td>
+            <td>Llama 3.1 8B · Qwen 2.5 7B</td>
+            <td class="mono">not published</td>
+            <td><strong>Axis 1 only.</strong> We can say what they get wrong, never why</td>
+          </tr>
         </tbody>
       </table>
     </div>
+
     <p class="prose">
-      The second group is not left unfinished. It answers a question the first group cannot: <strong>is this pattern
-      a quirk of OLMo, or a property of language models?</strong> If Llama and Qwen fail in similar
-      proportions, our conclusions about cause carry weight beyond the models we could open. Without them, the
+      <strong>Group 2 is not a group we ran out of time on.</strong> It answers a question group 1 cannot ask of
+      itself: is this pattern a quirk of OLMo, or a property of language models? If Llama and Qwen fail in similar
+      proportions, our conclusions about cause carry weight beyond the models we could open. Drop group 2 and the
       question "does this only apply to OLMo?" has one honest answer — we don't know.
     </p>
     <p class="prose">
-      Their cause columns stay empty, marked <code>n/a — corpus not public</code> rather than left blank. That
-      distinction matters: blank reads as unfinished, <code>n/a</code> reads as impossible. And the empty cells make
-      the project's point better than invented numbers would.
+      In the results table, group 2's cause columns stay empty, marked <code>n/a — corpus not public</code> rather
+      than left blank. The distinction matters: blank reads as unfinished, <code>n/a</code> reads as impossible. And
+      those empty cells make the project's point better than invented numbers would.
     </p>
     <div class="redline">
       <div class="mk">One risk closed early</div>
