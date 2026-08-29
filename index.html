@@ -624,46 +624,112 @@
 
     <div class="tscroll">
       <table>
-        <thead><tr><th>Tier</th><th>Models</th><th>Corpus</th><th>Axis 2?</th></tr></thead>
+        <thead><tr><th>Tier</th><th>Models</th><th>Weights</th><th>Corpus disclosure</th><th>Axis 2?</th></tr></thead>
         <tbody>
           <tr class="us">
             <td class="lead">A · Open data</td>
-            <td>OLMo 2 1B/7B/13B/32B · OLMoE · DCLM-7B · RedPajama-INCITE 7B · Pythia 6.9B/12B · GPT-NeoX-20B</td>
+            <td>OLMo 2 1B/7B/13B/32B · OLMo 2 7B/13B <em>base</em> · OLMoE · DCLM-7B · RedPajama-INCITE 7B ·
+                Pythia 6.9B/12B · GPT-NeoX-20B</td>
+            <td class="mono">released</td>
             <td class="mono">published + indexed</td>
             <td class="no">yes</td>
           </tr>
           <tr>
             <td class="lead">B · Open weight</td>
             <td>DeepSeek V4-Flash · Qwen3.8-27B · Qwen3.6-35B-A3B · Llama 4 Scout · Gemma 4 31B · Mistral Large 3 · Kimi K2.6</td>
-            <td class="mono">not published</td>
+            <td class="mono">released</td>
+            <td class="mono">described only</td>
             <td>no</td>
           </tr>
           <tr>
             <td class="lead">C · Closed</td>
             <td>GPT-5.6 Sol · Claude Opus 5 · Gemini 3.6 Flash</td>
-            <td class="mono">no weights, no corpus</td>
+            <td class="mono">withheld</td>
+            <td class="mono">undisclosed</td>
             <td>no</td>
           </tr>
         </tbody>
       </table>
     </div>
     <p class="prose" style="font-size:0.88rem;color:var(--muted)">
-      Roughly nineteen configurations. Tier A is repeated in group 2 below. Model names and pricing were checked in
+      Twenty-two configurations — twelve, seven and three. Tier A is repeated in group 2 below; its two <em>base</em>
+      checkpoints are the post-training control described there. <em>Described only</em> covers a range — some tier B
+      cards give token counts and mixture categories, others little more than a language list — so the disclosure
+      level is recorded per model rather than assumed uniform across the tier. Model names and pricing were checked in
       August 2026 and move quickly — reconfirm before the generation sweep.
     </p>
+
+    <div class="goal">
+      <div class="mk">Why B and C are separate rows when both measure the same</div>
+      <p class="gline">
+        Tiers B and C are indistinguishable in the data. They are separated because they are evidence for different
+        things.
+      </p>
+      <p class="gsub">
+        Neither publishes a corpus, so both carry <code>n/a</code> in every cause column and both are scored on axis 1
+        by exactly the same procedure. Collapsing them would lose nothing numerically and cost the argument one of its
+        two halves. <strong>Tier B shows that the corpus gap survives maximal good faith</strong> — these labs
+        released weights, code and in several cases the data recipe, and still did not release the data, so the gap
+        is structural rather than a matter of commercial secrecy. <strong>Tier C shows that the gap covers the models
+        the field actually ranks</strong>; without it a reviewer can dismiss the finding as a fact about research
+        models. One tier answers <em>why does no one do this</em>, the other answers <em>does it matter</em>.
+      </p>
+    </div>
+
+    <div class="tscroll">
+      <table class="compact">
+        <thead><tr><th></th><th>Tier B · open weight</th><th>Tier C · closed</th></tr></thead>
+        <tbody>
+          <tr><td class="lead">Axis 1</td><td>identical</td><td>identical</td></tr>
+          <tr><td class="lead">Axis 2</td><td><code>n/a</code></td><td><code>n/a</code></td></tr>
+          <tr class="us"><td class="lead">Can it ever move to tier A?</td><td>Yes — the weights already exist; one release or one new index is all that is missing</td><td>No — not by anyone outside the provider, at any effort</td></tr>
+          <tr><td class="lead">Re-runnable in 2030</td><td>Yes — pin a checkpoint hash, fix the seed</td><td>No — the endpoint changes silently behind a stable name</td></tr>
+          <tr><td class="lead">Inference we control</td><td>Temperature, seed, logprobs, no system prompt, base checkpoints</td><td>Whatever the serving stack does</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="goal alt">
+      <div class="mk">The sentence for the paper</div>
+      <p class="gline">
+        Tier B is not <em>yet</em> attributable. Tier C cannot be made attributable by anyone outside the provider.
+      </p>
+      <p class="gsub">
+        That difference is invisible in the table's cells and decisive for what the table means. It also states the
+        project's larger point in one line: <strong>whether a hallucination can be explained is a property of how a
+        model was released, not of how good the model is.</strong> The three tiers are a ladder of disclosure, and the
+        ladder is itself a result — read down the <em>Axis 2?</em> column and the field's blind spot has a shape.
+      </p>
+    </div>
+
+    <div class="redline">
+      <div class="mk">What we cannot rule out on tier C — stated as a limitation, not discovered later</div>
+      <p>
+        A closed endpoint may retrieve. If a provider runs search or RAG behind the API, what we measure is no longer
+        hallucination from parametric memory — and parametric memory is the only thing a corpus-provenance study is
+        about. <strong>We cannot verify the absence of retrieval</strong>, so tier C results are reported as
+        end-to-end system behaviour rather than model behaviour, and are never used to support a claim about
+        pretraining data.
+      </p>
+      <p>
+        A refusal is also not an abstention. A closed model declining on policy grounds and a base model declining
+        because it holds no answer produce the same visible event and mean opposite things. Tier C abstention rates
+        are therefore reported <strong>beside</strong> tiers A and B rather than pooled with them, and refusals
+        carrying explicit policy language are counted in a separate bucket.
+      </p>
+    </div>
 
     <div class="redline">
       <div class="mk">What tier C costs us, beyond money</div>
       <p>
-        Closed models are the ones the twenty-nine surveyed benchmarks actually rank, so leaving them out would mean
-        our criteria could never be compared against the criteria they replace. They are included for that reason —
-        and because the empty cause column beside a frontier model states the project's problem more plainly than a
-        paragraph could.
+        The price of including it is reproducibility. API models change without notice behind a stable name, so
+        <strong>the exact model version and run date are recorded with every result, and the thesis states plainly
+        that this tier cannot be re-run the way tiers A and B can.</strong> Provider terms on publishing comparative
+        evaluations are checked before the sweep, since several restrict it.
       </p>
       <p>
-        The cost is reproducibility. API models change without notice, so <strong>the exact model version and run
-        date are recorded, and the thesis states plainly that this tier cannot be re-run the way tiers A and B
-        can.</strong> Provider terms on publishing comparative evaluations are checked before the sweep.
+        We accept that price because the empty cause column beside a frontier model states the project's problem more
+        plainly than a paragraph could.
       </p>
     </div>
 
@@ -679,12 +745,16 @@
           <tr><td class="lead">GPT-5.6 Sol</td><td class="num">5.00</td><td class="num">30.00</td><td class="num">$33.66</td></tr>
           <tr><td class="lead">Claude Opus 5</td><td class="num">5.00</td><td class="num">25.00</td><td class="num">$28.26</td></tr>
           <tr><td class="lead">Gemini 3.6 Flash</td><td class="num">1.50</td><td class="num">7.50</td><td class="num">$8.48</td></tr>
-          <tr><td class="lead">Kimi K3</td><td class="num">3.00</td><td class="num">15.00</td><td class="num">$16.96</td></tr>
-          <tr><td class="lead">DeepSeek V3.2</td><td class="num">0.28</td><td class="num">0.42</td><td class="num">$0.52</td></tr>
-          <tr><td class="lead">Qwen3.7 Flash</td><td class="num">0.03</td><td class="num">0.13</td><td class="num">$0.15</td></tr>
+          <tr><td class="lead">Kimi K2.6</td><td class="num">3.00</td><td class="num">15.00</td><td class="num">$16.96</td></tr>
+          <tr><td class="lead">DeepSeek V4-Flash</td><td class="num">0.28</td><td class="num">0.42</td><td class="num">$0.52</td></tr>
+          <tr><td class="lead">Qwen3.8-27B</td><td class="num">0.03</td><td class="num">0.13</td><td class="num">$0.15</td></tr>
         </tbody>
       </table>
     </div>
+    <p class="prose" style="font-size:0.86rem;color:var(--muted)">
+      The last three rows are aggregator list prices standing in for tier B as a whole; per-model rates differ by a
+      few cents and are reconfirmed at sweep time. Tier A is self-hosted and does not appear here.
+    </p>
 
     <div class="goal">
       <div class="mk">Budget</div>
@@ -713,6 +783,7 @@
         <tbody>
           <tr class="us"><td class="lead">OLMo 2 — 1B · 7B · 13B</td><td>OLMo-mix-1124</td><td class="mono">v4_olmo-mix-1124_llama</td><td>Primary. Three sizes on one corpus gives the scale curve</td></tr>
           <tr><td class="lead">OLMo 2 — 32B</td><td>—</td><td class="mono">v4_olmo-2-0325-32b-instruct_llama</td><td>Extends the scale curve to a fourth point</td></tr>
+          <tr class="us"><td class="lead">OLMo 2 — 7B · 13B <em>base</em></td><td>OLMo-mix-1124</td><td class="mono">v4_olmo-mix-1124_llama</td><td>Post-training control. Same corpus, same pretraining, no SFT or DPO</td></tr>
           <tr><td class="lead">OLMoE — 1B-7B</td><td>—</td><td class="mono">v4_olmoe-0125-1b-7b-instruct_llama</td><td>Mixture-of-experts, same lab</td></tr>
           <tr><td class="lead">DCLM-7B</td><td>DCLM-baseline</td><td class="mono">v4_dclm-baseline_llama</td><td>Different lab, different corpus — the strongest cross-corpus evidence</td></tr>
           <tr><td class="lead">RedPajama-INCITE 7B Instruct</td><td>RedPajama-1T</td><td class="mono">v4_rpj_llama_s4</td><td>Older but instruction-tuned</td></tr>
@@ -722,6 +793,68 @@
       </table>
     </div>
 
+    <h3 style="margin-top:1.1rem">Why several sizes, rather than only the newest model</h3>
+    <p class="prose">
+      The newest models are already in the study — they are tiers B and C above. Group 2 is not here to represent the
+      state of the art. <strong>It is the instrument, and an instrument needs a scale.</strong>
+    </p>
+    <p class="prose">
+      A single checkpoint, however current, yields a description: <em>this</em> model's hallucinations divide
+      <em>this</em> way. It cannot say whether that division is a property of the model, of the corpus, or of the
+      parameter count, because nothing is held fixed against anything else. OLMo 2 at 1B, 7B, 13B and 32B is the one
+      comparison available anywhere in which <strong>corpus, data order and training recipe are identical and only
+      scale moves</strong>. What changes across those four points is attributable to scale and to nothing else.
+    </p>
+
+    <div class="tscroll">
+      <table class="compact">
+        <thead><tr><th>What moves</th><th>Prediction</th><th>What a failure would mean</th></tr></thead>
+        <tbody>
+          <tr>
+            <td class="lead">Scale ↑</td>
+            <td>TRUTH share falls</td>
+            <td>If it does not, larger models are not recovering facts that were present — the recall account is wrong</td>
+          </tr>
+          <tr class="us">
+            <td class="lead">Scale ↑</td>
+            <td>SILENCE share does <em>not</em> fall</td>
+            <td>If it does, the provenance labels are tracking something other than corpus content and axis 2 is not measuring what it claims</td>
+          </tr>
+          <tr>
+            <td class="lead">Post-training<br><span class="mono" style="font-size:0.74rem;color:var(--muted)">base vs instruct</span></td>
+            <td>Abstention moves, provenance does not</td>
+            <td>If provenance moves too, the axes are not independent and the cross-tabulation is circular — constraint C4 fails</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="goal">
+      <div class="mk">What the middle row buys</div>
+      <p class="gline">
+        A model cannot recall a fact its corpus never contained. The SILENCE share should fall to a floor and stay
+        there — and that floor is the share of hallucination scaling cannot buy away.
+      </p>
+      <p class="gsub">
+        This is the number section 04 asks for, stated as a measurement rather than an intuition. A single checkpoint
+        cannot produce it; four points on one corpus can. If the floor comes back high, the conclusion is that
+        parameters are the wrong place to spend and the corpus is the right one — a claim about where effort should
+        go, which is what an intervention-point framing is for. Note that the three rows above are predictions that
+        can fail, and two of them would falsify our own taxonomy rather than someone else's.
+      </p>
+    </div>
+
+    <div class="redline">
+      <div class="mk">One comparison we will not make</div>
+      <p>
+        OLMo 1 → OLMo 2 changes the corpus, but it also changes the architecture, the recipe and the token budget at
+        the same time. Any difference between them is confounded three ways and could not be attributed to the
+        corpus, so we do not run it and do not report it. <strong>The corpus contrast we can defend is between labs
+        at matched scale</strong> — OLMo 2 7B against DCLM-7B — where the corpus is the salient difference rather
+        than one of four.
+      </p>
+    </div>
+
     <div class="goal">
       <div class="mk">The rule that keeps this affordable</div>
       <p class="gline">
@@ -729,10 +862,13 @@
       </p>
       <p class="gsub">
         A group 1 model costs one generation run and automatic labeling — so breadth there is close to free, and it
-        turns "does this generalize?" from a hope into a measurement across nineteen configurations. A group 2 model
-        costs all of that <em>plus</em> attribution, sampling and manual inspection. Attribution effort therefore
-        follows a fixed priority: <strong>OLMo 2 sizes first</strong> for the scale curve, <strong>DCLM next</strong>
-        for cross-corpus evidence, then the remainder while time allows.
+        turns "does this generalize?" from a hope into a measurement across twenty-two configurations. A group 2 model
+        costs all of that <em>plus</em> attribution, sampling and manual inspection. But that extra cost is paid per
+        <em>corpus</em>, not per model: a corpus query is keyed on the pair (claim, corpus), so every OLMo 2 size hits
+        the same cache and the second, third and fourth sizes pay only for generation and for claims not seen before.
+        Adding a model on a <em>different</em> corpus is what buys a fresh query set. Attribution effort therefore
+        follows a fixed priority: <strong>OLMo 2 sizes first</strong> — nearly free, and they give the scale curve —
+        then <strong>DCLM</strong> for cross-corpus evidence, then the remainder while time allows.
       </p>
     </div>
 
@@ -826,8 +962,8 @@
       <table>
         <tbody>
           <tr><td class="k">Tasks</td><td>scientific citation (primary) · code packages · should-refuse — 1,200 prompts</td></tr>
-          <tr><td class="k">Models</td><td>~9 open-data configurations on both axes · ~9 open-weight configurations on axis 1</td></tr>
-          <tr><td class="k">Volume</td><td>~68,000 generations at three samples per prompt · ~4,000 cause-labeled instances</td></tr>
+          <tr><td class="k">Models</td><td><strong>22 configurations in three tiers.</strong> 12 open-data on both axes · 7 open-weight on axis 1 · 3 closed commercial on axis 1 — GPT-5.6 Sol, Claude Opus 5, Gemini 3.6 Flash. Two of the twelve are base checkpoints held as the post-training control</td></tr>
+          <tr><td class="k">Volume</td><td>~79,000 generations at three samples per prompt · ~4,500 cause-labeled instances</td></tr>
           <tr><td class="k">Team</td><td>4 people, full time — attribution · citation verifier · code verifier · infra</td></tr>
           <tr><td class="k">Also in</td><td>Three samples per prompt for error bars · the corpus-frequency curve · a freshly authored prompt subset · the proxy-corpus error bar</td></tr>
           <tr><td class="k">Still cut</td><td>Intermediate training checkpoints — a separate study, not an addition to this one</td></tr>
@@ -895,7 +1031,7 @@
         <div class="wk">Oct 16<br>– Oct 19</div>
         <div class="pb">
           <h3>Analysis and figures</h3>
-          <p>Cross-tabulation, scale curve across four OLMo sizes, cross-corpus comparison, hand-inspection of a hundred cases.</p>
+          <p>Cross-tabulation, the scale curve across four OLMo 2 sizes and the irreducible share φ read off it, the base-versus-instruct independence control, cross-corpus comparison, hand-inspection of a hundred cases.</p>
         </div>
       </div>
       <div class="phase">
@@ -948,9 +1084,12 @@
         rather than circular.
       </p>
       <p>
-        We evaluate nineteen model configurations on the first axis, of which nine — the near-complete set of models
-        publishing both weights and an indexed pretraining corpus — also receive provenance labels. We report the
-        resulting cross-tabulation, a scale curve across four OLMo 2 sizes, a cross-corpus comparison against
+        We evaluate twenty-two model configurations on the first axis — open-data, open-weight and closed commercial
+        alike — of which twelve, the near-complete set of models publishing both weights and an indexed pretraining
+        corpus, also receive provenance labels. Holding the corpus fixed and varying only parameter count across four
+        OLMo 2 sizes isolates what scale can and cannot repair, and a base-versus-instruct pair on the same corpus
+        serves as a control on the independence of the two axes. We report the
+        resulting cross-tabulation, the scale curve, a cross-corpus comparison against
         DCLM-baseline and the Pile, and the relationship between corpus frequency and hallucination rate. We release
         the cause-labeled corpus, with the raw corpus counts and the retrieved evidence attached to every judgment.
       </p>
@@ -1003,8 +1142,10 @@
         corpus of cause-labeled hallucinations with raw corpus counts and retrieved evidence attached; and (iv) a
         verified survey of twenty-nine benchmarks along a dimension no prior work has compiled. We are explicit about
         what this does not establish: corpus presence and absence show where an error is addressable in principle,
-        not that a given intervention would succeed, and because exact-string search cannot detect facts expressed in
-        other surface forms, the fabrication rate is reported as an upper bound.
+        not that a given intervention would succeed; because exact-string search cannot detect facts expressed in
+        other surface forms, the fabrication rate is reported as an upper bound; and because closed endpoints may
+        retrieve without disclosing it, results on that tier describe system behaviour rather than model behaviour
+        and are never used to support a claim about pretraining data.
       </p>
     </div>
   </section>
@@ -1033,7 +1174,7 @@
 
         <rect class="bx" x="100" y="96" width="300" height="46" rx="4"/>
         <text class="ttl" x="250" y="118" text-anchor="middle">Generate</text>
-        <text class="sub" x="250" y="133" text-anchor="middle">19 model configurations × 3 samples</text>
+        <text class="sub" x="250" y="133" text-anchor="middle">22 model configurations × 3 samples</text>
         <line class="ln" x1="250" y1="142" x2="250" y2="174" marker-end="url(#ah)"/>
 
         <rect class="bx" x="100" y="176" width="300" height="46" rx="4"/>
@@ -1089,7 +1230,10 @@
     <p class="prose">
       Let <code>C</code> be the set of atomic claims extracted from a model's responses, partitioned into supported
       claims <code>C_sup</code>, hallucinated claims <code>C_hal</code>, and claims the verifier could not decide
-      <code>C_unv</code>. Let <code>R</code> be the set of responses.
+      <code>C_unv</code>. Let <code>R</code> be the set of responses, and let <code>m</code> index a model
+      configuration — quantities written <code>x(m)</code> are computed per configuration and compared across them.
+      The first five formulas score a single model; the four that follow are the comparisons the multi-model design
+      exists to make.
     </p>
 
     <div class="tscroll">
@@ -1104,7 +1248,7 @@
         <div class="fmlrow">
           <div class="fn">Abstention rate</div>
           <div class="fe">A = |R_abstained| / |R|</div>
-          <div class="fd">Reported separately, never folded into H. Were abstentions placed in the denominator, a model that refuses everything would score best.</div>
+          <div class="fd">Reported separately, never folded into H. Were abstentions placed in the denominator, a model that refuses everything would score best. Policy refusals are counted in their own bucket and excluded from <code>R_abstained</code>, so tier C is reported beside tiers A and B rather than pooled with them — a refusal on policy grounds and a decline from having no answer are the same visible event and opposite in meaning.</div>
         </div>
 
         <div class="fmlrow">
@@ -1141,6 +1285,30 @@
           <div class="fn">Cross-tabulation cell</div>
           <div class="fe">P(cause = k | mode = j) = n_jk / n_j</div>
           <div class="fd">The principal result. n_jk is the count of hallucinations with failure mode j and provenance k; n_j is the total for that mode. Reported with Wilson confidence intervals over the three samples.</div>
+        </div>
+
+        <div class="fmlrow">
+          <div class="fn">Provenance composition</div>
+          <div class="fe">π_k(m) = n_k(m) / |C_hal(m)|<br><span style="color:var(--muted)">for k ∈ {TRUTH, ERROR, SILENCE, MIXED}</span></div>
+          <div class="fd">The share of model <code>m</code>'s hallucinations carrying each provenance label. Composition, not raw counts — otherwise a model that simply hallucinates less would be mistaken for one whose hallucinations have a different cause.</div>
+        </div>
+
+        <div class="fmlrow">
+          <div class="fn">Scale curve<br><span style="font-weight:400;color:var(--muted);font-size:0.86rem">corpus held fixed</span></div>
+          <div class="fe">π_k(m) as a function of log N_params<br>over m ∈ {OLMo 2 1B, 7B, 13B, 32B}<br><br>predictions: π_TRUTH decreasing<br>π_SILENCE non-decreasing</div>
+          <div class="fd">All four checkpoints share <code>olmo-mix-1124</code>, one data order and one recipe, so parameter count is the only quantity that moves. Each point carries a Wilson interval over the three samples; a monotone trend is claimed only where the intervals do not overlap.</div>
+        </div>
+
+        <div class="fmlrow">
+          <div class="fn">Irreducible share<br><span style="font-weight:400;color:var(--muted);font-size:0.86rem">the intervention-point answer</span></div>
+          <div class="fe">φ = π_SILENCE(m_largest)</div>
+          <div class="fd">The share of hallucination that scaling does not remove, read off at the largest size and reported with its interval — <strong>not extrapolated to a limit</strong>, since four points do not license one. Under the taxonomy these are the cases addressable only in the corpus. φ is the principal quantity section 04 asks for.</div>
+        </div>
+
+        <div class="fmlrow">
+          <div class="fn">Axis-independence control<br><span style="font-weight:400;color:var(--muted);font-size:0.86rem">base vs instruct</span></div>
+          <div class="fe">Δ = max over k of | π_k(base) − π_k(instruct) |</div>
+          <div class="fd">Run on OLMo 2 7B and 13B, where pretraining and corpus are identical and only post-training differs. Provenance is a property of the corpus, so Δ should stay small while the abstention rate A moves freely. <strong>A large Δ alongside a moved A is evidence against constraint C4</strong> and is reported as a limitation rather than dropped.</div>
         </div>
 
         <div class="fmlrow">
