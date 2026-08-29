@@ -346,14 +346,22 @@
     border: 1px solid var(--rule); background: var(--surface);
     padding: 1.2rem; overflow-x: auto;
   }
-  .flow { display: block; margin: 0 auto; min-width: 700px; }
+  .flow { display: block; margin: 0 auto; min-width: 960px; }
   .flow .ttl { font-family: "Anuphan", sans-serif; font-size: 13px; font-weight: 600; fill: var(--ink); }
   .flow .sub { font-family: "IBM Plex Mono", monospace; font-size: 10.5px; fill: var(--muted); }
   .flow .acc { fill: var(--accent-ink); }
   .flow .bx { fill: var(--surface); stroke: var(--rule); stroke-width: 1.5; }
   .flow .bxa { fill: var(--accent-wash); stroke: var(--accent); stroke-width: 2; }
   .flow .bxm { fill: var(--surface-2); stroke: var(--rule); stroke-width: 1.5; stroke-dasharray: 4 3; }
+  .flow .bxe { fill: var(--surface-2); stroke: var(--rule); stroke-width: 1.2; }
   .flow .ln { stroke: var(--rule); stroke-width: 1.5; fill: none; }
+  .flow .mk { fill: var(--rule); }
+  .flow .lnd { stroke: var(--rule); stroke-width: 1.2; fill: none; stroke-dasharray: 4 4; }
+  .flow .fr { fill: none; stroke: var(--rule); stroke-width: 1.2; stroke-dasharray: 5 5; }
+  .flow .fl {
+    font-family: "IBM Plex Mono", monospace; font-size: 10px; font-weight: 600;
+    letter-spacing: 0.14em; fill: var(--accent);
+  }
 
   footer {
     border-top: 1px solid var(--rule); padding-top: 1.2rem;
@@ -1154,75 +1162,200 @@
     <h2><span class="sn">10</span>Framework</h2>
 
     <p class="prose">
-      One prompt enters at the top; a doubly-labeled claim leaves at the bottom. The branch is the only place the two
-      model groups diverge.
+      Four bands. <strong>Input</strong> is what we bring: prompts, models, corpora. <strong>Process</strong> is the
+      pipeline we build — one prompt enters, a doubly-labeled claim leaves, and the diamond is the only place the
+      model tiers diverge. <strong>Environment</strong> is everything the pipeline depends on but does not own, drawn
+      to the side because each item is a risk we do not control. <strong>Output</strong> is what the paper reports.
+    </p>
+    <p class="prose" style="font-size:0.88rem;color:var(--muted)">
+      Standard flowchart notation, so the shape carries meaning: rectangle for a process step, the barred rectangle
+      for a call to something outside the pipeline, diamond for a decision, parallelogram for data, cylinder for
+      stored data, wavy-edged box for a document or report, trapezoid for a manual operation, stadium for start and
+      end. A legend runs along the bottom of the figure.
     </p>
 
     <div class="flowwrap">
-      <svg class="flow" viewBox="0 0 760 760" width="760" height="760" role="img"
-           aria-label="Pipeline flowchart from prompts through dual labeling to cross-tabulation">
+      <svg class="flow" viewBox="0 0 1000 1400" width="1000" height="1400" role="img"
+           aria-label="Project framework flowchart: input, process, environment and output">
         <defs>
           <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
-            <path d="M0,0 L10,5 L0,10 z" fill="var(--rule)"/>
+            <path d="M0,0 L10,5 L0,10 z" class="mk"/>
           </marker>
         </defs>
-
-        <rect class="bx" x="100" y="16" width="300" height="46" rx="4"/>
-        <text class="ttl" x="250" y="38" text-anchor="middle">1,200 prompts across 3 tasks</text>
-        <text class="sub" x="250" y="53" text-anchor="middle">citation · code packages · should-refuse</text>
-        <line class="ln" x1="250" y1="62" x2="250" y2="94" marker-end="url(#ah)"/>
-
-        <rect class="bx" x="100" y="96" width="300" height="46" rx="4"/>
-        <text class="ttl" x="250" y="118" text-anchor="middle">Generate</text>
-        <text class="sub" x="250" y="133" text-anchor="middle">22 model configurations × 3 samples</text>
-        <line class="ln" x1="250" y1="142" x2="250" y2="174" marker-end="url(#ah)"/>
-
-        <rect class="bx" x="100" y="176" width="300" height="46" rx="4"/>
-        <text class="ttl" x="250" y="198" text-anchor="middle">Decompose into atomic claims</text>
-        <text class="sub" x="250" y="213" text-anchor="middle">unit of labeling is the claim, not the response</text>
-        <line class="ln" x1="250" y1="222" x2="250" y2="254" marker-end="url(#ah)"/>
-
-        <rect class="bx" x="100" y="256" width="300" height="46" rx="4"/>
-        <text class="ttl" x="250" y="278" text-anchor="middle">Verify against authoritative index</text>
-        <text class="sub" x="250" y="293" text-anchor="middle">PyPI · Semantic Scholar · gazetteer</text>
-
-        <line class="ln" x1="400" y1="279" x2="486" y2="279" marker-end="url(#ah)"/>
-        <rect class="bxm" x="488" y="248" width="256" height="62" rx="4"/>
-        <text class="sub" x="616" y="268" text-anchor="middle">SUPPORTED · ABSTAINED</text>
-        <text class="sub" x="616" y="283" text-anchor="middle">UNVERIFIABLE · PARSE FAILURE</text>
-        <text class="sub" x="616" y="300" text-anchor="middle">reported separately or excluded</text>
-
-        <line class="ln" x1="250" y1="302" x2="250" y2="336" marker-end="url(#ah)"/>
-
-        <rect class="bxa" x="100" y="338" width="300" height="62" rx="4"/>
-        <text class="ttl acc" x="250" y="359" text-anchor="middle">AXIS 1 · failure mode</text>
-        <text class="sub" x="250" y="376" text-anchor="middle">EXISTENCE · ATTRIBUTION</text>
-        <text class="sub" x="250" y="391" text-anchor="middle">NON-ABSTENTION</text>
-        <line class="ln" x1="250" y1="400" x2="250" y2="432" marker-end="url(#ah)"/>
-
-        <path class="bx" d="M250,434 L370,486 L250,538 L130,486 Z"/>
-        <text class="ttl" x="250" y="482" text-anchor="middle">corpus published</text>
-        <text class="ttl" x="250" y="498" text-anchor="middle">and indexed?</text>
-
-        <line class="ln" x1="370" y1="486" x2="486" y2="486" marker-end="url(#ah)"/>
-        <text class="sub" x="428" y="478" text-anchor="middle">no</text>
-        <rect class="bxm" x="488" y="462" width="256" height="48" rx="4"/>
-        <text class="sub" x="616" y="482" text-anchor="middle">n/a — cause not assignable</text>
-        <text class="sub" x="616" y="498" text-anchor="middle">group 1 only</text>
-
-        <line class="ln" x1="250" y1="538" x2="250" y2="570" marker-end="url(#ah)"/>
-        <text class="sub" x="266" y="558">yes · group 2</text>
-
-        <rect class="bxa" x="100" y="572" width="300" height="76" rx="4"/>
-        <text class="ttl acc" x="250" y="593" text-anchor="middle">AXIS 2 · provenance</text>
-        <text class="sub" x="250" y="610" text-anchor="middle">two queries per claim into infini-gram</text>
-        <text class="sub" x="250" y="627" text-anchor="middle">TRUTH · ERROR · SILENCE</text>
-        <text class="sub" x="250" y="642" text-anchor="middle">MIXED · N/A</text>
-        <line class="ln" x1="250" y1="648" x2="250" y2="680" marker-end="url(#ah)"/>
-
-        <rect class="bx" x="100" y="682" width="300" height="52" rx="4"/>
-        <text class="ttl" x="250" y="704" text-anchor="middle">Cross-tabulation</text>
-        <text class="sub" x="250" y="720" text-anchor="middle">failure mode × provenance, per model</text>
+        <rect class="fr" x="16" y="16" width="708" height="186" rx="5"/>
+        <text class="fl" x="30" y="37">INPUT</text>
+        <path class="bx" d="M28,67 L244,52 L244,180 L28,180 Z"/>
+        <text class="ttl" x="136" y="96" text-anchor="middle">Prompt set</text>
+        <text class="sub" x="136" y="114" text-anchor="middle">1,200 prompts · 3 tasks</text>
+        <text class="sub" x="136" y="129" text-anchor="middle">citation (primary) · code</text>
+        <text class="sub" x="136" y="144" text-anchor="middle">packages · should-refuse</text>
+        <text class="sub" x="136" y="159" text-anchor="middle">reused + fresh-authored</text>
+        <path class="bx" d="M272,52 L468,52 L448,180 L252,180 Z"/>
+        <text class="ttl" x="360" y="90" text-anchor="middle">Models under test</text>
+        <text class="sub" x="360" y="108" text-anchor="middle">22 configurations</text>
+        <text class="sub" x="360" y="123" text-anchor="middle">A open-data 12</text>
+        <text class="sub" x="360" y="138" text-anchor="middle">B open-weight 7 · C closed 3</text>
+        <text class="sub" x="360" y="153" text-anchor="middle">3 samples per prompt</text>
+        <path class="bx" d="M476,63 A108.0,11 0 0 1 692,63 L692,169 A108.0,11 0 0 1 476,169 Z"/>
+        <path class="bx" style="fill:none" d="M476,63 A108.0,11 0 0 0 692,63"/>
+        <text class="ttl" x="584" y="103.5" text-anchor="middle">Reference corpora</text>
+        <text class="sub" x="584" y="121.5" text-anchor="middle">olmo-mix-1124 (primary)</text>
+        <text class="sub" x="584" y="136.5" text-anchor="middle">dclm-baseline · pile-train</text>
+        <text class="sub" x="584" y="151.5" text-anchor="middle">rpj · c4 for the proxy check</text>
+        <line class="ln" x1="136" y1="180" x2="136" y2="206"/>
+        <line class="ln" x1="360" y1="180" x2="360" y2="206"/>
+        <line class="ln" x1="584" y1="180" x2="584" y2="206"/>
+        <line class="ln" x1="136" y1="206" x2="584" y2="206"/>
+        <line class="ln" x1="194" y1="206" x2="194" y2="242" marker-end="url(#ah)"/>
+        <rect class="fr" x="16" y="210" width="708" height="830" rx="5"/>
+        <text class="fl" x="30" y="231">PROCESS</text>
+        <rect class="bxt" x="114" y="244" width="160" height="38" rx="19.0"/>
+        <text class="ttl" x="194" y="267" text-anchor="middle">START</text>
+        <line class="ln" x1="194" y1="282" x2="194" y2="308" marker-end="url(#ah)"/>
+        <rect class="bx" x="44" y="310" width="300" height="66" rx="3"/>
+        <line class="bar" x1="55" y1="310" x2="55" y2="376"/>
+        <line class="bar" x1="333" y1="310" x2="333" y2="376"/>
+        <text class="ttl" x="194" y="332" text-anchor="middle">Generate</text>
+        <text class="sub" x="194" y="350" text-anchor="middle">22 configs × 1,200 × 3 samples</text>
+        <text class="sub" x="194" y="365" text-anchor="middle">≈ 79,000 responses</text>
+        <line class="lnd" x1="752" y1="343" x2="726" y2="343" marker-end="url(#ah)"/>
+        <line class="ln" x1="194" y1="376" x2="194" y2="400" marker-end="url(#ah)"/>
+        <rect class="bx" x="44" y="402" width="300" height="66" rx="3"/>
+        <text class="ttl" x="194" y="424" text-anchor="middle">Decompose into atomic claims</text>
+        <text class="sub" x="194" y="442" text-anchor="middle">the claim is the unit, not</text>
+        <text class="sub" x="194" y="457" text-anchor="middle">the response · shared by 3 tasks</text>
+        <line class="ln" x1="194" y1="468" x2="194" y2="492" marker-end="url(#ah)"/>
+        <rect class="bx" x="44" y="494" width="300" height="66" rx="3"/>
+        <line class="bar" x1="55" y1="494" x2="55" y2="560"/>
+        <line class="bar" x1="333" y1="494" x2="333" y2="560"/>
+        <text class="ttl" x="194" y="516" text-anchor="middle">Verify against ground truth</text>
+        <text class="sub" x="194" y="534" text-anchor="middle">Semantic Scholar · PyPI</text>
+        <text class="sub" x="194" y="549" text-anchor="middle">arXiv · gazetteer</text>
+        <line class="lnd" x1="752" y1="527" x2="726" y2="527" marker-end="url(#ah)"/>
+        <line class="ln" x1="344" y1="527" x2="370" y2="527" marker-end="url(#ah)"/>
+        <path class="bxm" d="M372,486 L708,486 L708,565 C613.92,587.1 466.08000000000004,544.2 372,565 Z"/>
+        <text class="ttl" x="540" y="509.5" text-anchor="middle">Excluded, or reported apart</text>
+        <text class="sub" x="540" y="527.5" text-anchor="middle">SUPPORTED · ABSTAINED</text>
+        <text class="sub" x="540" y="542.5" text-anchor="middle">UNVERIFIABLE · PARSE FAILURE</text>
+        <text class="sub" x="540" y="557.5" text-anchor="middle">policy REFUSAL — tier C only</text>
+        <line class="ln" x1="194" y1="560" x2="194" y2="584" marker-end="url(#ah)"/>
+        <rect class="bxa" x="44" y="586" width="300" height="80" rx="3"/>
+        <text class="ttl acc" x="194" y="607.5" text-anchor="middle">AXIS 1 · failure mode</text>
+        <text class="sub" x="194" y="625.5" text-anchor="middle">EXISTENCE · ATTRIBUTION</text>
+        <text class="sub" x="194" y="640.5" text-anchor="middle">NON-ABSTENTION</text>
+        <text class="sub" x="194" y="655.5" text-anchor="middle">decided from the output alone</text>
+        <line class="ln" x1="194" y1="666" x2="194" y2="690" marker-end="url(#ah)"/>
+        <path class="bx" d="M194,690 L306,742 L194,794 L82,742 Z"/>
+        <text class="ttl" x="194" y="738" text-anchor="middle">corpus published</text>
+        <text class="ttl" x="194" y="754" text-anchor="middle">and indexed?</text>
+        <line class="ln" x1="306" y1="742" x2="370" y2="742" marker-end="url(#ah)"/>
+        <text class="sub" x="339" y="734" text-anchor="middle">no</text>
+        <path class="bxm" d="M392,712 L708,712 L688,772 L372,772 Z"/>
+        <text class="ttl" x="540" y="738.5" text-anchor="middle">n/a — cause not assignable</text>
+        <text class="sub" x="540" y="756.5" text-anchor="middle">tiers B and C · axis 1 only</text>
+        <line class="ln" x1="194" y1="794" x2="194" y2="818" marker-end="url(#ah)"/>
+        <text class="sub" x="206" y="812">yes · tier A</text>
+        <rect class="bxa" x="44" y="820" width="300" height="100" rx="3"/>
+        <line class="bar" x1="55" y1="820" x2="55" y2="920"/>
+        <line class="bar" x1="333" y1="820" x2="333" y2="920"/>
+        <text class="ttl acc" x="194" y="844" text-anchor="middle">AXIS 2 · provenance</text>
+        <text class="sub" x="194" y="862" text-anchor="middle">3 query forms × 2 queries</text>
+        <text class="sub" x="194" y="877" text-anchor="middle">per claim → c_true, c_false</text>
+        <text class="sub" x="194" y="892" text-anchor="middle">TRUTH · ERROR · SILENCE</text>
+        <text class="sub" x="194" y="907" text-anchor="middle">MIXED · N/A</text>
+        <line class="lnd" x1="752" y1="870" x2="726" y2="870" marker-end="url(#ah)"/>
+        <line class="ln" x1="194" y1="920" x2="194" y2="944" marker-end="url(#ah)"/>
+        <rect class="bx" x="44" y="946" width="300" height="66" rx="3"/>
+        <text class="ttl" x="194" y="968" text-anchor="middle">Aggregate per configuration</text>
+        <text class="sub" x="194" y="986" text-anchor="middle">H · A · F · π_k, then</text>
+        <text class="sub" x="194" y="1001" text-anchor="middle">compare across models</text>
+        <line class="ln" x1="194" y1="1012" x2="194" y2="1096" marker-end="url(#ah)"/>
+        <rect class="fr" x="740" y="210" width="244" height="830" rx="5"/>
+        <text class="fl" x="754" y="231">ENVIRONMENT</text>
+        <rect class="bxe" x="754" y="310" width="216" height="66" rx="3"/>
+        <text class="ttl" x="862" y="332" text-anchor="middle">Model endpoints</text>
+        <text class="sub" x="862" y="350" text-anchor="middle">self-hosted vLLM · A, B</text>
+        <text class="sub" x="862" y="365" text-anchor="middle">provider APIs · tier C</text>
+        <rect class="bxe" x="754" y="402" width="216" height="66" rx="3"/>
+        <text class="ttl" x="862" y="424" text-anchor="middle">Compute and budget</text>
+        <text class="sub" x="862" y="442" text-anchor="middle">local GPUs for A and B</text>
+        <text class="sub" x="862" y="457" text-anchor="middle">≈ $130 of API for tier C</text>
+        <rect class="bxe" x="754" y="494" width="216" height="66" rx="3"/>
+        <line class="bar" x1="765" y1="494" x2="765" y2="560"/>
+        <line class="bar" x1="959" y1="494" x2="959" y2="560"/>
+        <text class="ttl" x="862" y="516" text-anchor="middle">Authoritative indexes</text>
+        <text class="sub" x="862" y="534" text-anchor="middle">Semantic Scholar · PyPI</text>
+        <text class="sub" x="862" y="549" text-anchor="middle">arXiv · gazetteer</text>
+        <path class="bxe" d="M754,586 L970,586 L948,666 L776,666 Z"/>
+        <text class="ttl" x="862" y="615" text-anchor="middle">Human annotators</text>
+        <text class="sub" x="862" y="633" text-anchor="middle">2 per item · 100 per task</text>
+        <text class="sub" x="862" y="648" text-anchor="middle">consensus is ground truth</text>
+        <path class="bxe" d="M754,701 A108.0,11 0 0 1 970,701 L970,765 A108.0,11 0 0 1 754,765 Z"/>
+        <path class="bxe" style="fill:none" d="M754,701 A108.0,11 0 0 0 970,701"/>
+        <text class="ttl" x="862" y="726" text-anchor="middle">Evidence store</text>
+        <text class="sub" x="862" y="744" text-anchor="middle">raw counts + matched docs</text>
+        <text class="sub" x="862" y="759" text-anchor="middle">kept for every judgment</text>
+        <rect class="bxe" x="754" y="820" width="216" height="100" rx="3"/>
+        <line class="bar" x1="765" y1="820" x2="765" y2="920"/>
+        <line class="bar" x1="959" y1="820" x2="959" y2="920"/>
+        <text class="ttl" x="862" y="844" text-anchor="middle">infini-gram API</text>
+        <text class="sub" x="862" y="862" text-anchor="middle">n-gram counts over the</text>
+        <text class="sub" x="862" y="877" text-anchor="middle">model's own corpus</text>
+        <text class="sub" x="862" y="892" text-anchor="middle">not a proxy — the mix</text>
+        <text class="sub" x="862" y="907" text-anchor="middle">OLMo 2 actually read</text>
+        <rect class="bxe" x="754" y="946" width="216" height="66" rx="3"/>
+        <text class="ttl" x="862" y="968" text-anchor="middle">Cache and rate limit</text>
+        <text class="sub" x="862" y="986" text-anchor="middle">queries keyed on</text>
+        <text class="sub" x="862" y="1001" text-anchor="middle">(claim, corpus), not model</text>
+        <rect class="fr" x="16" y="1064" width="968" height="194" rx="5"/>
+        <text class="fl" x="30" y="1085">OUTPUT</text>
+        <path class="bxa" d="M30,1096 L258,1096 L258,1223 C194.16,1245.1 93.84,1202.2 30,1223 Z"/>
+        <text class="ttl acc" x="144" y="1134" text-anchor="middle">Cross-tabulation</text>
+        <text class="sub" x="144" y="1152" text-anchor="middle">P(cause | mode)</text>
+        <text class="sub" x="144" y="1167" text-anchor="middle">per configuration</text>
+        <text class="sub" x="144" y="1182" text-anchor="middle">with Wilson intervals</text>
+        <text class="sub" x="144" y="1197" text-anchor="middle">the principal result</text>
+        <path class="bx" d="M266,1096 L494,1096 L494,1223 C430.15999999999997,1245.1 329.84000000000003,1202.2 266,1223 Z"/>
+        <text class="ttl" x="380" y="1134" text-anchor="middle">Scale curve and φ</text>
+        <text class="sub" x="380" y="1152" text-anchor="middle">π_k over 4 OLMo sizes</text>
+        <text class="sub" x="380" y="1167" text-anchor="middle">corpus held fixed</text>
+        <text class="sub" x="380" y="1182" text-anchor="middle">φ = the share that</text>
+        <text class="sub" x="380" y="1197" text-anchor="middle">scaling cannot remove</text>
+        <path class="bx" d="M502,1096 L730,1096 L730,1223 C666.16,1245.1 565.84,1202.2 502,1223 Z"/>
+        <text class="ttl" x="616" y="1134" text-anchor="middle">Cause-labeled dataset</text>
+        <text class="sub" x="616" y="1152" text-anchor="middle">≈ 4,500 instances</text>
+        <text class="sub" x="616" y="1167" text-anchor="middle">raw counts and evidence</text>
+        <text class="sub" x="616" y="1182" text-anchor="middle">on every judgment</text>
+        <text class="sub" x="616" y="1197" text-anchor="middle">released</text>
+        <path class="bx" d="M738,1096 L966,1096 L966,1223 C902.16,1245.1 801.84,1202.2 738,1223 Z"/>
+        <text class="ttl" x="852" y="1134" text-anchor="middle">Validation report</text>
+        <text class="sub" x="852" y="1152" text-anchor="middle">P / R / F1 and κ</text>
+        <text class="sub" x="852" y="1167" text-anchor="middle">Δ axis independence</text>
+        <text class="sub" x="852" y="1182" text-anchor="middle">A_proxy · parse failure</text>
+        <text class="sub" x="852" y="1197" text-anchor="middle">abstention, kept apart</text>
+        <line class="ln" x1="500" y1="1258" x2="500" y2="1282" marker-end="url(#ah)"/>
+        <rect class="bxt" x="414" y="1284" width="172" height="38" rx="19.0"/>
+        <text class="ttl" x="500" y="1307" text-anchor="middle">END</text>
+        <line class="fr" x1="16" y1="1346" x2="984" y2="1346"/>
+        <rect class="lg" x="22" y="1360" width="30" height="20" rx="3"/>
+        <text class="lgt" x="59" y="1374">process</text>
+        <rect class="lg" x="143" y="1360" width="30" height="20" rx="3"/>
+        <line class="bar" x1="148" y1="1360" x2="148" y2="1380"/>
+        <line class="bar" x1="168" y1="1360" x2="168" y2="1380"/>
+        <text class="lgt" x="180" y="1374">external call</text>
+        <path class="lg" d="M279.0,1360.0 L294.0,1370.0 L279.0,1380.0 L264.0,1370.0 Z"/>
+        <text class="lgt" x="301" y="1374">decision</text>
+        <path class="lg" d="M391,1360 L415,1360 L409,1380 L385,1380 Z"/>
+        <text class="lgt" x="422" y="1374">data</text>
+        <path class="lg" d="M506,1364 A15.0,4 0 0 1 536,1364 L536,1376 A15.0,4 0 0 1 506,1376 Z"/>
+        <path class="lg" style="fill:none" d="M506,1364 A15.0,4 0 0 0 536,1364"/>
+        <text class="lgt" x="543" y="1374">stored data</text>
+        <path class="lg" d="M627,1360 L657,1360 L657,1375 C648.6,1383.5 635.4,1367.0 627,1375 Z"/>
+        <text class="lgt" x="664" y="1374">document</text>
+        <path class="lg" d="M748,1360 L778,1360 L772,1380 L754,1380 Z"/>
+        <text class="lgt" x="785" y="1374">manual</text>
+        <rect class="lg" x="869" y="1360" width="30" height="20" rx="10.0"/>
+        <text class="lgt" x="906" y="1374">terminator</text>
       </svg>
     </div>
 

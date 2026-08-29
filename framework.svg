@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1400" width="1000" height="1400">
+  <rect x="0" y="0" width="1000" height="1400" fill="#FFFFFF"/>
+        <defs>
+          <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+            <path d="M0,0 L10,5 L0,10 z" fill="#D3DAD4"/>
+          </marker>
+        </defs>
+        <rect fill="none" stroke="#D3DAD4" stroke-width="1.2" stroke-dasharray="5 5" x="16" y="16" width="708" height="186" rx="5"/>
+        <text font-family="Consolas, Courier New, monospace" font-size="10" font-weight="700" letter-spacing="1.4" fill="#0E6B57" x="30" y="37">INPUT</text>
+        <path fill="#FFFFFF" stroke="#D3DAD4" stroke-width="1.5" d="M28,67 L244,52 L244,180 L28,180 Z"/>
+        <text font-family="Segoe UI, Calibri, Arial, sans-serif" font-size="13" font-weight="600" fill="#141A17" x="136" y="96" text-anchor="middle">Prompt set</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="136" y="114" text-anchor="middle">1,200 prompts · 3 tasks</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="136" y="129" text-anchor="middle">citation (primary) · code</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="136" y="144" text-anchor="middle">packages · should-refuse</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="136" y="159" text-anchor="middle">reused + fresh-authored</text>
+        <path fill="#FFFFFF" stroke="#D3DAD4" stroke-width="1.5" d="M272,52 L468,52 L448,180 L252,180 Z"/>
+        <text font-family="Segoe UI, Calibri, Arial, sans-serif" font-size="13" font-weight="600" fill="#141A17" x="360" y="90" text-anchor="middle">Models under test</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="360" y="108" text-anchor="middle">22 configurations</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="360" y="123" text-anchor="middle">A open-data 12</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="360" y="138" text-anchor="middle">B open-weight 7 · C closed 3</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="360" y="153" text-anchor="middle">3 samples per prompt</text>
+        <path fill="#FFFFFF" stroke="#D3DAD4" stroke-width="1.5" d="M476,63 A108.0,11 0 0 1 692,63 L692,169 A108.0,11 0 0 1 476,169 Z"/>
+        <path fill="#FFFFFF" stroke="#D3DAD4" stroke-width="1.5" style="fill:none" d="M476,63 A108.0,11 0 0 0 692,63"/>
+        <text font-family="Segoe UI, Calibri, Arial, sans-serif" font-size="13" font-weight="600" fill="#141A17" x="584" y="103.5" text-anchor="middle">Reference corpora</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="584" y="121.5" text-anchor="middle">olmo-mix-1124 (primary)</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="584" y="136.5" text-anchor="middle">dclm-baseline · pile-train</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="584" y="151.5" text-anchor="middle">rpj · c4 for the proxy check</text>
+        <line stroke="#D3DAD4" stroke-width="1.5" fill="none" x1="136" y1="180" x2="136" y2="206"/>
+        <line stroke="#D3DAD4" stroke-width="1.5" fill="none" x1="360" y1="180" x2="360" y2="206"/>
+        <line stroke="#D3DAD4" stroke-width="1.5" fill="none" x1="584" y1="180" x2="584" y2="206"/>
+        <line stroke="#D3DAD4" stroke-width="1.5" fill="none" x1="136" y1="206" x2="584" y2="206"/>
+        <line stroke="#D3DAD4" stroke-width="1.5" fill="none" x1="194" y1="206" x2="194" y2="242" marker-end="url(#ah)"/>
+        <rect fill="none" stroke="#D3DAD4" stroke-width="1.2" stroke-dasharray="5 5" x="16" y="210" width="708" height="830" rx="5"/>
+        <text font-family="Consolas, Courier New, monospace" font-size="10" font-weight="700" letter-spacing="1.4" fill="#0E6B57" x="30" y="231">PROCESS</text>
+        <rect fill="#0E6B57" stroke="#0E6B57" stroke-width="1.5" x="114" y="244" width="160" height="38" rx="19.0"/>
+        <text font-family="Segoe UI, Calibri, Arial, sans-serif" font-size="13" font-weight="600" fill="#FFFFFF" x="194" y="267" text-anchor="middle">START</text>
+        <line stroke="#D3DAD4" stroke-width="1.5" fill="none" x1="194" y1="282" x2="194" y2="308" marker-end="url(#ah)"/>
+        <rect fill="#FFFFFF" stroke="#D3DAD4" stroke-width="1.5" x="44" y="310" width="300" height="66" rx="3"/>
+        <line stroke="#D3DAD4" stroke-width="1.5" x1="55" y1="310" x2="55" y2="376"/>
+        <line stroke="#D3DAD4" stroke-width="1.5" x1="333" y1="310" x2="333" y2="376"/>
+        <text font-family="Segoe UI, Calibri, Arial, sans-serif" font-size="13" font-weight="600" fill="#141A17" x="194" y="332" text-anchor="middle">Generate</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="194" y="350" text-anchor="middle">22 configs × 1,200 × 3 samples</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="194" y="365" text-anchor="middle">≈ 79,000 responses</text>
+        <line stroke="#D3DAD4" stroke-width="1.2" fill="none" stroke-dasharray="4 4" x1="752" y1="343" x2="726" y2="343" marker-end="url(#ah)"/>
+        <line stroke="#D3DAD4" stroke-width="1.5" fill="none" x1="194" y1="376" x2="194" y2="400" marker-end="url(#ah)"/>
+        <rect fill="#FFFFFF" stroke="#D3DAD4" stroke-width="1.5" x="44" y="402" width="300" height="66" rx="3"/>
+        <text font-family="Segoe UI, Calibri, Arial, sans-serif" font-size="13" font-weight="600" fill="#141A17" x="194" y="424" text-anchor="middle">Decompose into atomic claims</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="194" y="442" text-anchor="middle">the claim is the unit, not</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="194" y="457" text-anchor="middle">the response · shared by 3 tasks</text>
+        <line stroke="#D3DAD4" stroke-width="1.5" fill="none" x1="194" y1="468" x2="194" y2="492" marker-end="url(#ah)"/>
+        <rect fill="#FFFFFF" stroke="#D3DAD4" stroke-width="1.5" x="44" y="494" width="300" height="66" rx="3"/>
+        <line stroke="#D3DAD4" stroke-width="1.5" x1="55" y1="494" x2="55" y2="560"/>
+        <line stroke="#D3DAD4" stroke-width="1.5" x1="333" y1="494" x2="333" y2="560"/>
+        <text font-family="Segoe UI, Calibri, Arial, sans-serif" font-size="13" font-weight="600" fill="#141A17" x="194" y="516" text-anchor="middle">Verify against ground truth</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="194" y="534" text-anchor="middle">Semantic Scholar · PyPI</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="194" y="549" text-anchor="middle">arXiv · gazetteer</text>
+        <line stroke="#D3DAD4" stroke-width="1.2" fill="none" stroke-dasharray="4 4" x1="752" y1="527" x2="726" y2="527" marker-end="url(#ah)"/>
+        <line stroke="#D3DAD4" stroke-width="1.5" fill="none" x1="344" y1="527" x2="370" y2="527" marker-end="url(#ah)"/>
+        <path fill="#EBEFEA" stroke="#D3DAD4" stroke-width="1.5" stroke-dasharray="4 3" d="M372,486 L708,486 L708,565 C613.92,587.1 466.08000000000004,544.2 372,565 Z"/>
+        <text font-family="Segoe UI, Calibri, Arial, sans-serif" font-size="13" font-weight="600" fill="#141A17" x="540" y="509.5" text-anchor="middle">Excluded, or reported apart</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="540" y="527.5" text-anchor="middle">SUPPORTED · ABSTAINED</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="540" y="542.5" text-anchor="middle">UNVERIFIABLE · PARSE FAILURE</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="540" y="557.5" text-anchor="middle">policy REFUSAL — tier C only</text>
+        <line stroke="#D3DAD4" stroke-width="1.5" fill="none" x1="194" y1="560" x2="194" y2="584" marker-end="url(#ah)"/>
+        <rect fill="#DFEDE8" stroke="#0E6B57" stroke-width="2" x="44" y="586" width="300" height="80" rx="3"/>
+        <text font-family="Segoe UI, Calibri, Arial, sans-serif" font-size="13" font-weight="600" fill="#0A5344" x="194" y="607.5" text-anchor="middle">AXIS 1 · failure mode</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="194" y="625.5" text-anchor="middle">EXISTENCE · ATTRIBUTION</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="194" y="640.5" text-anchor="middle">NON-ABSTENTION</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="194" y="655.5" text-anchor="middle">decided from the output alone</text>
+        <line stroke="#D3DAD4" stroke-width="1.5" fill="none" x1="194" y1="666" x2="194" y2="690" marker-end="url(#ah)"/>
+        <path fill="#FFFFFF" stroke="#D3DAD4" stroke-width="1.5" d="M194,690 L306,742 L194,794 L82,742 Z"/>
+        <text font-family="Segoe UI, Calibri, Arial, sans-serif" font-size="13" font-weight="600" fill="#141A17" x="194" y="738" text-anchor="middle">corpus published</text>
+        <text font-family="Segoe UI, Calibri, Arial, sans-serif" font-size="13" font-weight="600" fill="#141A17" x="194" y="754" text-anchor="middle">and indexed?</text>
+        <line stroke="#D3DAD4" stroke-width="1.5" fill="none" x1="306" y1="742" x2="370" y2="742" marker-end="url(#ah)"/>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="339" y="734" text-anchor="middle">no</text>
+        <path fill="#EBEFEA" stroke="#D3DAD4" stroke-width="1.5" stroke-dasharray="4 3" d="M392,712 L708,712 L688,772 L372,772 Z"/>
+        <text font-family="Segoe UI, Calibri, Arial, sans-serif" font-size="13" font-weight="600" fill="#141A17" x="540" y="738.5" text-anchor="middle">n/a — cause not assignable</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="540" y="756.5" text-anchor="middle">tiers B and C · axis 1 only</text>
+        <line stroke="#D3DAD4" stroke-width="1.5" fill="none" x1="194" y1="794" x2="194" y2="818" marker-end="url(#ah)"/>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="206" y="812">yes · tier A</text>
+        <rect fill="#DFEDE8" stroke="#0E6B57" stroke-width="2" x="44" y="820" width="300" height="100" rx="3"/>
+        <line stroke="#D3DAD4" stroke-width="1.5" x1="55" y1="820" x2="55" y2="920"/>
+        <line stroke="#D3DAD4" stroke-width="1.5" x1="333" y1="820" x2="333" y2="920"/>
+        <text font-family="Segoe UI, Calibri, Arial, sans-serif" font-size="13" font-weight="600" fill="#0A5344" x="194" y="844" text-anchor="middle">AXIS 2 · provenance</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="194" y="862" text-anchor="middle">3 query forms × 2 queries</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="194" y="877" text-anchor="middle">per claim → c_true, c_false</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="194" y="892" text-anchor="middle">TRUTH · ERROR · SILENCE</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="194" y="907" text-anchor="middle">MIXED · N/A</text>
+        <line stroke="#D3DAD4" stroke-width="1.2" fill="none" stroke-dasharray="4 4" x1="752" y1="870" x2="726" y2="870" marker-end="url(#ah)"/>
+        <line stroke="#D3DAD4" stroke-width="1.5" fill="none" x1="194" y1="920" x2="194" y2="944" marker-end="url(#ah)"/>
+        <rect fill="#FFFFFF" stroke="#D3DAD4" stroke-width="1.5" x="44" y="946" width="300" height="66" rx="3"/>
+        <text font-family="Segoe UI, Calibri, Arial, sans-serif" font-size="13" font-weight="600" fill="#141A17" x="194" y="968" text-anchor="middle">Aggregate per configuration</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="194" y="986" text-anchor="middle">H · A · F · π_k, then</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="194" y="1001" text-anchor="middle">compare across models</text>
+        <line stroke="#D3DAD4" stroke-width="1.5" fill="none" x1="194" y1="1012" x2="194" y2="1096" marker-end="url(#ah)"/>
+        <rect fill="none" stroke="#D3DAD4" stroke-width="1.2" stroke-dasharray="5 5" x="740" y="210" width="244" height="830" rx="5"/>
+        <text font-family="Consolas, Courier New, monospace" font-size="10" font-weight="700" letter-spacing="1.4" fill="#0E6B57" x="754" y="231">ENVIRONMENT</text>
+        <rect fill="#EBEFEA" stroke="#D3DAD4" stroke-width="1.2" x="754" y="310" width="216" height="66" rx="3"/>
+        <text font-family="Segoe UI, Calibri, Arial, sans-serif" font-size="13" font-weight="600" fill="#141A17" x="862" y="332" text-anchor="middle">Model endpoints</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="862" y="350" text-anchor="middle">self-hosted vLLM · A, B</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="862" y="365" text-anchor="middle">provider APIs · tier C</text>
+        <rect fill="#EBEFEA" stroke="#D3DAD4" stroke-width="1.2" x="754" y="402" width="216" height="66" rx="3"/>
+        <text font-family="Segoe UI, Calibri, Arial, sans-serif" font-size="13" font-weight="600" fill="#141A17" x="862" y="424" text-anchor="middle">Compute and budget</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="862" y="442" text-anchor="middle">local GPUs for A and B</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="862" y="457" text-anchor="middle">≈ $130 of API for tier C</text>
+        <rect fill="#EBEFEA" stroke="#D3DAD4" stroke-width="1.2" x="754" y="494" width="216" height="66" rx="3"/>
+        <line stroke="#D3DAD4" stroke-width="1.5" x1="765" y1="494" x2="765" y2="560"/>
+        <line stroke="#D3DAD4" stroke-width="1.5" x1="959" y1="494" x2="959" y2="560"/>
+        <text font-family="Segoe UI, Calibri, Arial, sans-serif" font-size="13" font-weight="600" fill="#141A17" x="862" y="516" text-anchor="middle">Authoritative indexes</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="862" y="534" text-anchor="middle">Semantic Scholar · PyPI</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="862" y="549" text-anchor="middle">arXiv · gazetteer</text>
+        <path fill="#EBEFEA" stroke="#D3DAD4" stroke-width="1.2" d="M754,586 L970,586 L948,666 L776,666 Z"/>
+        <text font-family="Segoe UI, Calibri, Arial, sans-serif" font-size="13" font-weight="600" fill="#141A17" x="862" y="615" text-anchor="middle">Human annotators</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="862" y="633" text-anchor="middle">2 per item · 100 per task</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="862" y="648" text-anchor="middle">consensus is ground truth</text>
+        <path fill="#EBEFEA" stroke="#D3DAD4" stroke-width="1.2" d="M754,701 A108.0,11 0 0 1 970,701 L970,765 A108.0,11 0 0 1 754,765 Z"/>
+        <path fill="#EBEFEA" stroke="#D3DAD4" stroke-width="1.2" style="fill:none" d="M754,701 A108.0,11 0 0 0 970,701"/>
+        <text font-family="Segoe UI, Calibri, Arial, sans-serif" font-size="13" font-weight="600" fill="#141A17" x="862" y="726" text-anchor="middle">Evidence store</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="862" y="744" text-anchor="middle">raw counts + matched docs</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="862" y="759" text-anchor="middle">kept for every judgment</text>
+        <rect fill="#EBEFEA" stroke="#D3DAD4" stroke-width="1.2" x="754" y="820" width="216" height="100" rx="3"/>
+        <line stroke="#D3DAD4" stroke-width="1.5" x1="765" y1="820" x2="765" y2="920"/>
+        <line stroke="#D3DAD4" stroke-width="1.5" x1="959" y1="820" x2="959" y2="920"/>
+        <text font-family="Segoe UI, Calibri, Arial, sans-serif" font-size="13" font-weight="600" fill="#141A17" x="862" y="844" text-anchor="middle">infini-gram API</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="862" y="862" text-anchor="middle">n-gram counts over the</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="862" y="877" text-anchor="middle">model's own corpus</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="862" y="892" text-anchor="middle">not a proxy — the mix</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="862" y="907" text-anchor="middle">OLMo 2 actually read</text>
+        <rect fill="#EBEFEA" stroke="#D3DAD4" stroke-width="1.2" x="754" y="946" width="216" height="66" rx="3"/>
+        <text font-family="Segoe UI, Calibri, Arial, sans-serif" font-size="13" font-weight="600" fill="#141A17" x="862" y="968" text-anchor="middle">Cache and rate limit</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="862" y="986" text-anchor="middle">queries keyed on</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="862" y="1001" text-anchor="middle">(claim, corpus), not model</text>
+        <rect fill="none" stroke="#D3DAD4" stroke-width="1.2" stroke-dasharray="5 5" x="16" y="1064" width="968" height="194" rx="5"/>
+        <text font-family="Consolas, Courier New, monospace" font-size="10" font-weight="700" letter-spacing="1.4" fill="#0E6B57" x="30" y="1085">OUTPUT</text>
+        <path fill="#DFEDE8" stroke="#0E6B57" stroke-width="2" d="M30,1096 L258,1096 L258,1223 C194.16,1245.1 93.84,1202.2 30,1223 Z"/>
+        <text font-family="Segoe UI, Calibri, Arial, sans-serif" font-size="13" font-weight="600" fill="#0A5344" x="144" y="1134" text-anchor="middle">Cross-tabulation</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="144" y="1152" text-anchor="middle">P(cause | mode)</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="144" y="1167" text-anchor="middle">per configuration</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="144" y="1182" text-anchor="middle">with Wilson intervals</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="144" y="1197" text-anchor="middle">the principal result</text>
+        <path fill="#FFFFFF" stroke="#D3DAD4" stroke-width="1.5" d="M266,1096 L494,1096 L494,1223 C430.15999999999997,1245.1 329.84000000000003,1202.2 266,1223 Z"/>
+        <text font-family="Segoe UI, Calibri, Arial, sans-serif" font-size="13" font-weight="600" fill="#141A17" x="380" y="1134" text-anchor="middle">Scale curve and φ</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="380" y="1152" text-anchor="middle">π_k over 4 OLMo sizes</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="380" y="1167" text-anchor="middle">corpus held fixed</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="380" y="1182" text-anchor="middle">φ = the share that</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="380" y="1197" text-anchor="middle">scaling cannot remove</text>
+        <path fill="#FFFFFF" stroke="#D3DAD4" stroke-width="1.5" d="M502,1096 L730,1096 L730,1223 C666.16,1245.1 565.84,1202.2 502,1223 Z"/>
+        <text font-family="Segoe UI, Calibri, Arial, sans-serif" font-size="13" font-weight="600" fill="#141A17" x="616" y="1134" text-anchor="middle">Cause-labeled dataset</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="616" y="1152" text-anchor="middle">≈ 4,500 instances</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="616" y="1167" text-anchor="middle">raw counts and evidence</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="616" y="1182" text-anchor="middle">on every judgment</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="616" y="1197" text-anchor="middle">released</text>
+        <path fill="#FFFFFF" stroke="#D3DAD4" stroke-width="1.5" d="M738,1096 L966,1096 L966,1223 C902.16,1245.1 801.84,1202.2 738,1223 Z"/>
+        <text font-family="Segoe UI, Calibri, Arial, sans-serif" font-size="13" font-weight="600" fill="#141A17" x="852" y="1134" text-anchor="middle">Validation report</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="852" y="1152" text-anchor="middle">P / R / F1 and κ</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="852" y="1167" text-anchor="middle">Δ axis independence</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="852" y="1182" text-anchor="middle">A_proxy · parse failure</text>
+        <text font-family="Consolas, Courier New, monospace" font-size="10.5" fill="#6B776F" x="852" y="1197" text-anchor="middle">abstention, kept apart</text>
+        <line stroke="#D3DAD4" stroke-width="1.5" fill="none" x1="500" y1="1258" x2="500" y2="1282" marker-end="url(#ah)"/>
+        <rect fill="#0E6B57" stroke="#0E6B57" stroke-width="1.5" x="414" y="1284" width="172" height="38" rx="19.0"/>
+        <text font-family="Segoe UI, Calibri, Arial, sans-serif" font-size="13" font-weight="600" fill="#FFFFFF" x="500" y="1307" text-anchor="middle">END</text>
+        <line fill="none" stroke="#D3DAD4" stroke-width="1.2" stroke-dasharray="5 5" x1="16" y1="1346" x2="984" y2="1346"/>
+        <rect fill="#FFFFFF" stroke="#6B776F" stroke-width="1.2" x="22" y="1360" width="30" height="20" rx="3"/>
+        <text font-family="Consolas, Courier New, monospace" font-size="10" fill="#6B776F" x="59" y="1374">process</text>
+        <rect fill="#FFFFFF" stroke="#6B776F" stroke-width="1.2" x="143" y="1360" width="30" height="20" rx="3"/>
+        <line stroke="#D3DAD4" stroke-width="1.5" x1="148" y1="1360" x2="148" y2="1380"/>
+        <line stroke="#D3DAD4" stroke-width="1.5" x1="168" y1="1360" x2="168" y2="1380"/>
+        <text font-family="Consolas, Courier New, monospace" font-size="10" fill="#6B776F" x="180" y="1374">external call</text>
+        <path fill="#FFFFFF" stroke="#6B776F" stroke-width="1.2" d="M279.0,1360.0 L294.0,1370.0 L279.0,1380.0 L264.0,1370.0 Z"/>
+        <text font-family="Consolas, Courier New, monospace" font-size="10" fill="#6B776F" x="301" y="1374">decision</text>
+        <path fill="#FFFFFF" stroke="#6B776F" stroke-width="1.2" d="M391,1360 L415,1360 L409,1380 L385,1380 Z"/>
+        <text font-family="Consolas, Courier New, monospace" font-size="10" fill="#6B776F" x="422" y="1374">data</text>
+        <path fill="#FFFFFF" stroke="#6B776F" stroke-width="1.2" d="M506,1364 A15.0,4 0 0 1 536,1364 L536,1376 A15.0,4 0 0 1 506,1376 Z"/>
+        <path fill="#FFFFFF" stroke="#6B776F" stroke-width="1.2" style="fill:none" d="M506,1364 A15.0,4 0 0 0 536,1364"/>
+        <text font-family="Consolas, Courier New, monospace" font-size="10" fill="#6B776F" x="543" y="1374">stored data</text>
+        <path fill="#FFFFFF" stroke="#6B776F" stroke-width="1.2" d="M627,1360 L657,1360 L657,1375 C648.6,1383.5 635.4,1367.0 627,1375 Z"/>
+        <text font-family="Consolas, Courier New, monospace" font-size="10" fill="#6B776F" x="664" y="1374">document</text>
+        <path fill="#FFFFFF" stroke="#6B776F" stroke-width="1.2" d="M748,1360 L778,1360 L772,1380 L754,1380 Z"/>
+        <text font-family="Consolas, Courier New, monospace" font-size="10" fill="#6B776F" x="785" y="1374">manual</text>
+        <rect fill="#FFFFFF" stroke="#6B776F" stroke-width="1.2" x="869" y="1360" width="30" height="20" rx="10.0"/>
+        <text font-family="Consolas, Courier New, monospace" font-size="10" fill="#6B776F" x="906" y="1374">terminator</text>
+</svg>
