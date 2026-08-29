@@ -616,71 +616,226 @@
       Illustrative numbers, not measured.
     </p>
 
-    <h3 style="margin-top:0.8rem">Which models, and why exactly these</h3>
+    <h3 style="margin-top:0.8rem">Which models we can use</h3>
     <p class="prose">
-      The two axes have different entry requirements, and that single fact decides the whole study.
+      The two axes have different entry requirements, and that single fact decides the whole model list.
       <strong>Axis 1 needs only the model's output</strong>, so it runs on anything we can call. <strong>Axis 2 needs
-      to read the corpus the model was trained on</strong>, and that corpus must also be searchable at the scale of
-      thousands of individual lookups — which in practice means it has an infini-gram index.
+      to read the corpus the model was trained on</strong> — and that corpus must also be searchable, which in
+      practice means it has an infini-gram index.
+    </p>
+    <p class="prose">
+      So the models split into two groups, not by choice but by what each one permits. The asymmetry in cost between
+      them is what shapes the plan: adding a group 2 model is nearly free, while adding a group 1 model buys another
+      round of attribution work.
     </p>
 
-    <div class="goal">
-      <div class="mk">The scope decision this study rests on</div>
-      <p class="gline">
-        We study every model whose pretraining corpus is published <em>and</em> searchable. There are five of them,
-        so we take all five rather than sampling.
-      </p>
-      <p class="gsub">
-        This is not a benchmark and does not try to be one. A benchmark ranks models; this measures where their
-        errors come from, and that can only be done where the training data can be opened. Because the set is small
-        enough to take whole, <strong>the result describes a complete population rather than a sample</strong> — the
-        question "why these five?" has the answer "because there are five".
-      </p>
-    </div>
-
-    <h3 style="margin-top:1rem">The five, matched at roughly 7B</h3>
+    <h3 style="margin-top:0.9rem">Group 1 · Axis 1 — every model we can call</h3>
     <p class="prose">
-      All five are <strong>base checkpoints</strong>, all within a few hundred million parameters of each other, and
-      each was trained by a different group on a corpus built on a different principle. Using base models throughout
-      removes the post-training confound entirely: nothing in the comparison varies because one model had SFT and
-      another did not.
+      Axis 1 needs nothing but the output, so it runs on all of them — <strong>the open-data models included, and the
+      closed frontier models too</strong>. Adding one costs a generation run and automatic labeling, so we take the
+      current field broadly rather than sampling it. Three tiers, listed by how much of the model is visible.
     </p>
 
     <div class="tscroll">
       <table>
-        <thead><tr><th>Model</th><th>Corpus</th><th>infini-gram index</th><th>Lab</th><th>What its corpus stands for</th></tr></thead>
+        <thead><tr><th>Tier</th><th>Models</th><th>Weights</th><th>Corpus disclosure</th><th>Axis 2?</th></tr></thead>
         <tbody>
-          <tr class="us"><td class="lead">OLMo 2 7B base</td><td>OLMo-mix-1124</td><td class="mono">v4_olmo-mix-1124_llama</td><td>AI2</td><td>Curated mixing — the reference point</td></tr>
-          <tr><td class="lead">OLMo 1.7 7B base</td><td>Dolma 1.7</td><td class="mono">v4_dolma-v1_7_llama</td><td>AI2</td><td>The same lab one generation earlier</td></tr>
-          <tr class="us"><td class="lead">DCLM-7B base</td><td>DCLM-baseline</td><td class="mono">v4_dclm-baseline_llama</td><td>DataComp</td><td>Aggressive model-based filtering</td></tr>
-          <tr><td class="lead">RedPajama-INCITE 7B base</td><td>RedPajama-1T</td><td class="mono">v4_rpj_llama_s4</td><td>Together</td><td>Open reproduction of a closed recipe</td></tr>
-          <tr><td class="lead">Pythia 6.9B</td><td>The Pile</td><td class="mono">v4_piletrain_llama</td><td>EleutherAI</td><td>Accumulation of curated sources</td></tr>
+          <tr class="us">
+            <td class="lead">A · Open data</td>
+            <td>OLMo 2 7B · DCLM-7B · Pythia 6.9B · RedPajama-INCITE 7B</td>
+            <td class="mono">released</td>
+            <td class="mono">published + indexed</td>
+            <td class="no">yes</td>
+          </tr>
+          <tr>
+            <td class="lead">B · Open weight</td>
+            <td>Llama 4 Scout · Qwen3.8-27B</td>
+            <td class="mono">released</td>
+            <td class="mono">described only</td>
+            <td>no</td>
+          </tr>
+          <tr>
+            <td class="lead">C · Closed</td>
+            <td>GPT-5.6 Sol · Claude Opus 5</td>
+            <td class="mono">withheld</td>
+            <td class="mono">undisclosed</td>
+            <td>no</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="prose" style="font-size:0.88rem;color:var(--muted)">
+      Eight models — four, two and two. One checkpoint per model, no size variants: the study asks how models
+      differ from one another, not how a model differs from itself. Tier A is repeated in group 2 below, where the
+      four are matched at roughly 7B so that what varies between them is the training data rather than the scale. <em>Described only</em> covers a range — some tier B
+      cards give token counts and mixture categories, others little more than a language list — so the disclosure
+      level is recorded per model rather than assumed uniform across the tier. Model names and pricing were checked in
+      August 2026 and move quickly — reconfirm before the generation sweep.
+    </p>
+
+    <div class="goal">
+      <div class="mk">Why B and C are separate rows when both measure the same</div>
+      <p class="gline">
+        Tiers B and C are indistinguishable in the data. They are separated because they are evidence for different
+        things.
+      </p>
+      <p class="gsub">
+        Neither publishes a corpus, so both carry <code>n/a</code> in every cause column and both are scored on axis 1
+        by exactly the same procedure. Collapsing them would lose nothing numerically and cost the argument one of its
+        two halves. <strong>Tier B shows that the corpus gap survives maximal good faith</strong> — these labs
+        released weights, code and in several cases the data recipe, and still did not release the data, so the gap
+        is structural rather than a matter of commercial secrecy. <strong>Tier C shows that the gap covers the models
+        the field actually ranks</strong>; without it a reviewer can dismiss the finding as a fact about research
+        models. One tier answers <em>why does no one do this</em>, the other answers <em>does it matter</em>.
+      </p>
+    </div>
+
+    <div class="tscroll">
+      <table class="compact">
+        <thead><tr><th></th><th>Tier B · open weight</th><th>Tier C · closed</th></tr></thead>
+        <tbody>
+          <tr><td class="lead">Axis 1</td><td>identical</td><td>identical</td></tr>
+          <tr><td class="lead">Axis 2</td><td><code>n/a</code></td><td><code>n/a</code></td></tr>
+          <tr class="us"><td class="lead">Can it ever move to tier A?</td><td>Yes — the weights already exist; one release or one new index is all that is missing</td><td>No — not by anyone outside the provider, at any effort</td></tr>
+          <tr><td class="lead">Re-runnable in 2030</td><td>Yes — pin a checkpoint hash, fix the seed</td><td>No — the endpoint changes silently behind a stable name</td></tr>
+          <tr><td class="lead">Inference we control</td><td>Temperature, seed, logprobs, no system prompt, base checkpoints</td><td>Whatever the serving stack does</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="goal alt">
+      <div class="mk">The sentence for the paper</div>
+      <p class="gline">
+        Tier B is not <em>yet</em> attributable. Tier C cannot be made attributable by anyone outside the provider.
+      </p>
+      <p class="gsub">
+        That difference is invisible in the table's cells and decisive for what the table means. It also states the
+        project's larger point in one line: <strong>whether a hallucination can be explained is a property of how a
+        model was released, not of how good the model is.</strong> The three tiers are a ladder of disclosure, and the
+        ladder is itself a result — read down the <em>Axis 2?</em> column and the field's blind spot has a shape.
+      </p>
+    </div>
+
+    <div class="redline">
+      <div class="mk">What we cannot rule out on tier C — stated as a limitation, not discovered later</div>
+      <p>
+        A closed endpoint may retrieve. If a provider runs search or RAG behind the API, what we measure is no longer
+        hallucination from parametric memory — and parametric memory is the only thing a corpus-provenance study is
+        about. <strong>We cannot verify the absence of retrieval</strong>, so tier C results are reported as
+        end-to-end system behaviour rather than model behaviour, and are never used to support a claim about
+        pretraining data.
+      </p>
+      <p>
+        A refusal is also not an abstention. A closed model declining on policy grounds and a base model declining
+        because it holds no answer produce the same visible event and mean opposite things. Tier C abstention rates
+        are therefore reported <strong>beside</strong> tiers A and B rather than pooled with them, and refusals
+        carrying explicit policy language are counted in a separate bucket.
+      </p>
+    </div>
+
+    <div class="redline">
+      <div class="mk">What tier C costs us, beyond money</div>
+      <p>
+        The price of including it is reproducibility. API models change without notice behind a stable name, so
+        <strong>the exact model version and run date are recorded with every result, and the thesis states plainly
+        that this tier cannot be re-run the way tiers A and B can.</strong> Provider terms on publishing comparative
+        evaluations are checked before the sweep, since several restrict it.
+      </p>
+      <p>
+        We accept that price because the empty cause column beside a frontier model states the project's problem more
+        plainly than a paragraph could.
+      </p>
+    </div>
+
+    <h3 style="margin-top:1rem">What the generation sweep costs</h3>
+    <p class="prose">
+      1,200 prompts × 5 samples = 6,000 calls per model. Measured against pilot outputs, roughly 70 input and 300
+      output tokens per call — so 0.42M input and 1.8M output tokens per model.
+    </p>
+    <div class="tscroll">
+      <table>
+        <thead><tr><th>Model</th><th class="num">$ / M in</th><th class="num">$ / M out</th><th class="num">Cost for the sweep</th></tr></thead>
+        <tbody>
+          <tr><td class="lead">GPT-5.6 Sol</td><td class="num">5.00</td><td class="num">30.00</td><td class="num">$56.10</td></tr>
+          <tr><td class="lead">Claude Opus 5</td><td class="num">5.00</td><td class="num">25.00</td><td class="num">$47.10</td></tr>
+          <tr><td class="lead">Llama 4 Scout</td><td class="num">0.20</td><td class="num">0.60</td><td class="num">$1.16</td></tr>
+          <tr><td class="lead">Qwen3.8-27B</td><td class="num">0.03</td><td class="num">0.13</td><td class="num">$0.25</td></tr>
         </tbody>
       </table>
     </div>
     <p class="prose" style="font-size:0.86rem;color:var(--muted)">
-      Five corpora, but <strong>four independent data philosophies</strong> — OLMo 1.7 and OLMo 2 are the same
-      lineage, and we say so rather than counting them as two independent points.
+      All four API-served models, at five samples per prompt. Tier B rates are aggregator list prices and are
+      reconfirmed at sweep time. Tier A does not appear here — it is served by us on a rented GPU and is costed in
+      hours instead, below. <strong>$104.61 for the four.</strong>
+    </p>
+
+    <h3 style="margin-top:1rem">What tier A costs, in GPU hours</h3>
+    <p class="prose">
+      All four tier A models sit at roughly 7B, so one modest rented GPU serves every one of them through vLLM —
+      dropping the 32B checkpoint removed the only entry that needed a large card. <strong>Which card, and from
+      which provider, is not decided yet</strong>: it is picked during gate week against whatever is available and
+      cheapest, and the choice changes no result. At five samples generation runs about two hours per model; with
+      weight downloads, restarts and the reruns any real project has, <strong>16 GPU-hours is the working estimate
+      at $1.50–2.00 an hour</strong>, plus a small network volume for the weights.
     </p>
 
     <div class="redline">
-      <div class="mk">What base-only costs, and how it is handled</div>
+      <div class="mk">Renting by the hour changes how we work, not just what we pay</div>
       <p>
-        Base models do not abstain on their own, and abstention is one of our three failure modes. Every prompt is
-        therefore issued few-shot, with demonstrations that include a refusal, so the model has a template for
-        declining available to it. <strong>Parse-failure rate is reported openly per model</strong> rather than
-        quietly dropped, because a tolerant parser applied to a base model is exactly where silent selection creeps
-        into results.
+        An idle rented GPU bills exactly like a busy one, so the pipeline is built and debugged locally against a
+        1B checkpoint, the full prompt set is prepared offline, and the GPU is rented only to run a prepared batch
+        and released immediately after. <strong>The cost risk here is not the hourly rate but hours spent debugging
+        on a running meter</strong> — the discipline is to never open a rented instance without a batch ready to run.
       </p>
     </div>
 
-    <h3 style="margin-top:1.1rem">Why corpora rather than sizes</h3>
+    <div class="goal">
+      <div class="mk">Budget</div>
+      <p class="gline">
+        Around 145 US dollars, and three quarters of it is two API models.
+      </p>
+      <p class="gsub">
+        The four API-served models come to $104.61, tier A to 16 rented GPU-hours at $1.50–2.00 — call it $28 —
+        plus about $10 of volume storage. <strong>The GPU side has almost vanished</strong>: four 7B models on one
+        modest card is the cheapest configuration this project has had, and the remaining spend is dominated by
+        GPT-5.6 Sol and Claude Opus 5 at five samples each. If the budget needs cutting, that is therefore the only
+        place worth cutting — GPT-5.4 and Claude Sonnet 5 come to about $21 together, bringing the total under $60.
+      </p>
+    </div>
+
+    <h3 style="margin-top:0.9rem">Group 2 · Axis 2 — the subset whose corpus we can read</h3>
     <p class="prose">
-      An earlier version of this plan varied parameter count within one model family and held the corpus fixed. That
-      answers a real question — how much of hallucination scaling repairs — but it is not this project's question.
-      <strong>We want to know what hallucination comes from, and we want differences between models rather than
-      between versions of one model.</strong> So the axis is inverted: hold scale roughly fixed, vary the training
-      data.
+      A <strong>subset of group 1</strong>, not a separate population. These are the models that additionally allow
+      the cause question, because their pretraining corpus is published <em>and</em> indexed. Group 2 is what turns
+      group 1's measurements into an explanation — it supplies the provenance that the rest of the field cannot.
+      The set is small enough to take whole rather than sample.
+    </p>
+    <div class="tscroll">
+      <table>
+        <thead><tr><th>Model</th><th>Corpus</th><th>infini-gram index</th><th>Note</th></tr></thead>
+        <tbody>
+          <tr class="us"><td class="lead">OLMo 2 7B</td><td>OLMo-mix-1124</td><td class="mono">v4_olmo-mix-1124_llama</td><td>AI2. The reference point — the corpus we know best</td></tr>
+          <tr class="us"><td class="lead">DCLM-7B</td><td>DCLM-baseline</td><td class="mono">v4_dclm-baseline_llama</td><td>DataComp. A corpus built by aggressive filtering rather than accumulation</td></tr>
+          <tr><td class="lead">Pythia 6.9B</td><td>The Pile</td><td class="mono">v4_piletrain_llama</td><td>EleutherAI. The oldest and most curated of the four <span class="chip warn">base only</span></td></tr>
+          <tr><td class="lead">RedPajama-INCITE 7B</td><td>RedPajama-1T</td><td class="mono">v4_rpj_llama_s4</td><td>Together. An open reproduction of the Llama recipe</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3 style="margin-top:1.1rem">Why four corpora, rather than four sizes</h3>
+    <p class="prose">
+      An earlier version of this plan varied parameter count across one model family and held the corpus fixed. It
+      answered a real question — how much of hallucination scaling can repair — but it is not the question this
+      project is asking. <strong>We want to know what hallucination comes from, and we want differences between
+      models rather than between versions of one model.</strong> So the axis is inverted: hold the scale roughly
+      fixed and vary the training data.
+    </p>
+    <p class="prose">
+      The four tier A models sit within a few hundred million parameters of each other and were trained by four
+      different labs on four corpora built on four different philosophies — accumulation (the Pile), open
+      reproduction (RedPajama), aggressive filtering (DCLM), and curated mixing (OLMo-mix). Each publishes its data
+      and each has an infini-gram index, so for every one of them the question <em>was this fact in the data this
+      model read</em> has an answer.
     </p>
 
     <div class="tscroll">
@@ -688,172 +843,92 @@
         <thead><tr><th>What we look at</th><th>Prediction</th><th>What a failure would mean</th></tr></thead>
         <tbody>
           <tr class="us">
-            <td class="lead">π_SILENCE across the five corpora</td>
+            <td class="lead">π_SILENCE across the four corpora</td>
             <td>It differs measurably</td>
-            <td>If all five agree within their intervals, provenance is not shaped by the corpus and corpus-side work has no differential leverage — a negative result, and a publishable one</td>
+            <td>If all four agree within their intervals, provenance is not shaped by the corpus, and corpus-side work has no differential leverage — a negative result, and a publishable one</td>
           </tr>
           <tr>
-            <td class="lead">The same claim, looked up in five corpora</td>
-            <td>It does not get the same label everywhere</td>
-            <td>If labels agree across corpora, the search is detecting what the open web contains rather than what each model read, and the method is not doing what it claims</td>
+            <td class="lead">The same claim, looked up in four corpora</td>
+            <td>It does not receive the same label everywhere</td>
+            <td>If labels agree across corpora, our search is detecting what the open web contains rather than what each model read, and the method is not doing what it claims</td>
           </tr>
           <tr>
-            <td class="lead">Proxy corpus against the real one</td>
+            <td class="lead">Proxy corpus vs the real one</td>
             <td>A_proxy is well below 1</td>
-            <td>If substituting RedPajama or C4 reproduces the true labels, the shortcut prior work takes is harmless and one of our contributions evaporates</td>
+            <td>If substituting RedPajama or C4 reproduces the true labels, then the shortcut prior work takes is harmless and one of our contributions evaporates</td>
           </tr>
         </tbody>
       </table>
     </div>
 
     <div class="goal">
-      <div class="mk">The headline quantity</div>
+      <div class="mk">What replaces the scale curve</div>
       <p class="gline">
-        Corpus spread — how far the provenance mix moves when the training data changes and the scale does not.
+        Corpus spread: how far the provenance mix moves when the training data changes and the scale does not.
       </p>
       <p class="gsub">
         Wide spread says the corpus is where the leverage is, and names which corpus does better. Narrow spread says
-        something more surprising: that the provenance mix is stable across five independently built datasets, and is
-        therefore a property of the task rather than of any one group's data decisions. <strong>Both outcomes are
-        reportable, which is what makes this worth running.</strong> A study that only works if the numbers land one
-        way is a bet, not an experiment.
+        something more surprising — that the provenance mix is stable across independently built datasets, and
+        therefore a property of the task rather than of any one lab's data decisions. <strong>Both outcomes are
+        reportable, which is what makes this worth running.</strong> A study that only works if the numbers come out
+        one way is a bet, not an experiment.
       </p>
     </div>
 
     <div class="redline">
       <div class="mk">The claim we will not make</div>
       <p>
-        These five models differ in more than their corpora. Architecture, tokenizer, token budget, training recipe
-        and release year all move at once, so <strong>a difference between them cannot be attributed to the corpus
-        alone</strong>, and we do not write that it can. What we report is between-model variation in the provenance
-        mix, with the corpus named as one candidate driver among several.
+        These four models differ in more than their corpora. Architecture, tokenizer, token budget, training recipe
+        and release year all move at the same time, so <strong>a difference between them cannot be attributed to the
+        corpus alone</strong>, and we do not write that it can. What we report is between-model variation in the
+        provenance mix, with the corpus named as one candidate driver among several.
       </p>
       <p>
-        The per-claim label is untouched by this. Whether a given fact appears in a given model's training data is a
-        matter of fact, settled by search. <strong>The confound lives in the comparison across models, not in the
-        measurement of any one of them</strong> — and saying precisely where it lives is the difference between a
-        limitation and a flaw.
+        The per-claim label is not affected by any of this. Whether a given fact appears in a given model's training
+        data is a matter of fact, settled by search, and it stays exact no matter how the models differ. <strong>The
+        confound lives in the comparison across models, not in the measurement of any one of them</strong> — and
+        saying exactly where it lives is the difference between a limitation and a flaw.
       </p>
-    </div>
-
-    <h3 style="margin-top:1.1rem">The illustration row — two closed models, one task</h3>
-    <p class="prose">
-      Five open research models, on their own, invite one obvious objection: <em>what has any of this to do with the
-      models people actually use?</em> So GPT-5.6 Sol and Claude Opus 5 are run on the citation task at the same five
-      samples, under <strong>identical criteria in every respect</strong> — same prompts, same decomposition, same
-      verifier, same three failure modes, same formulas.
-    </p>
-    <p class="prose">
-      They sit in a separate, labelled table, not in the main results. Their job is not to be evaluated. Their job is
-      to make one column visibly empty.
-    </p>
-
-    <div class="tscroll">
-      <table class="compact">
-        <thead><tr><th>Model</th><th>Axis 1</th><th>Axis 2</th><th class="num">Cost at 5 samples</th></tr></thead>
-        <tbody>
-          <tr><td class="lead">GPT-5.6 Sol</td><td>full</td><td><code>n/a — corpus not public</code></td><td class="num">$28.05</td></tr>
-          <tr><td class="lead">Claude Opus 5</td><td>full</td><td><code>n/a — corpus not public</code></td><td class="num">$23.55</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="goal alt">
-      <div class="mk">Why identical criteria matter more than they look</div>
-      <p class="gline">
-        Change anything for these two and the empty column stops meaning "we cannot explain this" and starts meaning
-        "we measured something else".
-      </p>
-      <p class="gsub">
-        The row does two jobs. It marks the boundary of what can be explained — and it demonstrates that
-        <strong>axis 1 and our criteria travel to any model at all</strong>, which is evidence that the framework
-        generalises even though the corpus analysis cannot. That second job is the more valuable of the two, and it
-        is only available if nothing about the criteria changed.
-      </p>
-      <p class="gsub">
-        We cannot rule out that a closed endpoint retrieves. If a provider runs search behind the API, what we
-        measure is no longer hallucination from parametric memory. These two rows are therefore reported as
-        end-to-end system behaviour, never as evidence about training data — and a refusal on policy grounds is
-        counted in its own bucket rather than as an abstention.
-      </p>
-    </div>
-
-    <h3 style="margin-top:1.1rem">Open-data models we cannot reach</h3>
-    <p class="prose">
-      Publishing a corpus is not the same as making it searchable. Several models release their pretraining data in
-      full and still cannot be studied this way, because nobody has built an index over it and building one is far
-      out of reach — roughly <strong>7 bytes per token</strong>, which puts a 6T-token corpus at about 41 TB before
-      temporary files.
-    </p>
-
-    <div class="tscroll">
-      <table class="compact">
-        <thead><tr><th>Model</th><th>Corpus</th><th class="num">Approx. size</th><th>Why it is out</th></tr></thead>
-        <tbody>
-          <tr><td class="lead">OLMo 3 7B / 32B</td><td>Dolma 3 Mix</td><td class="num">~25 TB</td><td>Index exists inside AI2 — it appears, commented out, in the public OlmoTrace config — but has no public endpoint</td></tr>
-          <tr><td class="lead">Comma v0.1 7B</td><td>Common Pile v0.1</td><td class="num">8 TB</td><td>No index. The most tractable of these, and a candidate positive control</td></tr>
-          <tr><td class="lead">MAP-Neo 7B</td><td>Matrix</td><td class="num">~20 TB</td><td>No index</td></tr>
-          <tr><td class="lead">LLM360 Amber · K2</td><td>AmberDatasets</td><td class="num">~6 TB</td><td>No index</td></tr>
-          <tr><td class="lead">SmolLM2 · SmolLM3</td><td>SmolLM-corpus</td><td class="num">large</td><td>No index</td></tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div class="redline">
-      <div class="mk">This table is a finding, not an apology</div>
-      <p>
-        It is why the scope sentence reads <em>published and searchable</em> rather than <em>open data</em>. Writing
-        the looser version invites one question we could not answer — <em>so where is OLMo 3?</em> — and this table
-        answers it in advance.
-      </p>
-      <p>
-        It also sharpens section 03's point. <strong>Even a fully open model can be unexplainable in practice</strong>,
-        because openness of data and searchability of data are different properties and only the second one lets
-        anyone ask where an error came from. The gap the survey documents is not only about labs that withhold data.
-      </p>
-    </div>
-
-    <h3 style="margin-top:1.1rem">The lookup problem we have to solve first</h3>
-    <p class="prose">
-      Half our query pairs differ by a suffix — <code>read_json</code> against <code>read_jsonl</code>, a paper title
-      with one word changed, a year with one digit changed. Any substring count will find the shorter string inside
-      the longer one and report a hit that is not evidence. <strong>This is not a quirk of one tool; it is inherent to
-      substring counting, and infini-gram counts token n-grams, so it is exposed too.</strong>
-    </p>
-    <p class="prose">
-      One of the three query forms per fact is therefore <strong>boundary-anchored</strong> — a trailing delimiter is
-      included, so <code>pandas.read_json(</code> cannot match inside <code>pandas.read_jsonl(</code> — and a sample
-      of matches is pulled with the <code>find</code> endpoint and read by hand. A prefix-pair test case goes into
-      the gate-week script, so that if the counts do collide we know in week one rather than at analysis.
-    </p>
-
-    <h3 style="margin-top:1.1rem">What it costs</h3>
-    <div class="tscroll">
-      <table class="compact">
-        <thead><tr><th>Item</th><th>Detail</th><th class="num">Cost</th></tr></thead>
-        <tbody>
-          <tr><td class="lead">The five open models</td><td>Self-served through vLLM on a rented cloud GPU. All at ~7B, so one modest card serves every one; about 20 GPU-hours at $1.50–2.00</td><td class="num">~$35</td></tr>
-          <tr><td class="lead">Volume storage</td><td>Weights kept between sessions</td><td class="num">~$10</td></tr>
-          <tr><td class="lead">Illustration row</td><td>GPT-5.6 Sol and Claude Opus 5, citation task, five samples</td><td class="num">$51.60</td></tr>
-          <tr><td class="lead">Corpus search</td><td>infini-gram public API</td><td class="num">free</td></tr>
-          <tr class="us"><td class="lead">Total</td><td>Down from about $145 under the benchmark plan</td><td class="num">~$97</td></tr>
-        </tbody>
-      </table>
     </div>
 
     <div class="goal">
-      <div class="mk">Renting by the hour changes how we work, not only what we pay</div>
+      <div class="mk">The rule that keeps this affordable</div>
       <p class="gline">
-        An idle rented GPU bills exactly like a busy one.
+        Go wide on group 1. Go deep, in a fixed order, on group 2.
       </p>
       <p class="gsub">
-        The pipeline is built and debugged locally against a 1B checkpoint, the full prompt set is prepared offline,
-        and the GPU is rented only to run a prepared batch and released immediately after. <strong>The cost risk is
-        not the hourly rate but hours spent debugging on a running meter</strong> — never open an instance without a
-        batch ready to run.
+        A group 1 model costs one generation run and automatic labeling — so breadth there is close to free, and it
+        turns "does this generalize?" from a hope into a measurement across eight models. A group 2 model
+        costs all of that <em>plus</em> attribution, sampling and manual inspection. But that extra cost is paid per
+        <em>corpus</em>, not per model: a corpus query is keyed on the pair (claim, corpus), so every OLMo 2 size hits
+        the same cache and the second, third and fourth sizes pay only for generation and for claims not seen before.
+        Adding a model on a <em>different</em> corpus is what buys a fresh query set. Attribution effort therefore
+        Each tier A model now opens a corpus of its own, so unlike the earlier plan there is no shared cache to
+        lean on — four models means four query sets. That is the price of asking a between-model question, and it
+        is why tier A stops at four. Attribution order is fixed by how much each one adds:
+        <strong>OLMo 2 7B first</strong> as the reference, then <strong>DCLM</strong> for the sharpest contrast in
+        philosophy, then <strong>Pythia</strong> and <strong>RedPajama-INCITE</strong>.
       </p>
     </div>
 
+    <p class="prose">
+      For the models outside group 2, the cause columns stay empty, marked <code>n/a — corpus not public</code>
+      rather than left blank. Blank reads as unfinished; <code>n/a</code> reads as impossible. Those empty cells make
+      the project's point better than invented numbers would.
+    </p>
+
+    <div class="redline">
+      <div class="mk">One risk closed early</div>
+      <p>
+        infini-gram indexes <code>olmo-mix-1124</code> — the exact pretraining mix behind the OLMo 2 checkpoints,
+        not a stand-in. We search the corpus the model actually read, so a count of zero means the fact is absent
+        rather than that we queried the wrong collection. The same holds for every group 2 model: each is paired
+        with the index of the corpus it actually read, never a stand-in.
+      </p>
+    </div>
+  </section>
+
+  <section>
     <h2><span class="sn">06</span>What we use, and what we made</h2>
     <div class="bb">
       <div class="col borrowed">
@@ -865,7 +940,6 @@
           <li><strong>Reference vs content grounding</strong> — HalluHard</li>
           <li><strong>Non-abstention as a failure mode</strong> — HalluLens, AbstentionBench</li>
           <li><strong>infini-gram</strong> as the corpus search tool</li>
-          <li><strong>The idea that outputs can be traced to training data</strong> — OLMoTrace</li>
           <li><strong>Models and corpora</strong> from AI2 and EleutherAI</li>
         </ul>
         <p class="note">Every item here was built to be reused, under published licences. Reusing prompts is a
@@ -884,8 +958,7 @@
           <li><strong>Automatic labeling benchmark-wide</strong>, not spot-checks</li>
           <li><strong>Retaining raw counts</strong> → the frequency curve and the Kalai singleton test</li>
           <li><strong>An error bar on proxy-corpus attribution</strong> — nobody has measured this</li>
-          <li><strong>Complete coverage of the searchable population</strong> — all five, not a sample</li>
-          <li><strong>The excluded-models table</strong> — open data and unsearchable data are different things, and nobody has written that down</li>
+          <li><strong>Near-complete coverage of open-data models</strong> — the set is small enough to take whole rather than sample</li>
           <li><strong>The twenty-nine-paper survey</strong>, verified against primary sources</li>
           <li><strong>The intervention-point framing</strong> — A/B/C as an address, not an explanation</li>
         </ul>
@@ -905,30 +978,13 @@
       <p class="gsub">
         And the test that settles it: <strong>an assembly cannot produce a wrong answer — a measurement can.</strong>
         Ours can be wrong in several ways. The Kalai prediction may fail. Error may come back at two percent. OLMo
-        may come back at two percent. The five corpora may show no spread at all. That the result can be wrong is what
+        may come back at two percent. The four corpora may show no spread at all. That the result can be wrong is what
         proves it is a finding rather than a construction.
       </p>
     </div>
   </section>
 
   <section>
-    <div class="redline">
-      <div class="mk">The nearest neighbour, and how we differ from it</div>
-      <p>
-        <strong>OLMoTrace</strong> (AI2, ACL 2025 Demo, arXiv:2504.07096) already traces model output back to
-        training data in real time, on infini-gram, and ships inside the Ai2 Playground. It is the closest thing to
-        this project that exists, it comes from the lab that made both the models and the index, and anyone reading
-        our paper will know it. We cite it as the tool it is.
-      </p>
-      <p>
-        It matches <strong>verbatim spans</strong>, not facts. It has no notion of a correct form against an
-        incorrect one, assigns no label, and aggregates nothing — it is a system paper whose own text lists
-        hallucination as a use case that <em>users can explore</em>. <strong>OLMoTrace built the instrument and said
-        what it could be pointed at. Nobody has pointed it at a whole benchmark and reported what came
-        back.</strong> The distance between a demo and a measurement is the distance between that paper and this one.
-      </p>
-    </div>
-
     <h2><span class="sn">07</span>The plan</h2>
 
     <div class="redline">
@@ -936,9 +992,8 @@
       <p>
         Target is a workshop submission on <strong>31 October</strong>. From 28 August that is 9.1 weeks, with the
         final eleven days reserved for writing — so <strong>7.4 weeks of execution</strong>, with four people working
-        on nothing else. Dropping the benchmark returns roughly a week and a half of that, and it goes into
-        inspection and a second annotation pass, <strong>not into adding models back</strong>. The chain is unchanged:
-        feasibility gates attribution, attribution gates analysis. The sequencing below protects it.
+        on nothing else. That buys breadth, but not a shorter chain: feasibility still gates attribution, which still
+        gates analysis. The sequencing below protects that chain.
       </p>
     </div>
 
@@ -946,12 +1001,12 @@
       <table>
         <tbody>
           <tr><td class="k">Tasks</td><td>scientific citation (primary) · code packages · should-refuse — 1,200 prompts</td></tr>
-          <tr><td class="k">Models</td><td><strong>Five subjects, two for illustration.</strong> All five models whose corpus is published and indexed, base checkpoints at ~7B — OLMo 2 7B, OLMo 1.7 7B, DCLM-7B, RedPajama-INCITE 7B, Pythia 6.9B — plus GPT-5.6 Sol and Claude Opus 5 on the citation task only, reported apart</td></tr>
-          <tr><td class="k">Volume</td><td>30,000 generations at <strong>five</strong> samples per prompt, plus 6,000 for the illustration row · ~3,500 cause-labeled instances across five corpora</td></tr>
+          <tr><td class="k">Models</td><td><strong>8 models, one checkpoint each.</strong> 4 open-data on both axes, matched at ~7B on four corpora — OLMo 2 7B, DCLM-7B, Pythia 6.9B, RedPajama-INCITE 7B · 2 open-weight on axis 1 — Llama 4 Scout, Qwen3.8-27B · 2 closed on axis 1 — GPT-5.6 Sol, Claude Opus 5</td></tr>
+          <tr><td class="k">Volume</td><td>48,000 generations at <strong>five</strong> samples per prompt · ~3,000 cause-labeled instances</td></tr>
           <tr><td class="k">Team</td><td>4 people, full time — attribution · citation verifier · code verifier · infra</td></tr>
-          <tr><td class="k">Also in</td><td>Five samples per prompt for tighter error bars · 200 validation items per task rather than 100 · the corpus-frequency curve · a freshly authored prompt subset · the proxy-corpus error bar · the boundary-anchored query form</td></tr>
-          <tr><td class="k">Still cut</td><td><strong>Being a benchmark.</strong> We do not rank models and do not claim a competing evaluation suite · size variants within a family, and the scale curve that depended on them · open-weight models, which can be neither explained nor cheaply justified once ranking is off the table · OLMoE and GPT-NeoX, which duplicate corpora already covered</td></tr>
-          <tr><td class="k">Not in scope</td><td>Thai and multilingual · multi-turn · RAG · mitigation methods · influence functions · a thirtieth benchmark · building an index over any corpus that lacks one</td></tr>
+          <tr><td class="k">Also in</td><td>Five samples per prompt for tighter error bars · 200 validation items per task rather than 100 · the corpus-frequency curve · a freshly authored prompt subset · the proxy-corpus error bar</td></tr>
+          <tr><td class="k">Still cut</td><td>Size variants within a family, and the scale curve and φ that depended on them — the question is how models differ from each other, not how a model differs from itself · intermediate training checkpoints · OLMoE and GPT-NeoX, which duplicate corpora already covered</td></tr>
+          <tr><td class="k">Not in scope</td><td>Thai and multilingual · multi-turn · RAG · mitigation methods · influence functions · a thirtieth benchmark</td></tr>
         </tbody>
       </table>
     </div>
@@ -973,7 +1028,7 @@
         <div class="wk">Aug 28<br>– Sep 3</div>
         <div class="pb">
           <h3>Gate week</h3>
-          <p>Run <code>phase0_check.py</code> against infini-gram, <strong>including the prefix-pair test</strong> — <code>read_json</code> against <code>read_jsonl</code> on <code>olmo-mix-1124</code> — to settle the boundary question in week one. Check whether the AI2 S3 index bucket is publicly readable; if not, send one narrow question about a public endpoint for the OLMo 3 indexes. Request the Semantic Scholar key. Build the citation verifier. Confirm that all five corpus indexes respond and measure the rate limit. <strong>If corpus search does not work, replan by 1 September.</strong></p>
+          <p>Run <code>phase0_check.py</code> against infini-gram. Request the Semantic Scholar key. Build the citation verifier. Confirm which group 1 indexes actually respond and whether the <code>-instruct</code> indexes cover post-training data. <strong>If corpus search does not work, replan by 1 September.</strong></p>
         </div>
       </div>
       <div class="phase">
@@ -993,29 +1048,29 @@
       <div class="phase">
         <div class="wk">Sep 18<br>– Sep 24</div>
         <div class="pb">
-          <h3>All three tasks, all five models</h3>
-          <p>The full sweep across the five subjects at five samples, plus the illustration row on citation only. Every model is a base checkpoint, so all of it runs few-shot with a refusal demonstration in the prompt and a tolerant parser; <strong>parse-failure rate is reported per model, not hidden</strong>.</p>
+          <h3>Breadth on axis 1</h3>
+          <p>All three tasks across all eight models, five samples each. Cheap per model, and it delivers the generalization evidence in one sweep. Base models need few-shot prompting and a tolerant parser; parse-failure rate is reported, not hidden.</p>
         </div>
       </div>
       <div class="phase">
         <div class="wk">Sep 25<br>– Oct 8</div>
         <div class="pb">
-          <h3>Depth on axis 2, one corpus at a time</h3>
-          <p>Attribution for the remaining three corpora in order: Dolma 1.7, then the Pile, then RedPajama-1T. Each opens a fresh query set — the caching that made extra model sizes free does not apply here, because every model has its own corpus. This phase is corpus search, not model runs. <strong>Slack goes into hand-inspection and a second annotation pass, never into adding models back.</strong></p>
+          <h3>Depth on axis 2, in priority order</h3>
+          <p>Attribution for the remaining two corpora: Pythia 6.9B against the Pile, then RedPajama-INCITE 7B against RedPajama-1T. Each opens a fresh query set, so this phase is now dominated by corpus search rather than by model runs. Four models rather than twelve leaves slack — it goes into hand-inspection and a second annotation pass, not into adding models back.</p>
         </div>
       </div>
       <div class="phase">
         <div class="wk">Oct 9<br>– Oct 15</div>
         <div class="pb">
           <h3>The additions</h3>
-          <p>Freshly authored prompt subset and the contamination comparison. Proxy-corpus error bar — the same queries against C4. Corpus-frequency curve for the singleton test. <strong>Stretch goal only if everything above is finished:</strong> Comma v0.1 on Common Pile as a positive control, using a single streaming pass rather than an index. A corpus of openly licensed text alone should show visibly more SILENCE; if it does not, the instrument is not measuring what we claim.</p>
+          <p>Freshly authored prompt subset and the contamination comparison. Proxy-corpus error bar — the same queries against RedPajama and C4. Corpus-frequency curve for the singleton test.</p>
         </div>
       </div>
       <div class="phase">
         <div class="wk">Oct 16<br>– Oct 19</div>
         <div class="pb">
           <h3>Analysis and figures</h3>
-          <p>Cross-tabulation, corpus spread across the five corpora, the label disagreement D, the proxy-corpus disagreement A_proxy, the corpus-frequency curve, hand-inspection of two hundred cases. The illustration row is typeset last, in its own table.</p>
+          <p>Cross-tabulation, corpus spread across the four open-data models, the proxy-corpus disagreement A_proxy, the corpus-frequency curve, hand-inspection of two hundred cases.</p>
         </div>
       </div>
       <div class="phase">
@@ -1068,14 +1123,13 @@
         rather than circular.
       </p>
       <p>
-        We apply this to <strong>every model whose pretraining corpus is both published and searchable</strong> —
-        five base checkpoints at roughly seven billion parameters, trained by four groups on five differently
-        constructed corpora. Because that set is small enough to take whole, the result describes a complete
-        population rather than a sample. Two closed commercial models are run on one task under identical criteria
-        and reported separately, not to be evaluated but to mark the boundary of what can be explained at all. We
-        report the resulting cross-tabulation, the spread of the provenance mix across the five corpora, the
-        fraction of claims whose label depends on which corpus is searched, the disagreement introduced by
-        substituting a proxy corpus, and the relationship between corpus frequency and hallucination rate. We release
+        We evaluate eight models on the first axis — open-data, open-weight and closed commercial alike — of which
+        four, all publishing both weights and an indexed pretraining corpus, also receive provenance labels. Those
+        four are matched at roughly seven billion parameters and were trained by four different labs on four
+        differently constructed corpora, so the comparison between them holds scale approximately fixed while the
+        training data varies. We report the resulting cross-tabulation, the spread of the provenance mix across the
+        four corpora, the disagreement introduced by substituting a proxy corpus, and the relationship between
+        corpus frequency and hallucination rate. We release
         the cause-labeled corpus, with the raw corpus counts and the retrieved evidence attached to every judgment.
       </p>
       <p style="color:var(--muted);font-size:0.9rem">
@@ -1122,13 +1176,10 @@
       </p>
       <p>
         This paper measures that split. We contribute: (i) the first cross-tabulation of hallucination failure mode
-        against training-data provenance, applied across a whole prompt set rather than spot-checked; (ii) a single
-        decision rule that holds across three heterogeneous tasks, making their results comparable; (iii) complete
-        coverage of the population of models whose pretraining corpus can actually be searched, together with a
-        record of the open-data models that cannot be reached because publishing a corpus and indexing one are
-        different things; (iv) a released corpus of cause-labeled hallucinations with raw corpus counts and
-        retrieved evidence attached; and (v) a verified survey of twenty-nine benchmarks along a dimension no prior
-        work has compiled. <strong>We do not propose a benchmark and do not rank models.</strong> We are explicit about
+        against training-data provenance, applied across a whole benchmark rather than spot-checked; (ii) a single
+        decision rule that holds across three heterogeneous tasks, making their results comparable; (iii) a released
+        corpus of cause-labeled hallucinations with raw corpus counts and retrieved evidence attached; and (iv) a
+        verified survey of twenty-nine benchmarks along a dimension no prior work has compiled. We are explicit about
         what this does not establish: corpus presence and absence show where an error is addressable in principle,
         not that a given intervention would succeed; because exact-string search cannot detect facts expressed in
         other surface forms, the fabrication rate is reported as an upper bound; and because closed endpoints may
@@ -1183,16 +1234,16 @@
         <text class="sub" x="140" y="201" text-anchor="middle">reused + fresh-authored</text>
         <path class="bx" d="M274,94 L466,94 L446,222 L254,222 Z"/>
         <text class="ttl" x="360" y="132" text-anchor="middle">Models under test</text>
-        <text class="sub" x="360" y="150" text-anchor="middle">7 models</text>
-        <text class="sub" x="360" y="165" text-anchor="middle">5 subjects, base, ~7B</text>
-        <text class="sub" x="360" y="180" text-anchor="middle">+2 closed, illustration only</text>
-        <text class="sub" x="360" y="195" text-anchor="middle">5 samples per prompt</text>
+        <text class="sub" x="360" y="150" text-anchor="middle">8 models</text>
+        <text class="sub" x="360" y="165" text-anchor="middle">A open-data 4, one each</text>
+        <text class="sub" x="360" y="180" text-anchor="middle">B open-weight 2 · C closed 2</text>
+        <text class="sub" x="360" y="195" text-anchor="middle">5 samples · one checkpoint each</text>
         <path class="bx" d="M474,105 A106.0,11 0 0 1 686,105 L686,211 A106.0,11 0 0 1 474,211 Z"/>
         <path class="bx" style="fill:none" d="M474,105 A106.0,11 0 0 0 686,105"/>
         <text class="ttl" x="580" y="145.5" text-anchor="middle">Reference corpora</text>
-        <text class="sub" x="580" y="163.5" text-anchor="middle">five corpora, one per model</text>
-        <text class="sub" x="580" y="178.5" text-anchor="middle">dolma-1.7 · dclm · pile</text>
-        <text class="sub" x="580" y="193.5" text-anchor="middle">rpj-1t · c4 as proxy check</text>
+        <text class="sub" x="580" y="163.5" text-anchor="middle">four corpora, one per model</text>
+        <text class="sub" x="580" y="178.5" text-anchor="middle">dclm-baseline · pile-train</text>
+        <text class="sub" x="580" y="193.5" text-anchor="middle">rpj-1t · c4 for the proxy check</text>
         <line class="ln" x1="140" y1="222" x2="140" y2="248"/>
         <line class="ln" x1="360" y1="222" x2="360" y2="248"/>
         <line class="ln" x1="580" y1="222" x2="580" y2="248"/>
@@ -1207,8 +1258,8 @@
         <line class="bar" x1="63" y1="352" x2="63" y2="418"/>
         <line class="bar" x1="341" y1="352" x2="341" y2="418"/>
         <text class="ttl" x="202" y="374" text-anchor="middle">Generate</text>
-        <text class="sub" x="202" y="392" text-anchor="middle">5 models × 1,200 × 5 samples</text>
-        <text class="sub" x="202" y="407" text-anchor="middle">30,000 + 6,000 responses</text>
+        <text class="sub" x="202" y="392" text-anchor="middle">8 models × 1,200 × 5 samples</text>
+        <text class="sub" x="202" y="407" text-anchor="middle">48,000 responses</text>
         <line class="lnd" x1="760" y1="385" x2="734" y2="385" marker-end="url(#ah)"/>
         <line class="ln" x1="202" y1="418" x2="202" y2="442" marker-end="url(#ah)"/>
         <rect class="bx" x="52" y="444" width="300" height="66" rx="3"/>
@@ -1228,7 +1279,7 @@
         <text class="ttl" x="544" y="551.5" text-anchor="middle">Excluded, or reported apart</text>
         <text class="sub" x="544" y="569.5" text-anchor="middle">SUPPORTED · ABSTAINED</text>
         <text class="sub" x="544" y="584.5" text-anchor="middle">UNVERIFIABLE · PARSE FAILURE</text>
-        <text class="sub" x="544" y="599.5" text-anchor="middle">policy REFUSAL — closed only</text>
+        <text class="sub" x="544" y="599.5" text-anchor="middle">policy REFUSAL — tier C only</text>
         <line class="ln" x1="202" y1="602" x2="202" y2="626" marker-end="url(#ah)"/>
         <rect class="bxa" x="52" y="628" width="300" height="80" rx="3"/>
         <text class="ttl acc" x="202" y="649.5" text-anchor="middle">AXIS 1 · failure mode</text>
@@ -1243,9 +1294,9 @@
         <text class="sub" x="347" y="776" text-anchor="middle">no</text>
         <path class="bxm" d="M400,754 L708,754 L688,814 L380,814 Z"/>
         <text class="ttl" x="544" y="780.5" text-anchor="middle">n/a — cause not assignable</text>
-        <text class="sub" x="544" y="798.5" text-anchor="middle">the 2 closed · axis 1 only</text>
+        <text class="sub" x="544" y="798.5" text-anchor="middle">tiers B and C · axis 1 only</text>
         <line class="ln" x1="202" y1="836" x2="202" y2="860" marker-end="url(#ah)"/>
-        <text class="sub" x="214" y="854">yes · all 5 subjects</text>
+        <text class="sub" x="214" y="854">yes · tier A</text>
         <rect class="bxa" x="52" y="862" width="300" height="100" rx="3"/>
         <line class="bar" x1="63" y1="862" x2="63" y2="962"/>
         <line class="bar" x1="341" y1="862" x2="341" y2="962"/>
@@ -1259,7 +1310,7 @@
         <rect class="bx" x="52" y="988" width="300" height="66" rx="3"/>
         <text class="ttl" x="202" y="1010" text-anchor="middle">Aggregate per model</text>
         <text class="sub" x="202" y="1028" text-anchor="middle">H · A · F · π_k, then</text>
-        <text class="sub" x="202" y="1043" text-anchor="middle">compare across 5 corpora</text>
+        <text class="sub" x="202" y="1043" text-anchor="middle">compare across the four corpora</text>
         <line class="ln" x1="202" y1="1054" x2="202" y2="1138" marker-end="url(#ah)"/>
         <rect class="fr" x="748" y="252" width="244" height="830" rx="5"/>
         <text class="fl" x="762" y="273">EXTERNAL SERVICES</text>
@@ -1267,12 +1318,12 @@
         <text class="sub" x="762" y="304">someone else runs these</text>
         <rect class="bxe" x="762" y="352" width="216" height="66" rx="3"/>
         <text class="ttl" x="870" y="374" text-anchor="middle">Model endpoints</text>
-        <text class="sub" x="870" y="392" text-anchor="middle">vLLM, self-served · 5</text>
-        <text class="sub" x="870" y="407" text-anchor="middle">provider APIs · 2 closed</text>
+        <text class="sub" x="870" y="392" text-anchor="middle">aggregator API · tier B</text>
+        <text class="sub" x="870" y="407" text-anchor="middle">provider APIs · tier C</text>
         <rect class="bxe" x="762" y="444" width="216" height="66" rx="3"/>
         <text class="ttl" x="870" y="466" text-anchor="middle">Budget</text>
-        <text class="sub" x="870" y="484" text-anchor="middle">≈ $97 · 20 GPU-hours</text>
-        <text class="sub" x="870" y="499" text-anchor="middle">+ $52 illustration row</text>
+        <text class="sub" x="870" y="484" text-anchor="middle">≈ $145 · 16 GPU-hours</text>
+        <text class="sub" x="870" y="499" text-anchor="middle">+ $105 of API calls</text>
         <rect class="bxe" x="762" y="536" width="216" height="66" rx="3"/>
         <line class="bar" x1="773" y1="536" x2="773" y2="602"/>
         <line class="bar" x1="967" y1="536" x2="967" y2="602"/>
@@ -1294,8 +1345,8 @@
         <text class="ttl" x="870" y="886" text-anchor="middle">infini-gram API</text>
         <text class="sub" x="870" y="904" text-anchor="middle">n-gram counts over the</text>
         <text class="sub" x="870" y="919" text-anchor="middle">model's own corpus</text>
-        <text class="sub" x="870" y="934" text-anchor="middle">never a proxy — the mix</text>
-        <text class="sub" x="870" y="949" text-anchor="middle">each model actually read</text>
+        <text class="sub" x="870" y="934" text-anchor="middle">not a proxy — the mix</text>
+        <text class="sub" x="870" y="949" text-anchor="middle">OLMo 2 actually read</text>
         <rect class="bxe" x="762" y="988" width="216" height="66" rx="3"/>
         <text class="ttl" x="870" y="1010" text-anchor="middle">Cache and rate limit</text>
         <text class="sub" x="870" y="1028" text-anchor="middle">queries keyed on</text>
@@ -1310,13 +1361,13 @@
         <text class="sub" x="115" y="1241" text-anchor="middle">the principal result</text>
         <path class="bx" d="M204,1140 L366,1140 L366,1267 C320.64,1289.1 249.36,1246.2 204,1267 Z"/>
         <text class="ttl" x="285" y="1178" text-anchor="middle">Corpus spread</text>
-        <text class="sub" x="285" y="1196" text-anchor="middle">π_k over 5 corpora</text>
+        <text class="sub" x="285" y="1196" text-anchor="middle">π_k over 4 corpora</text>
         <text class="sub" x="285" y="1211" text-anchor="middle">scale held fixed</text>
         <text class="sub" x="285" y="1226" text-anchor="middle">S_k and the label</text>
         <text class="sub" x="285" y="1241" text-anchor="middle">disagreement D</text>
         <path class="bx" d="M374,1140 L536,1140 L536,1267 C490.64,1289.1 419.36,1246.2 374,1267 Z"/>
         <text class="ttl" x="455" y="1178" text-anchor="middle">Cause-labeled data</text>
-        <text class="sub" x="455" y="1196" text-anchor="middle">≈ 3,500 instances</text>
+        <text class="sub" x="455" y="1196" text-anchor="middle">≈ 3,000 instances</text>
         <text class="sub" x="455" y="1211" text-anchor="middle">raw counts and</text>
         <text class="sub" x="455" y="1226" text-anchor="middle">evidence attached</text>
         <text class="sub" x="455" y="1241" text-anchor="middle">released</text>
@@ -1333,7 +1384,7 @@
         <text class="fl" x="44" y="1404">COMPUTE</text>
         <text class="sub" x="44" y="1424">rented cloud GPU</text>
         <text class="sub" x="44" y="1439">billed by the hour</text>
-        <text class="sub" x="44" y="1454">five 7B models</text>
+        <text class="sub" x="44" y="1454">four 7B models</text>
         <text class="sub" x="44" y="1469">card chosen at setup</text>
         <text class="fl" x="212" y="1404">RUNTIME</text>
         <text class="sub" x="212" y="1424">Ubuntu 22.04 LTS</text>
@@ -1392,7 +1443,7 @@
         <div class="fmlrow">
           <div class="fn">Abstention rate</div>
           <div class="fe">A = |R_abstained| / |R|</div>
-          <div class="fd">Reported separately, never folded into H. Were abstentions placed in the denominator, a model that refuses everything would score best. Policy refusals are counted in their own bucket and excluded from <code>R_abstained</code>, so the two illustration models are reported beside the five subjects rather than pooled with them — a refusal on policy grounds and a decline from having no answer are the same visible event and opposite in meaning.</div>
+          <div class="fd">Reported separately, never folded into H. Were abstentions placed in the denominator, a model that refuses everything would score best. Policy refusals are counted in their own bucket and excluded from <code>R_abstained</code>, so tier C is reported beside tiers A and B rather than pooled with them — a refusal on policy grounds and a decline from having no answer are the same visible event and opposite in meaning.</div>
         </div>
 
         <div class="fmlrow">
@@ -1439,12 +1490,12 @@
 
         <div class="fmlrow">
           <div class="fn">Corpus spread<br><span style="font-weight:400;color:var(--muted);font-size:0.86rem">scale approximately fixed</span></div>
-          <div class="fe">S_k = max over m of π_k(m) − min over m of π_k(m)<br><span style="color:var(--muted)">over the five open-data models</span></div>
+          <div class="fe">S_k = max over m of π_k(m) − min over m of π_k(m)<br><span style="color:var(--muted)">over the four tier A models</span></div>
           <div class="fd">How far the share of provenance class k moves when the training data changes and the parameter count does not. Claimed as non-zero only where the extreme models' Wilson intervals do not overlap. <strong>S_SILENCE is the headline</strong> — a wide spread says the corpus shapes what a model cannot know, a narrow one says the provenance mix is stable across independently built datasets.</div>
         </div>
 
         <div class="fmlrow">
-          <div class="fn">Label disagreement<br><span style="font-weight:400;color:var(--muted);font-size:0.86rem">the same claim, five corpora</span></div>
+          <div class="fn">Label disagreement<br><span style="font-weight:400;color:var(--muted);font-size:0.86rem">the same claim, four corpora</span></div>
           <div class="fe">D = |{ i : label(i, m) not constant over m }| / |C_hal ∪ C_sup|</div>
           <div class="fd">The fraction of claims whose provenance label depends on which model's corpus is searched. D near zero would mean the search is detecting the open web rather than each model's own data — a check on the method, not on the models.</div>
         </div>
