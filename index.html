@@ -761,20 +761,42 @@
     </div>
     <p class="prose" style="font-size:0.86rem;color:var(--muted)">
       The last three rows are aggregator list prices standing in for tier B as a whole; per-model rates differ by a
-      few cents and are reconfirmed at sweep time. Tier A is self-hosted and does not appear here.
+      few cents and are reconfirmed at sweep time. Tier A does not appear here — it is served by us on a rented GPU
+      and is costed in hours instead, below.
     </p>
+
+    <h3 style="margin-top:1rem">What tier A costs, in GPU hours</h3>
+    <p class="prose">
+      Tier A tops out at 32B, so a single rented A100 80GB or H100 serves every one of the twelve configurations
+      through vLLM. Generation is roughly an hour for the small checkpoints and two to three for the 20–32B ones;
+      with weight downloads, restarts and the reruns any real project has, <strong>40 GPU-hours is the working
+      estimate at $1.50–2.00 an hour</strong>, plus a network volume to keep the weights between sessions.
+    </p>
+
+    <div class="redline">
+      <div class="mk">Renting by the hour changes how we work, not just what we pay</div>
+      <p>
+        An idle rented GPU bills exactly like a busy one, so the pipeline is built and debugged locally against a
+        1B checkpoint, the full prompt set is prepared offline, and the GPU is rented only to run a prepared batch
+        and released immediately after. <strong>The cost risk here is not the hourly rate but hours spent debugging
+        on a running meter</strong> — the discipline is to never open a rented instance without a batch ready to run.
+      </p>
+    </div>
 
     <div class="goal">
       <div class="mk">Budget</div>
       <p class="gline">
-        Around 130 US dollars for the entire generation sweep.
+        Around 190 US dollars, of which the GPU hours are the uncertain half.
       </p>
       <p class="gsub">
-        Tier C at flagship rates is roughly $70 for all three. Tier B, served through an aggregator, sits between
-        fifteen cents and a few dollars per model — call it $20 for the seven. Tier A is small enough to self-host,
-        or a few dollars each on a hosted endpoint. <strong>Cost is not the binding constraint; rate limits and the
-        attribution work are.</strong> If the budget needs halving, drop tier C to mid-range models — GPT-5.4,
-        Claude Sonnet 5 and Gemini 3 Flash come to about $31 together.
+        Tier C at flagship rates is roughly $70 for all three. Tier B through an aggregator sits between fifteen
+        cents and a few dollars per model — call it $20 for the seven. Tier A is 40 rented GPU-hours at $1.50–2.00,
+        so $60–80, plus about $20 of volume storage for the weights. The API side is a quoted price and will not
+        move; the GPU side is an estimate of our own efficiency and could double if we debug on a live instance.
+        <strong>Even doubled, cost is not the binding constraint — rate limits and the attribution work are.</strong>
+        If the budget needs cutting, tier C drops to mid-range models (GPT-5.4, Claude Sonnet 5, Gemini 3 Flash come
+        to about $31 together) and the 32B checkpoints go last, since they are the most expensive hours and the
+        scale curve already has three points without them.
       </p>
     </div>
 
@@ -1164,8 +1186,11 @@
     <p class="prose">
       Four bands. <strong>Input</strong> is what we bring: prompts, models, corpora. <strong>Process</strong> is the
       pipeline we build — one prompt enters, a doubly-labeled claim leaves, and the diamond is the only place the
-      model tiers diverge. <strong>Environment</strong> is everything the pipeline depends on but does not own, drawn
-      to the side because each item is a risk we do not control. <strong>Output</strong> is what the paper reports.
+      model tiers diverge. <strong>External services</strong>, down the right-hand side, are the things the pipeline
+      calls but does not own; every one of them is a dependency we cannot fix if it breaks, which is why they are
+      drawn apart rather than inline. <strong>Output</strong> is what the paper reports. The strip along the bottom
+      is the <strong>environment</strong> proper — the named stack the whole thing executes on, listed so the run is
+      reproducible from the figure alone.
     </p>
     <p class="prose" style="font-size:0.88rem;color:var(--muted)">
       Standard flowchart notation, so the shape carries meaning: rectangle for a process step, the barred rectangle
@@ -1175,7 +1200,7 @@
     </p>
 
     <div class="flowwrap">
-      <svg class="flow" viewBox="0 0 1000 1400" width="1000" height="1400" role="img"
+      <svg class="flow" viewBox="0 0 1000 1620" width="1000" height="1620" role="img"
            aria-label="Project framework flowchart: input, process, environment and output">
         <defs>
           <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto">
@@ -1271,15 +1296,15 @@
         <text class="sub" x="194" y="1001" text-anchor="middle">compare across models</text>
         <line class="ln" x1="194" y1="1012" x2="194" y2="1096" marker-end="url(#ah)"/>
         <rect class="fr" x="740" y="210" width="244" height="830" rx="5"/>
-        <text class="fl" x="754" y="231">ENVIRONMENT</text>
+        <text class="fl" x="754" y="231">EXTERNAL SERVICES</text>
         <rect class="bxe" x="754" y="310" width="216" height="66" rx="3"/>
         <text class="ttl" x="862" y="332" text-anchor="middle">Model endpoints</text>
-        <text class="sub" x="862" y="350" text-anchor="middle">self-hosted vLLM · A, B</text>
-        <text class="sub" x="862" y="365" text-anchor="middle">provider APIs · tier C</text>
+        <text class="sub" x="862" y="350" text-anchor="middle">vLLM on rented GPU · A</text>
+        <text class="sub" x="862" y="365" text-anchor="middle">aggregator B · provider C</text>
         <rect class="bxe" x="754" y="402" width="216" height="66" rx="3"/>
-        <text class="ttl" x="862" y="424" text-anchor="middle">Compute and budget</text>
-        <text class="sub" x="862" y="442" text-anchor="middle">local GPUs for A and B</text>
-        <text class="sub" x="862" y="457" text-anchor="middle">≈ $130 of API for tier C</text>
+        <text class="ttl" x="862" y="424" text-anchor="middle">Budget</text>
+        <text class="sub" x="862" y="442" text-anchor="middle">≈ $190 · GPU hours are</text>
+        <text class="sub" x="862" y="457" text-anchor="middle">the uncertain half</text>
         <rect class="bxe" x="754" y="494" width="216" height="66" rx="3"/>
         <line class="bar" x1="765" y1="494" x2="765" y2="560"/>
         <line class="bar" x1="959" y1="494" x2="959" y2="560"/>
@@ -1336,26 +1361,58 @@
         <line class="ln" x1="500" y1="1258" x2="500" y2="1282" marker-end="url(#ah)"/>
         <rect class="bxt" x="414" y="1284" width="172" height="38" rx="19.0"/>
         <text class="ttl" x="500" y="1307" text-anchor="middle">END</text>
-        <line class="fr" x1="16" y1="1346" x2="984" y2="1346"/>
-        <rect class="lg" x="22" y="1360" width="30" height="20" rx="3"/>
-        <text class="lgt" x="59" y="1374">process</text>
-        <rect class="lg" x="143" y="1360" width="30" height="20" rx="3"/>
-        <line class="bar" x1="148" y1="1360" x2="148" y2="1380"/>
-        <line class="bar" x1="168" y1="1360" x2="168" y2="1380"/>
-        <text class="lgt" x="180" y="1374">external call</text>
-        <path class="lg" d="M279.0,1360.0 L294.0,1370.0 L279.0,1380.0 L264.0,1370.0 Z"/>
-        <text class="lgt" x="301" y="1374">decision</text>
-        <path class="lg" d="M391,1360 L415,1360 L409,1380 L385,1380 Z"/>
-        <text class="lgt" x="422" y="1374">data</text>
-        <path class="lg" d="M506,1364 A15.0,4 0 0 1 536,1364 L536,1376 A15.0,4 0 0 1 506,1376 Z"/>
-        <path class="lg" style="fill:none" d="M506,1364 A15.0,4 0 0 0 536,1364"/>
-        <text class="lgt" x="543" y="1374">stored data</text>
-        <path class="lg" d="M627,1360 L657,1360 L657,1375 C648.6,1383.5 635.4,1367.0 627,1375 Z"/>
-        <text class="lgt" x="664" y="1374">document</text>
-        <path class="lg" d="M748,1360 L778,1360 L772,1380 L754,1380 Z"/>
-        <text class="lgt" x="785" y="1374">manual</text>
-        <rect class="lg" x="869" y="1360" width="30" height="20" rx="10.0"/>
-        <text class="lgt" x="906" y="1374">terminator</text>
+        <rect class="fr" x="16" y="1352" width="968" height="202" rx="5"/>
+        <text class="fl" x="30" y="1373">ENVIRONMENT · WHERE ALL OF THE ABOVE RUNS</text>
+        <rect class="bxe" x="30" y="1386" width="180" height="150" rx="3"/>
+        <text class="ttl" x="120" y="1435" text-anchor="middle">Compute</text>
+        <text class="sub" x="120" y="1453" text-anchor="middle">rented cloud GPU, hourly</text>
+        <text class="sub" x="120" y="1468" text-anchor="middle">1× A100 80GB or H100</text>
+        <text class="sub" x="120" y="1483" text-anchor="middle">sized for ≤ 32B models</text>
+        <text class="sub" x="120" y="1498" text-anchor="middle">team laptops for the rest</text>
+        <rect class="bxe" x="220" y="1386" width="180" height="150" rx="3"/>
+        <text class="ttl" x="310" y="1435" text-anchor="middle">OS and runtime</text>
+        <text class="sub" x="310" y="1453" text-anchor="middle">Ubuntu 22.04 LTS</text>
+        <text class="sub" x="310" y="1468" text-anchor="middle">Python 3.11</text>
+        <text class="sub" x="310" y="1483" text-anchor="middle">CUDA 12.x · PyTorch 2.x</text>
+        <text class="sub" x="310" y="1498" text-anchor="middle">uv for the lockfile</text>
+        <rect class="bxe" x="410" y="1386" width="180" height="150" rx="3"/>
+        <text class="ttl" x="500" y="1435" text-anchor="middle">Inference stack</text>
+        <text class="sub" x="500" y="1453" text-anchor="middle">vLLM — tier A, self-served</text>
+        <text class="sub" x="500" y="1468" text-anchor="middle">aggregator API — tier B</text>
+        <text class="sub" x="500" y="1483" text-anchor="middle">provider SDKs — tier C</text>
+        <text class="sub" x="500" y="1498" text-anchor="middle">Hugging Face Hub weights</text>
+        <rect class="bxe" x="600" y="1386" width="180" height="150" rx="3"/>
+        <text class="ttl" x="690" y="1435" text-anchor="middle">Data and analysis</text>
+        <text class="sub" x="690" y="1453" text-anchor="middle">Parquet + DuckDB store</text>
+        <text class="sub" x="690" y="1468" text-anchor="middle">pandas · numpy</text>
+        <text class="sub" x="690" y="1483" text-anchor="middle">statsmodels for Wilson CI</text>
+        <text class="sub" x="690" y="1498" text-anchor="middle">Label Studio annotation</text>
+        <rect class="bxe" x="790" y="1386" width="180" height="150" rx="3"/>
+        <text class="ttl" x="880" y="1435" text-anchor="middle">Reproducibility</text>
+        <text class="sub" x="880" y="1453" text-anchor="middle">Git + GitHub</text>
+        <text class="sub" x="880" y="1468" text-anchor="middle">pinned requirements</text>
+        <text class="sub" x="880" y="1483" text-anchor="middle">fixed seeds recorded</text>
+        <text class="sub" x="880" y="1498" text-anchor="middle">model revision hashes</text>
+        <line class="fr" x1="16" y1="1568" x2="984" y2="1568"/>
+        <rect class="lg" x="22" y="1582" width="30" height="20" rx="3"/>
+        <text class="lgt" x="59" y="1596">process</text>
+        <rect class="lg" x="143" y="1582" width="30" height="20" rx="3"/>
+        <line class="bar" x1="148" y1="1582" x2="148" y2="1602"/>
+        <line class="bar" x1="168" y1="1582" x2="168" y2="1602"/>
+        <text class="lgt" x="180" y="1596">external call</text>
+        <path class="lg" d="M279.0,1582.0 L294.0,1592.0 L279.0,1602.0 L264.0,1592.0 Z"/>
+        <text class="lgt" x="301" y="1596">decision</text>
+        <path class="lg" d="M391,1582 L415,1582 L409,1602 L385,1602 Z"/>
+        <text class="lgt" x="422" y="1596">data</text>
+        <path class="lg" d="M506,1586 A15.0,4 0 0 1 536,1586 L536,1598 A15.0,4 0 0 1 506,1598 Z"/>
+        <path class="lg" style="fill:none" d="M506,1586 A15.0,4 0 0 0 536,1586"/>
+        <text class="lgt" x="543" y="1596">stored data</text>
+        <path class="lg" d="M627,1582 L657,1582 L657,1597 C648.6,1605.5 635.4,1589.0 627,1597 Z"/>
+        <text class="lgt" x="664" y="1596">document</text>
+        <path class="lg" d="M748,1582 L778,1582 L772,1602 L754,1602 Z"/>
+        <text class="lgt" x="785" y="1596">manual</text>
+        <rect class="lg" x="869" y="1582" width="30" height="20" rx="10.0"/>
+        <text class="lgt" x="906" y="1596">terminator</text>
       </svg>
     </div>
 
