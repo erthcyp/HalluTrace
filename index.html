@@ -636,22 +636,21 @@
         <tbody>
           <tr class="us">
             <td class="lead">A · Open data</td>
-            <td>OLMo 2 1B/7B/13B/32B · OLMo 2 7B/13B <em>base</em> · OLMoE · DCLM-7B · RedPajama-INCITE 7B ·
-                Pythia 6.9B/12B · GPT-NeoX-20B</td>
+            <td>OLMo 2 1B · 7B · 13B · 32B · OLMo 2 7B <em>base</em> · DCLM-7B</td>
             <td class="mono">released</td>
             <td class="mono">published + indexed</td>
             <td class="no">yes</td>
           </tr>
           <tr>
             <td class="lead">B · Open weight</td>
-            <td>DeepSeek V4-Flash · Qwen3.8-27B · Qwen3.6-35B-A3B · Llama 4 Scout · Gemma 4 31B · Mistral Large 3 · Kimi K2.6</td>
+            <td>Llama 4 Scout · Qwen3.8-27B</td>
             <td class="mono">released</td>
             <td class="mono">described only</td>
             <td>no</td>
           </tr>
           <tr>
             <td class="lead">C · Closed</td>
-            <td>GPT-5.6 Sol · Claude Opus 5 · Gemini 3.6 Flash</td>
+            <td>GPT-5.6 Sol · Claude Opus 5</td>
             <td class="mono">withheld</td>
             <td class="mono">undisclosed</td>
             <td>no</td>
@@ -660,8 +659,8 @@
       </table>
     </div>
     <p class="prose" style="font-size:0.88rem;color:var(--muted)">
-      Twenty-two configurations — twelve, seven and three. Tier A is repeated in group 2 below; its two <em>base</em>
-      checkpoints are the post-training control described there. <em>Described only</em> covers a range — some tier B
+      Ten configurations — six, two and two. Tier A is repeated in group 2 below; its <em>base</em>
+      checkpoint is the post-training control described there. <em>Described only</em> covers a range — some tier B
       cards give token counts and mixture categories, others little more than a language list — so the disclosure
       level is recorded per model rather than assumed uniform across the tier. Model names and pricing were checked in
       August 2026 and move quickly — reconfirm before the generation sweep.
@@ -743,34 +742,32 @@
 
     <h3 style="margin-top:1rem">What the generation sweep costs</h3>
     <p class="prose">
-      1,200 prompts × 3 samples = 3,600 calls per model. Measured against pilot outputs, roughly 70 input and 300
-      output tokens per call — so 0.25M input and 1.08M output tokens per model.
+      1,200 prompts × 5 samples = 6,000 calls per model. Measured against pilot outputs, roughly 70 input and 300
+      output tokens per call — so 0.42M input and 1.8M output tokens per model.
     </p>
     <div class="tscroll">
       <table>
         <thead><tr><th>Model</th><th class="num">$ / M in</th><th class="num">$ / M out</th><th class="num">Cost for the sweep</th></tr></thead>
         <tbody>
-          <tr><td class="lead">GPT-5.6 Sol</td><td class="num">5.00</td><td class="num">30.00</td><td class="num">$33.66</td></tr>
-          <tr><td class="lead">Claude Opus 5</td><td class="num">5.00</td><td class="num">25.00</td><td class="num">$28.26</td></tr>
-          <tr><td class="lead">Gemini 3.6 Flash</td><td class="num">1.50</td><td class="num">7.50</td><td class="num">$8.48</td></tr>
-          <tr><td class="lead">Kimi K2.6</td><td class="num">3.00</td><td class="num">15.00</td><td class="num">$16.96</td></tr>
-          <tr><td class="lead">DeepSeek V4-Flash</td><td class="num">0.28</td><td class="num">0.42</td><td class="num">$0.52</td></tr>
-          <tr><td class="lead">Qwen3.8-27B</td><td class="num">0.03</td><td class="num">0.13</td><td class="num">$0.15</td></tr>
+          <tr><td class="lead">GPT-5.6 Sol</td><td class="num">5.00</td><td class="num">30.00</td><td class="num">$56.10</td></tr>
+          <tr><td class="lead">Claude Opus 5</td><td class="num">5.00</td><td class="num">25.00</td><td class="num">$47.10</td></tr>
+          <tr><td class="lead">Llama 4 Scout</td><td class="num">0.20</td><td class="num">0.60</td><td class="num">$1.16</td></tr>
+          <tr><td class="lead">Qwen3.8-27B</td><td class="num">0.03</td><td class="num">0.13</td><td class="num">$0.25</td></tr>
         </tbody>
       </table>
     </div>
     <p class="prose" style="font-size:0.86rem;color:var(--muted)">
-      The last three rows are aggregator list prices standing in for tier B as a whole; per-model rates differ by a
-      few cents and are reconfirmed at sweep time. Tier A does not appear here — it is served by us on a rented GPU
-      and is costed in hours instead, below.
+      All four API-served models, at five samples per prompt. Tier B rates are aggregator list prices and are
+      reconfirmed at sweep time. Tier A does not appear here — it is served by us on a rented GPU and is costed in
+      hours instead, below. <strong>$104.61 for the four.</strong>
     </p>
 
     <h3 style="margin-top:1rem">What tier A costs, in GPU hours</h3>
     <p class="prose">
-      Tier A tops out at 32B, so a single rented A100 80GB or H100 serves every one of the twelve configurations
-      through vLLM. Generation is roughly an hour for the small checkpoints and two to three for the 20–32B ones;
-      with weight downloads, restarts and the reruns any real project has, <strong>40 GPU-hours is the working
-      estimate at $1.50–2.00 an hour</strong>, plus a network volume to keep the weights between sessions.
+      Tier A tops out at 32B, so a single rented A100 80GB or H100 serves all six configurations through vLLM.
+      At five samples the generation is roughly ninety minutes for the small checkpoints and three to four hours for
+      the 32B; with weight downloads, restarts and the reruns any real project has, <strong>28 GPU-hours is the
+      working estimate at $1.50–2.00 an hour</strong>, plus a network volume to keep the weights between sessions.
     </p>
 
     <div class="redline">
@@ -786,17 +783,16 @@
     <div class="goal">
       <div class="mk">Budget</div>
       <p class="gline">
-        Around 190 US dollars, of which the GPU hours are the uncertain half.
+        Around 175 US dollars — and cutting to ten models did not save money, it bought precision.
       </p>
       <p class="gsub">
-        Tier C at flagship rates is roughly $70 for all three. Tier B through an aggregator sits between fifteen
-        cents and a few dollars per model — call it $20 for the seven. Tier A is 40 rented GPU-hours at $1.50–2.00,
-        so $60–80, plus about $20 of volume storage for the weights. The API side is a quoted price and will not
-        move; the GPU side is an estimate of our own efficiency and could double if we debug on a live instance.
-        <strong>Even doubled, cost is not the binding constraint — rate limits and the attribution work are.</strong>
-        If the budget needs cutting, tier C drops to mid-range models (GPT-5.4, Claude Sonnet 5, Gemini 3 Flash come
-        to about $31 together) and the 32B checkpoints go last, since they are the most expensive hours and the
-        scale curve already has three points without them.
+        The four API-served models come to $104.61, tier A to 28 rented GPU-hours at $1.50–2.00 — call it $50 —
+        plus about $20 of volume storage for the weights. That total lands within a few dollars of the
+        twenty-two-model plan, because the models we removed were the cheap ones and the samples we added apply to
+        the expensive ones. <strong>The spend did not fall; it moved from breadth to precision.</strong> If the
+        budget needs cutting, drop tier C to mid-range models — GPT-5.4 and Claude Sonnet 5 come to about $21
+        together — and run the 32B checkpoint last, since it is the most expensive block of hours and the scale
+        curve still has three points without it.
       </p>
     </div>
 
@@ -811,14 +807,10 @@
       <table>
         <thead><tr><th>Model</th><th>Corpus</th><th>infini-gram index</th><th>Note</th></tr></thead>
         <tbody>
-          <tr class="us"><td class="lead">OLMo 2 — 1B · 7B · 13B</td><td>OLMo-mix-1124</td><td class="mono">v4_olmo-mix-1124_llama</td><td>Primary. Three sizes on one corpus gives the scale curve</td></tr>
-          <tr><td class="lead">OLMo 2 — 32B</td><td>—</td><td class="mono">v4_olmo-2-0325-32b-instruct_llama</td><td>Extends the scale curve to a fourth point</td></tr>
-          <tr class="us"><td class="lead">OLMo 2 — 7B · 13B <em>base</em></td><td>OLMo-mix-1124</td><td class="mono">v4_olmo-mix-1124_llama</td><td>Post-training control. Same corpus, same pretraining, no SFT or DPO</td></tr>
-          <tr><td class="lead">OLMoE — 1B-7B</td><td>—</td><td class="mono">v4_olmoe-0125-1b-7b-instruct_llama</td><td>Mixture-of-experts, same lab</td></tr>
-          <tr><td class="lead">DCLM-7B</td><td>DCLM-baseline</td><td class="mono">v4_dclm-baseline_llama</td><td>Different lab, different corpus — the strongest cross-corpus evidence</td></tr>
-          <tr><td class="lead">RedPajama-INCITE 7B Instruct</td><td>RedPajama-1T</td><td class="mono">v4_rpj_llama_s4</td><td>Older but instruction-tuned</td></tr>
-          <tr><td class="lead">Pythia 6.9B · 12B</td><td>The Pile</td><td class="mono">v4_piletrain_llama</td><td><span class="chip warn">base only</span> needs few-shot prompting</td></tr>
-          <tr><td class="lead">GPT-NeoX-20B</td><td>The Pile</td><td class="mono">v4_piletrain_llama</td><td><span class="chip warn">base only</span></td></tr>
+          <tr class="us"><td class="lead">OLMo 2 — 1B · 7B · 13B</td><td>OLMo-mix-1124</td><td class="mono">v4_olmo-mix-1124_llama</td><td>Primary. Three sizes on one corpus — three points of the scale curve</td></tr>
+          <tr><td class="lead">OLMo 2 — 32B</td><td>OLMo-mix-1124</td><td class="mono">v4_olmo-2-0325-32b-instruct_llama</td><td>The fourth and highest point of the curve</td></tr>
+          <tr class="us"><td class="lead">OLMo 2 — 7B <em>base</em></td><td>OLMo-mix-1124</td><td class="mono">v4_olmo-mix-1124_llama</td><td>Post-training control. Same corpus, same pretraining, no SFT or DPO</td></tr>
+          <tr><td class="lead">DCLM-7B</td><td>DCLM-baseline</td><td class="mono">v4_dclm-baseline_llama</td><td>Different lab, different corpus, matched at 7B — the cross-corpus evidence</td></tr>
         </tbody>
       </table>
     </div>
@@ -892,13 +884,16 @@
       </p>
       <p class="gsub">
         A group 1 model costs one generation run and automatic labeling — so breadth there is close to free, and it
-        turns "does this generalize?" from a hope into a measurement across twenty-two configurations. A group 2 model
+        turns "does this generalize?" from a hope into a measurement across ten configurations. A group 2 model
         costs all of that <em>plus</em> attribution, sampling and manual inspection. But that extra cost is paid per
         <em>corpus</em>, not per model: a corpus query is keyed on the pair (claim, corpus), so every OLMo 2 size hits
         the same cache and the second, third and fourth sizes pay only for generation and for claims not seen before.
         Adding a model on a <em>different</em> corpus is what buys a fresh query set. Attribution effort therefore
-        follows a fixed priority: <strong>OLMo 2 sizes first</strong> — nearly free, and they give the scale curve —
-        then <strong>DCLM</strong> for cross-corpus evidence, then the remainder while time allows.
+        <strong>This is why cutting to ten models costs the argument so little.</strong> Five of the six tier A
+        entries share one corpus and therefore one query set; DCLM buys the second. The entries we removed — Pythia,
+        GPT-NeoX, OLMoE, RedPajama-INCITE — would each have opened a fresh corpus late in the schedule, and the
+        breadth they bought is claimed more cheaply through tiers B and C. Attribution order stays fixed:
+        <strong>OLMo 2 sizes first</strong>, then <strong>DCLM</strong>.
       </p>
     </div>
 
@@ -992,11 +987,11 @@
       <table>
         <tbody>
           <tr><td class="k">Tasks</td><td>scientific citation (primary) · code packages · should-refuse — 1,200 prompts</td></tr>
-          <tr><td class="k">Models</td><td><strong>22 configurations in three tiers.</strong> 12 open-data on both axes · 7 open-weight on axis 1 · 3 closed commercial on axis 1 — GPT-5.6 Sol, Claude Opus 5, Gemini 3.6 Flash. Two of the twelve are base checkpoints held as the post-training control</td></tr>
-          <tr><td class="k">Volume</td><td>~79,000 generations at three samples per prompt · ~4,500 cause-labeled instances</td></tr>
+          <tr><td class="k">Models</td><td><strong>10 configurations in three tiers.</strong> 6 open-data on both axes — four OLMo 2 sizes, one OLMo 2 base checkpoint, DCLM-7B · 2 open-weight on axis 1 — Llama 4 Scout, Qwen3.8-27B · 2 closed commercial on axis 1 — GPT-5.6 Sol, Claude Opus 5</td></tr>
+          <tr><td class="k">Volume</td><td>60,000 generations at <strong>five</strong> samples per prompt · ~4,000 cause-labeled instances</td></tr>
           <tr><td class="k">Team</td><td>4 people, full time — attribution · citation verifier · code verifier · infra</td></tr>
-          <tr><td class="k">Also in</td><td>Three samples per prompt for error bars · the corpus-frequency curve · a freshly authored prompt subset · the proxy-corpus error bar</td></tr>
-          <tr><td class="k">Still cut</td><td>Intermediate training checkpoints — a separate study, not an addition to this one</td></tr>
+          <tr><td class="k">Also in</td><td>Five samples per prompt for tighter error bars · 200 validation items per task rather than 100 · the corpus-frequency curve · a freshly authored prompt subset · the proxy-corpus error bar</td></tr>
+          <tr><td class="k">Still cut</td><td>Intermediate training checkpoints · Pythia, GPT-NeoX, OLMoE and RedPajama-INCITE — dropped in the cut to ten, since each opens a corpus we would query late and the breadth is cheaper to claim through tiers B and C</td></tr>
           <tr><td class="k">Not in scope</td><td>Thai and multilingual · multi-turn · RAG · mitigation methods · influence functions · a thirtieth benchmark</td></tr>
         </tbody>
       </table>
@@ -1033,21 +1028,21 @@
         <div class="wk">Sep 11<br>– Sep 17</div>
         <div class="pb">
           <h3>Validate, and reach a submittable state</h3>
-          <p>A hundred items, two annotators, agreement and κ. Extend citation across the OLMo 2 sizes. <strong>From this point a paper exists</strong> — everything after is additive and can be dropped without breaking it.</p>
+          <p>Two hundred items, two annotators, agreement and κ. Extend citation across the OLMo 2 sizes. <strong>From this point a paper exists</strong> — everything after is additive and can be dropped without breaking it.</p>
         </div>
       </div>
       <div class="phase">
         <div class="wk">Sep 18<br>– Sep 24</div>
         <div class="pb">
           <h3>Breadth on axis 1</h3>
-          <p>All three tasks across every model in both groups, three samples each. Cheap per model, and it delivers the generalization evidence in one sweep. Base models need few-shot prompting and a tolerant parser; parse-failure rate is reported, not hidden.</p>
+          <p>All three tasks across all ten configurations, five samples each. Cheap per model, and it delivers the generalization evidence in one sweep. Base models need few-shot prompting and a tolerant parser; parse-failure rate is reported, not hidden.</p>
         </div>
       </div>
       <div class="phase">
         <div class="wk">Sep 25<br>– Oct 8</div>
         <div class="pb">
           <h3>Depth on axis 2, in priority order</h3>
-          <p>Attribution for the remaining group 1 models: OLMo 2 32B and OLMoE, then DCLM for cross-corpus evidence, then RedPajama-INCITE and the Pile models while time allows. <strong>Stop when the calendar says so, not when the list is finished.</strong></p>
+          <p>Attribution for the rest of group 2: OLMo 2 1B, 13B and 32B to close the scale curve, the 7B base checkpoint for the independence control, then DCLM-7B for cross-corpus evidence. Six models rather than twelve means this phase now has slack — it goes into hand-inspection and a second annotation pass, not into adding models back.</p>
         </div>
       </div>
       <div class="phase">
@@ -1061,7 +1056,7 @@
         <div class="wk">Oct 16<br>– Oct 19</div>
         <div class="pb">
           <h3>Analysis and figures</h3>
-          <p>Cross-tabulation, the scale curve across four OLMo 2 sizes and the irreducible share φ read off it, the base-versus-instruct independence control, cross-corpus comparison, hand-inspection of a hundred cases.</p>
+          <p>Cross-tabulation, the scale curve across four OLMo 2 sizes and the irreducible share φ read off it, the base-versus-instruct independence control, cross-corpus comparison against DCLM, hand-inspection of two hundred cases.</p>
         </div>
       </div>
       <div class="phase">
@@ -1114,13 +1109,13 @@
         rather than circular.
       </p>
       <p>
-        We evaluate twenty-two model configurations on the first axis — open-data, open-weight and closed commercial
-        alike — of which twelve, the near-complete set of models publishing both weights and an indexed pretraining
-        corpus, also receive provenance labels. Holding the corpus fixed and varying only parameter count across four
+        We evaluate ten model configurations on the first axis — open-data, open-weight and closed commercial
+        alike — of which six, all publishing both weights and an indexed pretraining corpus, also receive provenance
+        labels. Holding the corpus fixed and varying only parameter count across four
         OLMo 2 sizes isolates what scale can and cannot repair, and a base-versus-instruct pair on the same corpus
         serves as a control on the independence of the two axes. We report the
         resulting cross-tabulation, the scale curve, a cross-corpus comparison against
-        DCLM-baseline and the Pile, and the relationship between corpus frequency and hallucination rate. We release
+        DCLM-baseline, and the relationship between corpus frequency and hallucination rate. We release
         the cause-labeled corpus, with the raw corpus counts and the retrieved evidence attached to every judgment.
       </p>
       <p style="color:var(--muted);font-size:0.9rem">
@@ -1217,15 +1212,15 @@
         <text class="sub" x="136" y="159" text-anchor="middle">reused + fresh-authored</text>
         <path class="bx" d="M272,52 L468,52 L448,180 L252,180 Z"/>
         <text class="ttl" x="360" y="90" text-anchor="middle">Models under test</text>
-        <text class="sub" x="360" y="108" text-anchor="middle">22 configurations</text>
-        <text class="sub" x="360" y="123" text-anchor="middle">A open-data 12</text>
-        <text class="sub" x="360" y="138" text-anchor="middle">B open-weight 7 · C closed 3</text>
-        <text class="sub" x="360" y="153" text-anchor="middle">3 samples per prompt</text>
+        <text class="sub" x="360" y="108" text-anchor="middle">10 configurations</text>
+        <text class="sub" x="360" y="123" text-anchor="middle">A open-data 6</text>
+        <text class="sub" x="360" y="138" text-anchor="middle">B open-weight 2 · C closed 2</text>
+        <text class="sub" x="360" y="153" text-anchor="middle">5 samples per prompt</text>
         <path class="bx" d="M476,63 A108.0,11 0 0 1 692,63 L692,169 A108.0,11 0 0 1 476,169 Z"/>
         <path class="bx" style="fill:none" d="M476,63 A108.0,11 0 0 0 692,63"/>
         <text class="ttl" x="584" y="103.5" text-anchor="middle">Reference corpora</text>
         <text class="sub" x="584" y="121.5" text-anchor="middle">olmo-mix-1124 (primary)</text>
-        <text class="sub" x="584" y="136.5" text-anchor="middle">dclm-baseline · pile-train</text>
+        <text class="sub" x="584" y="136.5" text-anchor="middle">dclm-baseline (cross-corpus)</text>
         <text class="sub" x="584" y="151.5" text-anchor="middle">rpj · c4 for the proxy check</text>
         <line class="ln" x1="136" y1="180" x2="136" y2="206"/>
         <line class="ln" x1="360" y1="180" x2="360" y2="206"/>
@@ -1241,8 +1236,8 @@
         <line class="bar" x1="55" y1="310" x2="55" y2="376"/>
         <line class="bar" x1="333" y1="310" x2="333" y2="376"/>
         <text class="ttl" x="194" y="332" text-anchor="middle">Generate</text>
-        <text class="sub" x="194" y="350" text-anchor="middle">22 configs × 1,200 × 3 samples</text>
-        <text class="sub" x="194" y="365" text-anchor="middle">≈ 79,000 responses</text>
+        <text class="sub" x="194" y="350" text-anchor="middle">10 configs × 1,200 × 5 samples</text>
+        <text class="sub" x="194" y="365" text-anchor="middle">60,000 responses</text>
         <line class="lnd" x1="752" y1="343" x2="726" y2="343" marker-end="url(#ah)"/>
         <line class="ln" x1="194" y1="376" x2="194" y2="400" marker-end="url(#ah)"/>
         <rect class="bx" x="44" y="402" width="300" height="66" rx="3"/>
@@ -1303,8 +1298,8 @@
         <text class="sub" x="862" y="365" text-anchor="middle">aggregator B · provider C</text>
         <rect class="bxe" x="754" y="402" width="216" height="66" rx="3"/>
         <text class="ttl" x="862" y="424" text-anchor="middle">Budget</text>
-        <text class="sub" x="862" y="442" text-anchor="middle">≈ $190 · GPU hours are</text>
-        <text class="sub" x="862" y="457" text-anchor="middle">the uncertain half</text>
+        <text class="sub" x="862" y="442" text-anchor="middle">≈ $175 · 28 GPU-hours</text>
+        <text class="sub" x="862" y="457" text-anchor="middle">+ $105 of API calls</text>
         <rect class="bxe" x="754" y="494" width="216" height="66" rx="3"/>
         <line class="bar" x1="765" y1="494" x2="765" y2="560"/>
         <line class="bar" x1="959" y1="494" x2="959" y2="560"/>
@@ -1313,7 +1308,7 @@
         <text class="sub" x="862" y="549" text-anchor="middle">arXiv · gazetteer</text>
         <path class="bxe" d="M754,586 L970,586 L948,666 L776,666 Z"/>
         <text class="ttl" x="862" y="615" text-anchor="middle">Human annotators</text>
-        <text class="sub" x="862" y="633" text-anchor="middle">2 per item · 100 per task</text>
+        <text class="sub" x="862" y="633" text-anchor="middle">2 per item · 200 per task</text>
         <text class="sub" x="862" y="648" text-anchor="middle">consensus is ground truth</text>
         <path class="bxe" d="M754,701 A108.0,11 0 0 1 970,701 L970,765 A108.0,11 0 0 1 754,765 Z"/>
         <path class="bxe" style="fill:none" d="M754,701 A108.0,11 0 0 0 970,701"/>
@@ -1348,7 +1343,7 @@
         <text class="sub" x="380" y="1197" text-anchor="middle">scaling cannot remove</text>
         <path class="bx" d="M502,1096 L730,1096 L730,1223 C666.16,1245.1 565.84,1202.2 502,1223 Z"/>
         <text class="ttl" x="616" y="1134" text-anchor="middle">Cause-labeled dataset</text>
-        <text class="sub" x="616" y="1152" text-anchor="middle">≈ 4,500 instances</text>
+        <text class="sub" x="616" y="1152" text-anchor="middle">≈ 4,000 instances</text>
         <text class="sub" x="616" y="1167" text-anchor="middle">raw counts and evidence</text>
         <text class="sub" x="616" y="1182" text-anchor="middle">on every judgment</text>
         <text class="sub" x="616" y="1197" text-anchor="middle">released</text>
@@ -1450,7 +1445,7 @@
         <div class="fmlrow">
           <div class="fn">Verifier validation<br><span style="font-weight:400;color:var(--muted);font-size:0.86rem">against human annotation</span></div>
           <div class="fe">P = TP / (TP + FP)<br>R = TP / (TP + FN)<br>F1 = 2PR / (P + R)</div>
-          <div class="fd">100 items per task, two annotators each, with the automatic verdict as the prediction and the human consensus as ground truth. Acceptance threshold: agreement ≥ 0.85.</div>
+          <div class="fd">200 items per task, two annotators each, with the automatic verdict as the prediction and the human consensus as ground truth. Acceptance threshold: agreement ≥ 0.85. The count doubled when the model list was cut to ten — the freed effort went here rather than into more models.</div>
         </div>
 
         <div class="fmlrow">
@@ -1474,7 +1469,7 @@
         <div class="fmlrow">
           <div class="fn">Cross-tabulation cell</div>
           <div class="fe">P(cause = k | mode = j) = n_jk / n_j</div>
-          <div class="fd">The principal result. n_jk is the count of hallucinations with failure mode j and provenance k; n_j is the total for that mode. Reported with Wilson confidence intervals over the three samples.</div>
+          <div class="fd">The principal result. n_jk is the count of hallucinations with failure mode j and provenance k; n_j is the total for that mode. Reported with Wilson confidence intervals over the five samples.</div>
         </div>
 
         <div class="fmlrow">
@@ -1486,7 +1481,7 @@
         <div class="fmlrow">
           <div class="fn">Scale curve<br><span style="font-weight:400;color:var(--muted);font-size:0.86rem">corpus held fixed</span></div>
           <div class="fe">π_k(m) as a function of log N_params<br>over m ∈ {OLMo 2 1B, 7B, 13B, 32B}<br><br>predictions: π_TRUTH decreasing<br>π_SILENCE non-decreasing</div>
-          <div class="fd">All four checkpoints share <code>olmo-mix-1124</code>, one data order and one recipe, so parameter count is the only quantity that moves. Each point carries a Wilson interval over the three samples; a monotone trend is claimed only where the intervals do not overlap.</div>
+          <div class="fd">All four checkpoints share <code>olmo-mix-1124</code>, one data order and one recipe, so parameter count is the only quantity that moves. Each point carries a Wilson interval over the five samples; a monotone trend is claimed only where the intervals do not overlap.</div>
         </div>
 
         <div class="fmlrow">
@@ -1498,7 +1493,7 @@
         <div class="fmlrow">
           <div class="fn">Axis-independence control<br><span style="font-weight:400;color:var(--muted);font-size:0.86rem">base vs instruct</span></div>
           <div class="fe">Δ = max over k of | π_k(base) − π_k(instruct) |</div>
-          <div class="fd">Run on OLMo 2 7B and 13B, where pretraining and corpus are identical and only post-training differs. Provenance is a property of the corpus, so Δ should stay small while the abstention rate A moves freely. <strong>A large Δ alongside a moved A is evidence against constraint C4</strong> and is reported as a limitation rather than dropped.</div>
+          <div class="fd">Run on OLMo 2 7B, where pretraining and corpus are identical between the base and instruct checkpoints and only post-training differs. Provenance is a property of the corpus, so Δ should stay small while the abstention rate A moves freely. <strong>A large Δ alongside a moved A is evidence against constraint C4</strong> and is reported as a limitation rather than dropped.</div>
         </div>
 
         <div class="fmlrow">
