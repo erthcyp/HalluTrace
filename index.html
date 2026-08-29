@@ -660,7 +660,9 @@
     </div>
     <p class="prose" style="font-size:0.86rem;color:var(--muted)">
       Five corpora, but <strong>four independent data philosophies</strong> — OLMo 1.7 and OLMo 2 are the same
-      lineage, and we say so rather than counting them as two independent points.
+      lineage, and we say so rather than counting them as two independent points. Two of these
+      indexes do not cover the whole of what their model was trained on; that is set out below and carried through to
+      the reported numbers.
     </p>
 
     <div class="redline">
@@ -671,6 +673,58 @@
         declining available to it. <strong>Parse-failure rate is reported openly per model</strong> rather than
         quietly dropped, because a tolerant parser applied to a base model is exactly where silent selection creeps
         into results.
+      </p>
+    </div>
+
+    <h3 style="margin-top:1.1rem">Having an index is not the same as being covered by it</h3>
+    <p class="prose">
+      All five corpora are indexed, but two of the five models were trained on <em>more</em> than the corpus their
+      index covers. Both were trained in stages, and only the first stage is public as an index. This is not a
+      rounding error we can wave through, because <strong>the missing slice is not random — it is the part our tasks
+      ask about.</strong>
+    </p>
+
+    <div class="tscroll">
+      <table>
+        <thead><tr><th>Model</th><th>Actually trained on</th><th class="num">Index covers</th><th>What is missing, and why it matters</th></tr></thead>
+        <tbody>
+          <tr><td class="lead">OLMo 2 7B</td><td>olmo-mix-1124 3.9T <span class="mono">+</span> Dolmino-mix-1124 50B</td><td class="num">~98.7%</td><td><span class="chip warn">biased gap</span> Dolmino is the high-quality academic, Q&amp;A and math slice — where citation facts concentrate</td></tr>
+          <tr><td class="lead">DCLM-7B</td><td>DCLM-baseline 3.8T <span class="mono">+</span> StarCoder <span class="mono">+</span> ProofPile2 = 4.1T</td><td class="num">~93%</td><td><span class="chip warn">biased gap</span> StarCoder is the code slice — where package and API facts live</td></tr>
+          <tr><td class="lead">OLMo 1.7 7B</td><td>Dolma 1.7</td><td class="num">verify</td><td>Believed complete; confirmed against the model card in gate week</td></tr>
+          <tr><td class="lead">RedPajama-INCITE 7B</td><td>RedPajama-1T</td><td class="num">verify</td><td>Confirm the index is the 1T release, not v2</td></tr>
+          <tr class="us"><td class="lead">Pythia 6.9B</td><td>The Pile</td><td class="num">complete</td><td>One stage, one corpus, fully indexed — the cleanest instrument in the set</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="goal">
+      <div class="mk">The bias has a direction, which is what makes it survivable</div>
+      <p class="gline">
+        A fact sitting in the uncovered slice is counted as absent. Incomplete coverage therefore over-reports
+        SILENCE and under-reports TRUTH — never the reverse.
+      </p>
+      <p class="gsub">
+        Because the direction is known, <strong>SILENCE is reported per model as an upper bound with its coverage
+        fraction attached</strong>, rather than as a point estimate that quietly depends on how completely each index
+        was built. Pythia, at full coverage, anchors the panel: if its SILENCE share sits below the others, coverage
+        is a candidate explanation and we say so. One specific rule follows — <strong>no strong SILENCE claim is
+        made from DCLM-7B on the code task</strong> while StarCoder is unindexed, because that is exactly where the
+        answers would be.
+      </p>
+    </div>
+
+    <div class="redline">
+      <div class="mk">Two ways to close these gaps, both cheap</div>
+      <p>
+        <strong>OLMo 2 costs nothing but an email.</strong> AI2's own OlmoTrace configuration lists an index named
+        <code>v4-olmo-2-0325-32b-anneal-adapt</code> — the annealing data is already indexed, just not exposed
+        publicly. The request is to switch something on, not to build it.
+      </p>
+      <p>
+        <strong>DCLM we can close ourselves.</strong> StarCoder and ProofPile2 together are on the order of a
+        terabyte — not the eight or twenty-five of a full pretraining corpus — so a single streaming pass with the
+        same pattern set takes a few hours and a few dollars, and its counts add to the ones the API returns. This is
+        where the one-pass procedure below stops being a contingency and becomes something we are likely to run.
       </p>
     </div>
 
@@ -807,6 +861,11 @@
         answers it in advance.
       </p>
       <p>
+        The method itself is not the limit — a fixed query set can be answered by one streaming pass over any of
+        these corpora, as set out below — but the bandwidth and the calendar are, and we would rather run five
+        corpora properly than six in a hurry.
+      </p>
+      <p>
         It also sharpens section 03's point. <strong>Even a fully open model can be unexplainable in practice</strong>,
         because openness of data and searchability of data are different properties and only the second one lets
         anyone ask where an error came from. The gap the survey documents is not only about labs that withhold data.
@@ -825,6 +884,58 @@
       included, so <code>pandas.read_json(</code> cannot match inside <code>pandas.read_jsonl(</code> — and a sample
       of matches is pulled with the <code>find</code> endpoint and read by hand. A prefix-pair test case goes into
       the gate-week script, so that if the counts do collide we know in week one rather than at analysis.
+    </p>
+
+    <h3 style="margin-top:1.1rem">If there is no index — how the method scales</h3>
+    <p class="prose">
+      This procedure does three jobs. It closes the DCLM coverage gap by scanning StarCoder and ProofPile2, which
+      is small enough to be practical and is <strong>the one place we expect to actually run it</strong>. It answers
+      the obvious question about the excluded table above — <em>could you not just do it yourselves?</em> And it is
+      the fallback if the public API becomes unavailable mid-project.
+    </p>
+    <p class="prose">
+      Building an index is not the answer. At roughly <strong>7 bytes per token</strong> plus temporary files, a
+      6T-token corpus needs about 41 TB before anything is downloaded, and infini-gram mini reports 99 days on a
+      128-vCPU node to index 83 TB. <strong>But an index exists to answer queries nobody has thought of yet, and ours
+      are all known before we start.</strong> Roughly 12,000 fixed strings — every claim, in three query forms, in a
+      correct and an incorrect variant — can be compiled into one Aho-Corasick automaton and counted in a single
+      streaming pass, at a cost that does not grow with the number of patterns.
+    </p>
+
+    <div class="walk">
+      <div class="wstep"><span class="ws">Compile</span><span class="wt">All ~12,000 patterns into one automaton — a trie with failure links, so the read head never backs up. About 230 MB of memory.</span></div>
+      <div class="wstep"><span class="ws">Normalise</span><span class="wt">NFKC, smart quotes and dashes folded, whitespace collapsed, lowercased — applied identically to patterns and corpus. <strong>This rule is the definition of "appears in the corpus" and belongs in the paper.</strong></span></div>
+      <div class="wstep"><span class="ws">Stream</span><span class="wt">Documents pulled with <code>datasets</code> streaming, matched, discarded. Nothing is stored, so the disk cost is zero.</span></div>
+      <div class="wstep"><span class="ws">Filter</span><span class="wt">Every match carries its position, so a hit is kept only when the characters on either side are not word characters.</span></div>
+      <div class="wstep last"><span class="ws">Emit</span><span class="wt">Per-pattern counts plus a window of context around the first few matches, for hand inspection.</span></div>
+    </div>
+
+    <div class="redline">
+      <div class="mk">Why not simply use ripgrep, which is four times faster</div>
+      <p>
+        Because it gets the answer wrong on exactly our query shape. Given the pair
+        <code>pandas.read_json</code> / <code>pandas.read_jsonl</code> over text containing both, a single ripgrep
+        pass reported the correct form 3 times and <strong>the hallucinated form zero times</strong> — a regex engine
+        consumes each position once, so the shorter pattern swallows the longer one. That flips the verdict from
+        MIXED to TRUTH: the paper would say the corpus was right and the model misremembered, when in fact the error
+        is sitting in the training data. Sorting patterns longest-first does not fix it; it moves the error to the
+        other count.
+      </p>
+      <p>
+        Aho-Corasick is built to report overlapping matches, so it returns 3 and 1, and the boundary filter then
+        removes the one occurrence that was only a substring of the longer string — leaving 2 and 1, which is the
+        truth. <strong>The failure is silent: no crash, no warning, just provenance labels that are wrong in a
+        consistent direction.</strong> A prefix-pair test case is therefore a permanent fixture of the test suite,
+        run before every scan.
+      </p>
+    </div>
+
+    <p class="prose" style="font-size:0.86rem;color:var(--muted)">
+      Measured on this query size: 15 MB/s per core through the automaton against 68 MB/s for ripgrep. Sixteen cores
+      of the slower, correct method still outruns a 1 Gbps connection by a factor of two, so <strong>the bottleneck
+      is bandwidth, not matching</strong> — an 8 TB corpus is roughly eighteen hours of streaming and about $8 of
+      CPU time, with no GPU and no storage. Optimising the part that is not the bottleneck, at the price of
+      correctness, would be a bad trade.
     </p>
 
     <h3 style="margin-top:1.1rem">What it costs</h3>
@@ -949,7 +1060,7 @@
           <tr><td class="k">Models</td><td><strong>Five subjects, two for illustration.</strong> All five models whose corpus is published and indexed, base checkpoints at ~7B — OLMo 2 7B, OLMo 1.7 7B, DCLM-7B, RedPajama-INCITE 7B, Pythia 6.9B — plus GPT-5.6 Sol and Claude Opus 5 on the citation task only, reported apart</td></tr>
           <tr><td class="k">Volume</td><td>30,000 generations at <strong>five</strong> samples per prompt, plus 6,000 for the illustration row · ~3,500 cause-labeled instances across five corpora</td></tr>
           <tr><td class="k">Team</td><td>4 people, full time — attribution · citation verifier · code verifier · infra</td></tr>
-          <tr><td class="k">Also in</td><td>Five samples per prompt for tighter error bars · 200 validation items per task rather than 100 · the corpus-frequency curve · a freshly authored prompt subset · the proxy-corpus error bar · the boundary-anchored query form</td></tr>
+          <tr><td class="k">Also in</td><td>Five samples per prompt for tighter error bars · 200 validation items per task rather than 100 · the corpus-frequency curve · a freshly authored prompt subset · the proxy-corpus error bar · the boundary-anchored query form · the per-model index coverage table · a single streaming pass over StarCoder and ProofPile2 to close the DCLM gap</td></tr>
           <tr><td class="k">Still cut</td><td><strong>Being a benchmark.</strong> We do not rank models and do not claim a competing evaluation suite · size variants within a family, and the scale curve that depended on them · open-weight models, which can be neither explained nor cheaply justified once ranking is off the table · OLMoE and GPT-NeoX, which duplicate corpora already covered</td></tr>
           <tr><td class="k">Not in scope</td><td>Thai and multilingual · multi-turn · RAG · mitigation methods · influence functions · a thirtieth benchmark · building an index over any corpus that lacks one</td></tr>
         </tbody>
@@ -973,7 +1084,7 @@
         <div class="wk">Aug 28<br>– Sep 3</div>
         <div class="pb">
           <h3>Gate week</h3>
-          <p>Run <code>phase0_check.py</code> against infini-gram, <strong>including the prefix-pair test</strong> — <code>read_json</code> against <code>read_jsonl</code> on <code>olmo-mix-1124</code> — to settle the boundary question in week one. Check whether the AI2 S3 index bucket is publicly readable; if not, send one narrow question about a public endpoint for the OLMo 3 indexes. Request the Semantic Scholar key. Build the citation verifier. Confirm that all five corpus indexes respond and measure the rate limit. <strong>If corpus search does not work, replan by 1 September.</strong></p>
+          <p>Run <code>phase0_check.py</code> against infini-gram, <strong>including the prefix-pair test</strong> — <code>read_json</code> against <code>read_jsonl</code> on <code>olmo-mix-1124</code> — to settle the boundary question in week one. Check whether the AI2 S3 index bucket is publicly readable; if not, send one narrow question covering both the OLMo 3 indexes and the existing <code>anneal-adapt</code> index that would close the OLMo 2 gap. <strong>Confirm the coverage of every index against its model card</strong> — the OLMo 1.7 and RedPajama-INCITE rows are unverified, and coverage is now a reported quantity. Request the Semantic Scholar key. Build the citation verifier. Confirm that all five corpus indexes respond and measure the rate limit. <strong>If corpus search does not work, replan by 1 September.</strong></p>
         </div>
       </div>
       <div class="phase">
@@ -1008,14 +1119,14 @@
         <div class="wk">Oct 9<br>– Oct 15</div>
         <div class="pb">
           <h3>The additions</h3>
-          <p>Freshly authored prompt subset and the contamination comparison. Proxy-corpus error bar — the same queries against C4. Corpus-frequency curve for the singleton test. <strong>Stretch goal only if everything above is finished:</strong> Comma v0.1 on Common Pile as a positive control, using a single streaming pass rather than an index. A corpus of openly licensed text alone should show visibly more SILENCE; if it does not, the instrument is not measuring what we claim.</p>
+          <p><strong>Close the DCLM gap:</strong> one streaming pass over StarCoder and ProofPile2 with the same pattern set, counts merged with the API results. Freshly authored prompt subset and the contamination comparison. Proxy-corpus error bar — the same queries against C4. Corpus-frequency curve for the singleton test. <strong>Stretch goal only if everything above is finished:</strong> Comma v0.1 on Common Pile as a positive control, using a single streaming pass rather than an index. A corpus of openly licensed text alone should show visibly more SILENCE; if it does not, the instrument is not measuring what we claim.</p>
         </div>
       </div>
       <div class="phase">
         <div class="wk">Oct 16<br>– Oct 19</div>
         <div class="pb">
           <h3>Analysis and figures</h3>
-          <p>Cross-tabulation, corpus spread across the five corpora, the label disagreement D, the proxy-corpus disagreement A_proxy, the corpus-frequency curve, hand-inspection of two hundred cases. The illustration row is typeset last, in its own table.</p>
+          <p>Cross-tabulation, corpus spread across the five corpora, the label disagreement D, the proxy-corpus disagreement A_proxy, the corpus-frequency curve, hand-inspection of two hundred cases. Every SILENCE figure is typeset with its coverage fraction beside it. The illustration row is typeset last, in its own table.</p>
         </div>
       </div>
       <div class="phase">
@@ -1126,12 +1237,13 @@
         decision rule that holds across three heterogeneous tasks, making their results comparable; (iii) complete
         coverage of the population of models whose pretraining corpus can actually be searched, together with a
         record of the open-data models that cannot be reached because publishing a corpus and indexing one are
-        different things; (iv) a released corpus of cause-labeled hallucinations with raw corpus counts and
+        different things, together with the single-pass procedure by which the method extends to them; (iv) a released corpus of cause-labeled hallucinations with raw corpus counts and
         retrieved evidence attached; and (v) a verified survey of twenty-nine benchmarks along a dimension no prior
         work has compiled. <strong>We do not propose a benchmark and do not rank models.</strong> We are explicit about
         what this does not establish: corpus presence and absence show where an error is addressable in principle,
         not that a given intervention would succeed; because exact-string search cannot detect facts expressed in
-        other surface forms, the fabrication rate is reported as an upper bound; and because closed endpoints may
+        other surface forms, and because two of the five indexes cover only the first training stage of their model,
+        SILENCE is reported as an upper bound with its coverage fraction attached; and because closed endpoints may
         retrieve without disclosing it, results on that tier describe system behaviour rather than model behaviour
         and are never used to support a claim about pretraining data.
       </p>
@@ -1422,7 +1534,7 @@
         <div class="fmlrow">
           <div class="fn">Provenance label</div>
           <div class="fe">TRUTH   if c_true &gt; 0 and c_false = 0<br>ERROR   if c_true = 0 and c_false &gt; 0<br>SILENCE if c_true = 0 and c_false = 0<br>MIXED   if c_true &gt; 0 and c_false &gt; 0</div>
-          <div class="fd">Applied identically across all three tasks. N/A where no unique correct answer exists, which is distinct from SILENCE and must not be merged with it.</div>
+          <div class="fd">Applied identically across all three tasks. N/A where no unique correct answer exists, which is distinct from SILENCE and must not be merged with it. Where the index covers only part of what a model was trained on, a fact in the uncovered slice reads as absent, so <strong>SILENCE is an upper bound and is reported with the coverage fraction beside it</strong> — 98.7% for OLMo 2, 93% for DCLM-7B before the StarCoder scan, complete for Pythia.</div>
         </div>
 
         <div class="fmlrow">
