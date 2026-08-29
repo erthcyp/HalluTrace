@@ -648,22 +648,52 @@
 
     <div class="tscroll">
       <table>
-        <thead><tr><th>Model</th><th>Corpus</th><th>infini-gram index</th><th>Lab</th><th>What its corpus stands for</th></tr></thead>
+        <thead><tr><th>#</th><th>HuggingFace repo</th><th class="num">Params</th><th>Corpus</th><th>infini-gram index</th><th>What that corpus represents</th></tr></thead>
         <tbody>
-          <tr class="us"><td class="lead">OLMo 2 7B base</td><td>OLMo-mix-1124</td><td class="mono">v4_olmo-mix-1124_llama</td><td>AI2</td><td>Curated mixing — the reference point</td></tr>
-          <tr><td class="lead">OLMo 1.7 7B base</td><td>Dolma 1.7</td><td class="mono">v4_dolma-v1_7_llama</td><td>AI2</td><td>The same lab one generation earlier</td></tr>
-          <tr class="us"><td class="lead">DCLM-7B base</td><td>DCLM-baseline</td><td class="mono">v4_dclm-baseline_llama</td><td>DataComp</td><td>Aggressive model-based filtering</td></tr>
-          <tr><td class="lead">RedPajama-INCITE 7B base</td><td>RedPajama-1T</td><td class="mono">v4_rpj_llama_s4</td><td>Together</td><td>Open reproduction of a closed recipe</td></tr>
-          <tr><td class="lead">Pythia 6.9B</td><td>The Pile</td><td class="mono">v4_piletrain_llama</td><td>EleutherAI</td><td>Accumulation of curated sources</td></tr>
+          <tr class="us"><td class="num">1</td><td class="code">allenai/OLMo-2-1124-7B</td><td class="num">7B</td><td>OLMo-mix-1124</td><td class="mono">v4_olmo-mix-1124_llama</td><td>Curated mixing — the reference point</td></tr>
+          <tr><td class="num">2</td><td class="code">allenai/OLMo-7B-0424-hf</td><td class="num">7B</td><td>Dolma 1.7</td><td class="mono">v4_dolma-v1_7_llama</td><td>The same lab, one generation earlier</td></tr>
+          <tr class="us"><td class="num">3</td><td class="code">apple/DCLM-7B</td><td class="num">7B</td><td>DCLM-baseline</td><td class="mono">v4_dclm-baseline_llama</td><td>Aggressive model-based filtering</td></tr>
+          <tr><td class="num">4</td><td class="code">togethercomputer/RedPajama-INCITE-7B-Base</td><td class="num">6.9B</td><td>RedPajama-Data-1T</td><td class="mono">v4_rpj_llama_s4</td><td>Open reproduction of a closed recipe</td></tr>
+          <tr><td class="num">5</td><td class="code">EleutherAI/pythia-6.9b</td><td class="num">6.9B</td><td>The Pile</td><td class="mono">v4_piletrain_llama</td><td>Accumulation of curated sources</td></tr>
         </tbody>
       </table>
     </div>
     <p class="prose" style="font-size:0.86rem;color:var(--muted)">
-      Five corpora, but <strong>four independent data philosophies</strong> — OLMo 1.7 and OLMo 2 are the same
-      lineage, and we say so rather than counting them as two independent points. Two of these
-      indexes do not cover the whole of what their model was trained on; that is set out below and carried through to
-      the reported numbers.
+      Every repo id above was checked against its HuggingFace model card in August 2026. All five are base
+      checkpoints under open licences. Five corpora, but <strong>four independent data philosophies</strong> — OLMo
+      1.7 and OLMo 2 are the same lineage, and we say so rather than counting them as two independent points. Two of
+      these indexes do not cover the whole of what their model was trained on; that is set out below and carried
+      through to the reported numbers.
     </p>
+
+    <div class="redline">
+      <div class="mk">Two repo names that must be exactly right</div>
+      <p>
+        <strong>OLMo 1.7 is now called OLMo-7B-0424</strong>, and the <code>-hf</code> suffix is not optional: the
+        repo without it needs AI2's own <code>olmo</code> library rather than transformers.
+      </p>
+      <p>
+        <strong>Pythia must be <code>pythia-6.9b</code>, never <code>pythia-6.9b-deduped</code></strong>. The index
+        is Pile-train, the non-deduplicated corpus. Picking the deduped checkpoint pairs a model with a corpus it was
+        not trained on, and <em>nothing in the pipeline would warn us</em> — the counts would come back looking
+        perfectly reasonable and every provenance label from that model would be quietly wrong.
+      </p>
+    </div>
+
+    <div class="redline">
+      <div class="mk">DCLM-7B may not serve on vLLM — settle this in gate week</div>
+      <p>
+        <code>apple/DCLM-7B</code> is an <strong>OpenLM</strong> architecture, not Llama or GPT-NeoX. Its model card
+        directs users to install <code>open_lm</code> and says nothing about vLLM. The plan assumes one vLLM instance
+        serves all five, so this is the one model that could break that assumption.
+      </p>
+      <p>
+        Test <code>vllm serve apple/DCLM-7B</code> in week one, not in late September. If it fails there are three
+        routes, in order: serve this one model through <code>open_lm</code> separately and accept the lower
+        throughput; find a community conversion to HF format; or <strong>drop DCLM and run four corpora</strong>,
+        which still clears the bar set above. The other four are architectures vLLM has supported for years.
+      </p>
+    </div>
 
     <div class="redline">
       <div class="mk">What base-only costs, and how it is handled</div>
@@ -688,11 +718,11 @@
       <table>
         <thead><tr><th>Model</th><th>Actually trained on</th><th class="num">Index covers</th><th>What is missing, and why it matters</th></tr></thead>
         <tbody>
-          <tr><td class="lead">OLMo 2 7B</td><td>olmo-mix-1124 3.9T <span class="mono">+</span> Dolmino-mix-1124 50B</td><td class="num">~98.7%</td><td><span class="chip warn">biased gap</span> Dolmino is the high-quality academic, Q&amp;A and math slice — where citation facts concentrate</td></tr>
-          <tr><td class="lead">DCLM-7B</td><td>DCLM-baseline 3.8T <span class="mono">+</span> StarCoder <span class="mono">+</span> ProofPile2 = 4.1T</td><td class="num">~93%</td><td><span class="chip warn">biased gap</span> StarCoder is the code slice — where package and API facts live</td></tr>
-          <tr><td class="lead">OLMo 1.7 7B</td><td>Dolma 1.7</td><td class="num">verify</td><td>Believed complete; confirmed against the model card in gate week</td></tr>
-          <tr><td class="lead">RedPajama-INCITE 7B</td><td>RedPajama-1T</td><td class="num">verify</td><td>Confirm the index is the 1T release, not v2</td></tr>
-          <tr class="us"><td class="lead">Pythia 6.9B</td><td>The Pile</td><td class="num">complete</td><td>One stage, one corpus, fully indexed — the cleanest instrument in the set</td></tr>
+          <tr><td class="code">allenai/OLMo-2-1124-7B</td><td>olmo-mix-1124 3.9T <span class="mono">+</span> Dolmino-mix-1124 50B</td><td class="num">~98.7%</td><td><span class="chip warn">biased gap</span> Dolmino is the high-quality academic, Q&amp;A and math slice — where citation facts concentrate</td></tr>
+          <tr><td class="code">apple/DCLM-7B</td><td>DCLM-baseline 3.8T <span class="mono">+</span> StarCoder <span class="mono">+</span> ProofPile2 = 4.1T</td><td class="num">~93%</td><td><span class="chip warn">biased gap</span> StarCoder is the code slice — where package and API facts live</td></tr>
+          <tr><td class="code">allenai/OLMo-7B-0424-hf</td><td>Dolma 1.7</td><td class="num">verify</td><td>Believed complete; confirmed against the model card in gate week</td></tr>
+          <tr><td class="code">togethercomputer/RedPajama-INCITE-7B-Base</td><td>RedPajama-Data-1T, 1.001T tokens</td><td class="num">complete</td><td>Confirmed — the API documents <code>v4_rpj_llama_s4</code> as RedPajama-Data-1T, the corpus this model was trained on</td></tr>
+          <tr class="us"><td class="code">EleutherAI/pythia-6.9b</td><td>The Pile</td><td class="num">complete</td><td>One stage, one corpus, fully indexed — the cleanest instrument in the set</td></tr>
         </tbody>
       </table>
     </div>
@@ -1084,7 +1114,7 @@
         <div class="wk">Aug 28<br>– Sep 3</div>
         <div class="pb">
           <h3>Gate week</h3>
-          <p>Run <code>phase0_check.py</code> against infini-gram, <strong>including the prefix-pair test</strong> — <code>read_json</code> against <code>read_jsonl</code> on <code>olmo-mix-1124</code> — to settle the boundary question in week one. Check whether the AI2 S3 index bucket is publicly readable; if not, send one narrow question covering both the OLMo 3 indexes and the existing <code>anneal-adapt</code> index that would close the OLMo 2 gap. <strong>Confirm the coverage of every index against its model card</strong> — the OLMo 1.7 and RedPajama-INCITE rows are unverified, and coverage is now a reported quantity. Request the Semantic Scholar key. Build the citation verifier. Confirm that all five corpus indexes respond and measure the rate limit. <strong>If corpus search does not work, replan by 1 September.</strong></p>
+          <p>Run <code>phase0_check.py</code> against infini-gram, <strong>including the prefix-pair test</strong> — <code>read_json</code> against <code>read_jsonl</code> on <code>olmo-mix-1124</code> — to settle the boundary question in week one. Check whether the AI2 S3 index bucket is publicly readable; if not, send one narrow question covering both the OLMo 3 indexes and the existing <code>anneal-adapt</code> index that would close the OLMo 2 gap. <strong>Confirm the coverage of every index against its model card</strong> — the OLMo 1.7 and RedPajama-INCITE rows are unverified, and coverage is now a reported quantity. Request the Semantic Scholar key. Build the citation verifier. <strong>Run <code>vllm serve</code> against all five checkpoints</strong> — DCLM-7B is the one at risk, and finding out in week one is the difference between a workaround and a crisis. Confirm that all five corpus indexes respond and measure the rate limit. <strong>If corpus search does not work, replan by 1 September.</strong></p>
         </div>
       </div>
       <div class="phase">

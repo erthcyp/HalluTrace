@@ -202,11 +202,19 @@ print("""
   Replan by 1 September if not.
 
   Not checkable by this script — do these by hand the same week:
+    - vllm serve, once each, on all five checkpoints:
+        allenai/OLMo-2-1124-7B                      (7B, olmo-mix-1124)
+        allenai/OLMo-7B-0424-hf                     (7B, Dolma 1.7)
+        apple/DCLM-7B                               (7B, DCLM-baseline)  <- AT RISK
+        togethercomputer/RedPajama-INCITE-7B-Base   (6.9B, RedPajama-1T)
+        EleutherAI/pythia-6.9b                      (6.9B, Pile-train)
+      DCLM-7B is an OpenLM architecture and may not serve on vLLM at all.
+      Note the exact repo names: OLMo-0424 needs the -hf suffix, and Pythia
+      must NOT be the -deduped variant (the index is the non-deduped Pile).
     - Read each model card and record what the index does NOT cover
       (OLMo 2 misses Dolmino 50B; DCLM-7B misses StarCoder + ProofPile2;
-       OLMo 1.7 and RedPajama-INCITE are still unverified)
+       OLMo 1.7 is still unverified)
     - aws s3 ls --no-sign-request  on the AI2 index bucket
-    - Confirm every checkpoint still downloads from HuggingFace
 """)
 rule()
 
