@@ -616,6 +616,93 @@
       Illustrative numbers, not measured.
     </p>
 
+    <h3 style="margin-top:1.1rem">Reading an intervention point off the evidence</h3>
+    <p class="prose">
+      The project is named for root cause, so this is the question it will be asked first. The honest answer is that
+      <strong>the provenance label separates data from not-data cleanly, and does not on its own separate training
+      from inference.</strong> Saying so plainly is what makes the rest of the claim credible.
+    </p>
+
+    <div class="tscroll">
+      <table class="compact">
+        <thead><tr><th>Label</th><th>Pretraining data</th><th>Training process</th><th>Inference</th></tr></thead>
+        <tbody>
+          <tr class="us"><td class="lead">WRONG_IN_DATA</td><td><strong>implicated</strong></td><td>possible</td><td>unlikely</td></tr>
+          <tr><td class="lead">CORRECT_IN_DATA</td><td>ruled out</td><td>possible</td><td>possible</td></tr>
+          <tr><td class="lead">NOT_IN_DATA</td><td>ruled out for that fact</td><td>possible</td><td>possible</td></tr>
+          <tr><td class="lead">MIXED</td><td>depends on the count ratio</td><td>possible</td><td>possible</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="prose" style="font-size:0.86rem;color:var(--muted)">
+      Only the first row points at one place. The other three establish that the content of the data was not the
+      problem, and then stop.
+    </p>
+
+    <h3 style="margin-top:1rem">Two further signals we already collect</h3>
+    <p class="prose">
+      Neither needs a single extra experiment, and together they split the remaining ambiguity.
+    </p>
+    <div class="walk">
+      <div class="wstep">
+        <span class="ws">Count size</span>
+        <span class="wt"><code>c_true</code> is stored as a number, not as a yes or no, so it records how often the
+        model met the fact. Missing something seen once is ordinary and points at <strong>exposure</strong>, which is
+        a property of how the data was mixed and ordered. Missing something seen twelve thousand times is not an
+        exposure problem and must be something else.</span>
+      </div>
+      <div class="wstep last">
+        <span class="ws">Consistency</span>
+        <span class="wt">Five samples per prompt were added for error bars, but they also answer a different
+        question. A claim that appears in five runs of five is fixed in the weights and decoding cannot avoid it.
+        A claim that appears in one of five is a sampling accident. <strong>This is the discriminator between
+        training and inference, and it costs nothing</strong> because the samples are generated either way.</span>
+      </div>
+    </div>
+
+    <div class="tscroll">
+      <table class="compact">
+        <thead><tr><th>What we observe</th><th>Read as</th><th>Where the fix would go</th></tr></thead>
+        <tbody>
+          <tr class="us"><td class="lead">WRONG_IN_DATA</td><td>the data carried the error</td><td>Pretraining data</td></tr>
+          <tr><td class="lead">CORRECT_IN_DATA · low count · consistent</td><td>too few exposures to learn it</td><td>Training process</td></tr>
+          <tr><td class="lead">CORRECT_IN_DATA · high count · inconsistent</td><td>known but lost at decoding</td><td>Inference</td></tr>
+          <tr><td class="lead">NOT_IN_DATA · consistent</td><td>confident fabrication, never taught to decline</td><td>Training process</td></tr>
+          <tr><td class="lead">NOT_IN_DATA · inconsistent</td><td>sampling noise filling a gap</td><td>Inference</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="goal">
+      <div class="mk">Why base-only models make this readable</div>
+      <p class="gline">
+        With no SFT and no RLHF anywhere in the panel, post-training drops out of the question entirely.
+      </p>
+      <p class="gsub">
+        "Training process" therefore narrows to pretraining dynamics alone, which is a far smaller space to reason
+        about than the usual tangle of pretraining, instruction tuning and preference optimisation. The decision to
+        use base checkpoints was made to remove a confound from the cross-corpus comparison, and it turns out to
+        sharpen this reading as well.
+      </p>
+    </div>
+
+    <div class="redline">
+      <div class="mk">Consistent with, not proof of</div>
+      <p>
+        None of this is causal proof. Establishing cause would mean retraining a model with the data altered and
+        observing whether the hallucination disappears, which is several thousand times beyond our means. What the
+        three signals produce is evidence consistent with one intervention point and inconsistent with another, and
+        the paper says exactly that: <strong>corpus presence and absence show where an error is addressable in
+        principle, not that a given intervention would succeed.</strong>
+      </p>
+      <p>
+        One reading in particular must not be inverted. <strong>NOT_IN_DATA does not mean the data cannot fix
+        it.</strong> It means better recall cannot fix it, because there was nothing to recall. Adding the missing
+        fact to the corpus is still a data intervention, and a perfectly reasonable one. What the label rules out is
+        a specific remedy, not a whole category of them.
+      </p>
+    </div>
+
     <h3 style="margin-top:0.8rem">Which models, and why exactly these</h3>
     <p class="prose">
       The two axes have different entry requirements, and that single fact decides the whole study.
@@ -1090,7 +1177,7 @@
           <tr><td class="k">Models</td><td><strong>Five subjects, two for illustration.</strong> All five models whose corpus is published and indexed, base checkpoints at ~7B — OLMo 2 7B, OLMo 1.7 7B, DCLM-7B, RedPajama-INCITE 7B, Pythia 6.9B — plus GPT-5.6 Sol and Claude Opus 5 on the citation task only, reported apart</td></tr>
           <tr><td class="k">Volume</td><td>30,000 generations at <strong>five</strong> samples per prompt, plus 6,000 for the illustration row · ~3,500 cause-labeled instances across five corpora</td></tr>
           <tr><td class="k">Team</td><td>4 people, full time — attribution · citation verifier · code verifier · infra</td></tr>
-          <tr><td class="k">Also in</td><td>Five samples per prompt for tighter error bars · 200 validation items per task rather than 100 · the corpus-frequency curve · a freshly authored prompt subset · the proxy-corpus error bar · the boundary-anchored query form · the per-model index coverage table · a single streaming pass over StarCoder and ProofPile2 to close the DCLM gap</td></tr>
+          <tr><td class="k">Also in</td><td>Five samples per prompt, which give both tighter error bars and the consistency signal that separates training from inference · 200 validation items per task rather than 100 · the corpus-frequency curve · a freshly authored prompt subset · the proxy-corpus error bar · the boundary-anchored query form · the per-model index coverage table · a single streaming pass over StarCoder and ProofPile2 to close the DCLM gap</td></tr>
           <tr><td class="k">Still cut</td><td><strong>Being a benchmark.</strong> We do not rank models and do not claim a competing evaluation suite · size variants within a family, and the scale curve that depended on them · open-weight models, which can be neither explained nor cheaply justified once ranking is off the table · OLMoE and GPT-NeoX, which duplicate corpora already covered</td></tr>
           <tr><td class="k">Not in scope</td><td>Thai and multilingual · multi-turn · RAG · mitigation methods · influence functions · a thirtieth benchmark · building an index over any corpus that lacks one</td></tr>
         </tbody>
@@ -1156,7 +1243,7 @@
         <div class="wk">Oct 16<br>– Oct 19</div>
         <div class="pb">
           <h3>Analysis and figures</h3>
-          <p>Cross-tabulation, corpus spread across the five corpora, the label disagreement D, the proxy-corpus disagreement A_proxy, the corpus-frequency curve, hand-inspection of two hundred cases. Every NOT_IN_DATA figure is typeset with its coverage fraction beside it. The illustration row is typeset last, in its own table.</p>
+          <p>Cross-tabulation, the three-signal intervention-point reading (label, count size, consistency across samples), corpus spread across the five corpora, the label disagreement D, the proxy-corpus disagreement A_proxy, the corpus-frequency curve, hand-inspection of two hundred cases. Every NOT_IN_DATA figure is typeset with its coverage fraction beside it. The illustration row is typeset last, in its own table.</p>
         </div>
       </div>
       <div class="phase">
@@ -1264,7 +1351,9 @@
       <p>
         This paper measures that split. We contribute: (i) the first cross-tabulation of hallucination failure mode
         against training-data provenance, applied across a whole prompt set rather than spot-checked; (ii) a single
-        decision rule that holds across three heterogeneous tasks, making their results comparable; (iii) complete
+        decision rule that holds across three heterogeneous tasks, making their results comparable, together with a
+        stated procedure for reading an intervention point from the label, the corpus count and the consistency of a
+        claim across repeated samples; (iii) complete
         coverage of the population of models whose pretraining corpus can actually be searched, together with a
         record of the open-data models that cannot be reached because publishing a corpus and indexing one are
         different things, together with the single-pass procedure by which the method extends to them; (iv) a released corpus of cause-labeled hallucinations with raw corpus counts and
