@@ -202,6 +202,19 @@ print("""
   Replan by 1 September if not.
 
   Not checkable by this script — do these by hand the same week:
+    - Cross-check ~20 claims by hand in the OlmoTrace UI
+      (https://playground.allenai.org). Paste an output that our pipeline
+      labelled WRONG_IN_DATA and confirm OlmoTrace surfaces matching training
+      documents. This validates our query construction and normalisation
+      against a tool we did not write, and it is worth half a day.
+      CAVEAT: OlmoTrace is wired to OLMo 2 32B Instruct over the olmoe-mix
+      index, NOT the olmo-mix-1124 our 7B subject uses. Expect the counts to
+      differ. What is being checked is whether the query strings behave
+      sensibly against real text, not whether the numbers match.
+      NOTE: OlmoTrace cannot replace this pipeline. It matches spans of the
+      model's own output, so it can find c_false but never c_true, which is
+      the string the model failed to produce.
+
     - vllm serve, once each, on all five checkpoints:
         allenai/OLMo-2-1124-7B                      (7B, olmo-mix-1124)
         allenai/OLMo-7B-0424-hf                     (7B, Dolma 1.7)

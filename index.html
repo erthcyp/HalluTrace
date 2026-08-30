@@ -1149,11 +1149,21 @@
         our paper will know it. We cite it as the tool it is.
       </p>
       <p>
-        It matches <strong>verbatim spans</strong>, not facts. It has no notion of a correct form against an
-        incorrect one, assigns no label, and aggregates nothing — it is a system paper whose own text lists
+        It matches <strong>verbatim spans</strong> of the model's own output, which is why it cannot replace this
+        pipeline: the hallucinated string is in the output and can be traced, but <strong>the correct string is not,
+        because the model never produced it</strong>. Half of our decision rule is a search for something that was
+        never said. OlmoTrace also has no notion of a correct form against an incorrect one, assigns no label, and
+        aggregates nothing — it is a system paper whose own text lists
         hallucination as a use case that <em>users can explore</em>. <strong>OLMoTrace built the instrument and said
         what it could be pointed at. Nobody has pointed it at a whole benchmark and reported what came
         back.</strong> The distance between a demo and a measurement is the distance between that paper and this one.
+      </p>
+      <p>
+        We use it anyway, in the one place it fits. During gate week roughly twenty claims are checked by hand in the
+        OlmoTrace interface, to confirm that our query strings and normalisation surface the same training documents
+        a tool we did not write would surface. Its index is wired to a different OLMo checkpoint than ours, so the
+        counts are not expected to match and we say so; what is being validated is the construction of the query,
+        not the value it returns.
       </p>
     </div>
 
@@ -1201,7 +1211,7 @@
         <div class="wk">Aug 28<br>– Sep 3</div>
         <div class="pb">
           <h3>Gate week</h3>
-          <p>Run <code>phase0_check.py</code> against infini-gram, <strong>including the prefix-pair test</strong> — <code>read_json</code> against <code>read_jsonl</code> on <code>olmo-mix-1124</code> — to settle the boundary question in week one. Check whether the AI2 S3 index bucket is publicly readable; if not, send one narrow question covering both the OLMo 3 indexes and the existing <code>anneal-adapt</code> index that would close the OLMo 2 gap. <strong>Confirm the coverage of every index against its model card</strong> — the OLMo 1.7 and RedPajama-INCITE rows are unverified, and coverage is now a reported quantity. Request the Semantic Scholar key. Build the citation verifier. <strong>Run <code>vllm serve</code> against all five checkpoints</strong> — DCLM-7B is the one at risk, and finding out in week one is the difference between a workaround and a crisis. Confirm that all five corpus indexes respond and measure the rate limit. <strong>If corpus search does not work, replan by 1 September.</strong></p>
+          <p>Run <code>phase0_check.py</code> against infini-gram, <strong>including the prefix-pair test</strong> — <code>read_json</code> against <code>read_jsonl</code> on <code>olmo-mix-1124</code> — to settle the boundary question in week one. Check whether the AI2 S3 index bucket is publicly readable; if not, send one narrow question covering both the OLMo 3 indexes and the existing <code>anneal-adapt</code> index that would close the OLMo 2 gap. <strong>Confirm the coverage of every index against its model card</strong> — the OLMo 1.7 and RedPajama-INCITE rows are unverified, and coverage is now a reported quantity. Request the Semantic Scholar key. Build the citation verifier. <strong>Cross-check twenty claims by hand in the OlmoTrace interface</strong> to validate our query construction against a tool we did not write. <strong>Run <code>vllm serve</code> against all five checkpoints</strong> — DCLM-7B is the one at risk, and finding out in week one is the difference between a workaround and a crisis. Confirm that all five corpus indexes respond and measure the rate limit. <strong>If corpus search does not work, replan by 1 September.</strong></p>
         </div>
       </div>
       <div class="phase">
