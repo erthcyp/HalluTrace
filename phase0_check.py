@@ -96,10 +96,10 @@ for label, bad, good in CASES:
     if "ERROR" in a or "ERROR" in b:
         print(f"  {label}: ERROR"); continue
     cf, ct = a.get("count", 0), b.get("count", 0)
-    verdict = ("SILENCE — nothing in the corpus"       if ct == 0 and cf == 0 else
-               "TRUTH   — fact present, recall failed" if cf == 0 else
-               "ERROR   — the mistake is in the corpus" if ct == 0 else
-               "MIXED   — both present")
+    verdict = ("NOT_IN_DATA     — neither version is in the corpus"       if ct == 0 and cf == 0 else
+               "CORRECT_IN_DATA — the right fact was there, the model missed it" if cf == 0 else
+               "WRONG_IN_DATA   — the mistake itself is in the corpus" if ct == 0 else
+               "MIXED           — both versions are present")
     print(f"  {label}")
     print(f"    c_false '{bad}'  -> {cf:,}")
     print(f"    c_true  '{good}' -> {ct:,}")

@@ -596,9 +596,9 @@
         <div class="mk">Axis 2 · from the corpus — HALoGEN's Type A/B/C, renamed</div>
         <h3>Where it came from</h3>
         <ul>
-          <li><strong>TRUTH</strong> — the fact was there; recall failed → <em>training or inference</em></li>
-          <li><strong>ERROR</strong> — the error is genuinely in the corpus → <em>the corpus</em></li>
-          <li><strong>SILENCE</strong> — nothing was there → <em>abstention only</em></li>
+          <li><strong>CORRECT_IN_DATA</strong> — the fact was there; recall failed → <em>training or inference</em></li>
+          <li><strong>WRONG_IN_DATA</strong> — the error is genuinely in the corpus → <em>the corpus</em></li>
+          <li><strong>NOT_IN_DATA</strong> — nothing was there → <em>abstention only</em></li>
         </ul>
         <p class="note">Two queries per claim into infini-gram; which one returns hits decides the label.</p>
       </div>
@@ -731,13 +731,13 @@
       <div class="mk">The bias has a direction, which is what makes it survivable</div>
       <p class="gline">
         A fact sitting in the uncovered slice is counted as absent. Incomplete coverage therefore over-reports
-        SILENCE and under-reports TRUTH — never the reverse.
+        NOT_IN_DATA and under-reports CORRECT_IN_DATA — never the reverse.
       </p>
       <p class="gsub">
-        Because the direction is known, <strong>SILENCE is reported per model as an upper bound with its coverage
+        Because the direction is known, <strong>NOT_IN_DATA is reported per model as an upper bound with its coverage
         fraction attached</strong>, rather than as a point estimate that quietly depends on how completely each index
-        was built. Pythia, at full coverage, anchors the panel: if its SILENCE share sits below the others, coverage
-        is a candidate explanation and we say so. One specific rule follows — <strong>no strong SILENCE claim is
+        was built. Pythia, at full coverage, anchors the panel: if its NOT_IN_DATA share sits below the others, coverage
+        is a candidate explanation and we say so. One specific rule follows — <strong>no strong NOT_IN_DATA claim is
         made from DCLM-7B on the code task</strong> while StarCoder is unindexed, because that is exactly where the
         answers would be.
       </p>
@@ -772,7 +772,7 @@
         <thead><tr><th>What we look at</th><th>Prediction</th><th>What a failure would mean</th></tr></thead>
         <tbody>
           <tr class="us">
-            <td class="lead">π_SILENCE across the five corpora</td>
+            <td class="lead">π_NOT_IN_DATA across the five corpora</td>
             <td>It differs measurably</td>
             <td>If all five agree within their intervals, provenance is not shaped by the corpus and corpus-side work has no differential leverage — a negative result, and a publishable one</td>
           </tr>
@@ -947,7 +947,7 @@
         <code>pandas.read_json</code> / <code>pandas.read_jsonl</code> over text containing both, a single ripgrep
         pass reported the correct form 3 times and <strong>the hallucinated form zero times</strong> — a regex engine
         consumes each position once, so the shorter pattern swallows the longer one. That flips the verdict from
-        MIXED to TRUTH: the paper would say the corpus was right and the model misremembered, when in fact the error
+        MIXED to CORRECT_IN_DATA: the paper would say the corpus was right and the model misremembered, when in fact the error
         is sitting in the training data. Sorting patterns longest-first does not fix it; it moves the error to the
         other count.
       </p>
@@ -1001,7 +1001,7 @@
         <div class="mk">Taken from prior work — cited openly</div>
         <h3>What the field already had</h3>
         <ul>
-          <li><strong>The Truth / Error / Silence taxonomy (Type A/B/C)</strong> — HALoGEN</li>
+          <li><strong>The three-way provenance taxonomy (Type A/B/C)</strong> — HALoGEN</li>
           <li><strong>Prompt sets</strong> — HALoGEN, permissively licensed</li>
           <li><strong>Reference vs content grounding</strong> — HalluHard</li>
           <li><strong>Non-abstention as a failure mode</strong> — HalluLens, AbstentionBench</li>
@@ -1149,14 +1149,14 @@
         <div class="wk">Oct 9<br>– Oct 15</div>
         <div class="pb">
           <h3>The additions</h3>
-          <p><strong>Close the DCLM gap:</strong> one streaming pass over StarCoder and ProofPile2 with the same pattern set, counts merged with the API results. Freshly authored prompt subset and the contamination comparison. Proxy-corpus error bar — the same queries against C4. Corpus-frequency curve for the singleton test. <strong>Stretch goal only if everything above is finished:</strong> Comma v0.1 on Common Pile as a positive control, using a single streaming pass rather than an index. A corpus of openly licensed text alone should show visibly more SILENCE; if it does not, the instrument is not measuring what we claim.</p>
+          <p><strong>Close the DCLM gap:</strong> one streaming pass over StarCoder and ProofPile2 with the same pattern set, counts merged with the API results. Freshly authored prompt subset and the contamination comparison. Proxy-corpus error bar — the same queries against C4. Corpus-frequency curve for the singleton test. <strong>Stretch goal only if everything above is finished:</strong> Comma v0.1 on Common Pile as a positive control, using a single streaming pass rather than an index. A corpus of openly licensed text alone should show visibly more NOT_IN_DATA; if it does not, the instrument is not measuring what we claim.</p>
         </div>
       </div>
       <div class="phase">
         <div class="wk">Oct 16<br>– Oct 19</div>
         <div class="pb">
           <h3>Analysis and figures</h3>
-          <p>Cross-tabulation, corpus spread across the five corpora, the label disagreement D, the proxy-corpus disagreement A_proxy, the corpus-frequency curve, hand-inspection of two hundred cases. Every SILENCE figure is typeset with its coverage fraction beside it. The illustration row is typeset last, in its own table.</p>
+          <p>Cross-tabulation, corpus spread across the five corpora, the label disagreement D, the proxy-corpus disagreement A_proxy, the corpus-frequency curve, hand-inspection of two hundred cases. Every NOT_IN_DATA figure is typeset with its coverage fraction beside it. The illustration row is typeset last, in its own table.</p>
         </div>
       </div>
       <div class="phase">
@@ -1273,7 +1273,7 @@
         what this does not establish: corpus presence and absence show where an error is addressable in principle,
         not that a given intervention would succeed; because exact-string search cannot detect facts expressed in
         other surface forms, and because two of the five indexes cover only the first training stage of their model,
-        SILENCE is reported as an upper bound with its coverage fraction attached; and because closed endpoints may
+        NOT_IN_DATA is reported as an upper bound with its coverage fraction attached; and because closed endpoints may
         retrieve without disclosing it, results on that tier describe system behaviour rather than model behaviour
         and are never used to support a claim about pretraining data.
       </p>
@@ -1391,11 +1391,12 @@
         <rect class="bxa" x="52" y="862" width="300" height="100" rx="3"/>
         <line class="bar" x1="63" y1="862" x2="63" y2="962"/>
         <line class="bar" x1="341" y1="862" x2="341" y2="962"/>
-        <text class="ttl acc" x="202" y="886" text-anchor="middle">AXIS 2 · provenance</text>
-        <text class="sub" x="202" y="904" text-anchor="middle">3 query forms × 2 queries</text>
-        <text class="sub" x="202" y="919" text-anchor="middle">per claim → c_true, c_false</text>
-        <text class="sub" x="202" y="934" text-anchor="middle">TRUTH · ERROR · SILENCE</text>
-        <text class="sub" x="202" y="949" text-anchor="middle">MIXED · N/A</text>
+        <text class="ttl acc" x="202" y="878.5" text-anchor="middle">AXIS 2 · provenance</text>
+        <text class="sub" x="202" y="896.5" text-anchor="middle">3 query forms × 2 queries</text>
+        <text class="sub" x="202" y="911.5" text-anchor="middle">per claim → c_true, c_false</text>
+        <text class="sub" x="202" y="926.5" text-anchor="middle">CORRECT_IN_DATA</text>
+        <text class="sub" x="202" y="941.5" text-anchor="middle">WRONG_IN_DATA</text>
+        <text class="sub" x="202" y="956.5" text-anchor="middle">NOT_IN_DATA · MIXED</text>
         <line class="lnd" x1="760" y1="912" x2="734" y2="912" marker-end="url(#ah)"/>
         <line class="ln" x1="202" y1="962" x2="202" y2="986" marker-end="url(#ah)"/>
         <rect class="bx" x="52" y="988" width="300" height="66" rx="3"/>
@@ -1563,8 +1564,8 @@
 
         <div class="fmlrow">
           <div class="fn">Provenance label</div>
-          <div class="fe">TRUTH   if c_true &gt; 0 and c_false = 0<br>ERROR   if c_true = 0 and c_false &gt; 0<br>SILENCE if c_true = 0 and c_false = 0<br>MIXED   if c_true &gt; 0 and c_false &gt; 0</div>
-          <div class="fd">Applied identically across all three tasks. N/A where no unique correct answer exists, which is distinct from SILENCE and must not be merged with it. Where the index covers only part of what a model was trained on, a fact in the uncovered slice reads as absent, so <strong>SILENCE is an upper bound and is reported with the coverage fraction beside it</strong> — 98.7% for OLMo 2, 93% for DCLM-7B before the StarCoder scan, complete for Pythia.</div>
+          <div class="fe">CORRECT_IN_DATA   if c_true &gt; 0 and c_false = 0<br>WRONG_IN_DATA   if c_true = 0 and c_false &gt; 0<br>NOT_IN_DATA if c_true = 0 and c_false = 0<br>MIXED   if c_true &gt; 0 and c_false &gt; 0</div>
+          <div class="fd">Applied identically across all three tasks. N/A where no unique correct answer exists, which is distinct from NOT_IN_DATA and must not be merged with it. Where the index covers only part of what a model was trained on, a fact in the uncovered slice reads as absent, so <strong>NOT_IN_DATA is an upper bound and is reported with the coverage fraction beside it</strong> — 98.7% for OLMo 2, 93% for DCLM-7B before the StarCoder scan, complete for Pythia.</div>
         </div>
 
         <div class="fmlrow">
@@ -1575,14 +1576,14 @@
 
         <div class="fmlrow">
           <div class="fn">Provenance composition</div>
-          <div class="fe">π_k(m) = n_k(m) / |C_hal(m)|<br><span style="color:var(--muted)">for k ∈ {TRUTH, ERROR, SILENCE, MIXED}</span></div>
+          <div class="fe">π_k(m) = n_k(m) / |C_hal(m)|<br><span style="color:var(--muted)">for k ∈ {CORRECT_IN_DATA, WRONG_IN_DATA, NOT_IN_DATA, MIXED}</span></div>
           <div class="fd">The share of model <code>m</code>'s hallucinations carrying each provenance label. Composition, not raw counts — otherwise a model that simply hallucinates less would be mistaken for one whose hallucinations have a different cause.</div>
         </div>
 
         <div class="fmlrow">
           <div class="fn">Corpus spread<br><span style="font-weight:400;color:var(--muted);font-size:0.86rem">scale approximately fixed</span></div>
           <div class="fe">S_k = max over m of π_k(m) − min over m of π_k(m)<br><span style="color:var(--muted)">over the five open-data models</span></div>
-          <div class="fd">How far the share of provenance class k moves when the training data changes and the parameter count does not. Claimed as non-zero only where the extreme models' Wilson intervals do not overlap. <strong>S_SILENCE is the headline</strong> — a wide spread says the corpus shapes what a model cannot know, a narrow one says the provenance mix is stable across independently built datasets.</div>
+          <div class="fd">How far the share of provenance class k moves when the training data changes and the parameter count does not. Claimed as non-zero only where the extreme models' Wilson intervals do not overlap. <strong>S_NOT_IN_DATA is the headline</strong> — a wide spread says the corpus shapes what a model cannot know, a narrow one says the provenance mix is stable across independently built datasets.</div>
         </div>
 
         <div class="fmlrow">
